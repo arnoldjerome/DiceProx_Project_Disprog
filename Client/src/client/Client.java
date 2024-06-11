@@ -19,6 +19,7 @@ public class Client {
         System.out.println("WOI NYOBA");
         halo bang -malv
         hai ngab MWAHH -gio
+        halo ini rome terakhir
     }
     
 }
