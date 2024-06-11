@@ -17,6 +17,7 @@ public class Client {
         // TODO code application logic here
         System.out.println("KITA GANTENG YUHU");
         System.out.println("WOI NYOBA");
+        halo bang -malv
     }
     
 }
