@@ -18,6 +18,7 @@ public class Client {
         System.out.println("KITA GANTENG YUHU");
         System.out.println("WOI NYOBA");
         halo bang -malv
+        hai ngab MWAHH -gio
     }
     
 }
