@@ -54,28 +54,13 @@ public class bookingTiketParkir extends javax.swing.JFrame {
                 "ID", "Number Plate", "Brand", "Class", "Color"
             }
         ));
-        table.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(table);
 
         textId.setEnabled(false);
 
         buttonCancel.setText("Cancel Booking");
-        buttonCancel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                buttonCancelMouseClicked(evt);
-            }
-        });
 
         buttonBook.setText("Book Parking");
-        buttonBook.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                buttonBookMouseClicked(evt);
-            }
-        });
 
         jLabel5.setText("Color");
 
@@ -157,39 +142,6 @@ public class bookingTiketParkir extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
-        // TODO add your handling code here:
-        JTable target = (JTable)evt.getSource();
-        int row = target.getSelectedRow();
-
-        textId.setText(target.getValueAt(row, 0).toString());
-        textPlateNumber.setText(target.getValueAt(row, 1).toString());
-        textBrand.setText(target.getValueAt(row, 2).toString());
-        textClass.setText(target.getValueAt(row, 3).toString());
-        textColor.setText(target.getValueAt(row, 4).toString());
-
-    }//GEN-LAST:event_tableMouseClicked
-
-    private void buttonCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonCancelMouseClicked
-        // TODO add your handling code here:
-        kendaraan.setId(Integer.parseInt(textId.getText()));
-
-        kendaraan.deleteData();
-        refreshTable();
-    }//GEN-LAST:event_buttonCancelMouseClicked
-
-    private void buttonBookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonBookMouseClicked
-        // TODO add your handling code here:
-        kendaraan.setNum_plate(textPlateNumber.getText());
-        kendaraan.setBrand(textBrand.getText());
-        kendaraan.setColor(textColor.getText());
-        kendaraan.setV_class(Integer.parseInt(textClass.getText()));
-
-        kendaraan.insertData();
-        refreshTable();
-
-    }//GEN-LAST:event_buttonBookMouseClicked
 
     /**
      * @param args the command line arguments
