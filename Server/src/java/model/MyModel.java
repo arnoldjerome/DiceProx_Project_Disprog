@@ -15,21 +15,26 @@ import java.util.ArrayList;
  * @author Rome
  */
 public abstract class MyModel {
+    // <editor-fold desc="Data Members">
     protected static Connection conn;
     protected Statement statement;
     protected ResultSet result;
+    // </editor-fold>
 
+    // <editor-fold desc="Constructor">
     public MyModel(Statement statement, ResultSet result) {
         this.statement = statement;
         this.result = result;
     }
-    
-    public MyModel(){
+
+    public MyModel() {
         this.conn = this._getConnection();
         this.statement = null;
         this.result = null;
     }
+// </editor-fold>
 
+    // <editor-fold desc="Properties">
     public static Connection getConn() {
         return conn;
     }
@@ -53,22 +58,28 @@ public abstract class MyModel {
     public void setResult(ResultSet result) {
         this.result = result;
     }
+
+    // </editor-fold>
     
-    private Connection _getConnection()
-    {
-        if (MyModel.conn == null){
-            try{
+    // <editor-fold desc="Methods">
+    private Connection _getConnection() {
+        if (MyModel.conn == null) {
+            try {
                 Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
                 return DriverManager.getConnection("jdbc:mysql://localhost/diceprox_ticketing", "root", "");
-            }
-            catch(Exception ex){
-                System.out.println(ex.getMessage());
+            } catch (Exception ex) {
+                System.out.println("Error di getConnection : " + ex);
             }
         }
         return MyModel.conn;
     }
-    
-    
-    
-    
+
+    public abstract void insertData();
+
+    public abstract void updateData();
+
+    public abstract void deleteData();
+
+    public abstract ArrayList<Object> viewListData();
+    // </editor-fold>
 }

@@ -6,6 +6,7 @@ package tickets;
 
 import com.sun.xml.rpc.processor.modeler.j2ee.xml.string;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import model.MyModel;
 
 /**
@@ -85,6 +86,26 @@ public class Tickets extends MyModel {
         this.ReservationDate = ReservationDate;
         this.IsClaimed = IsClaimed;
         this.created_at = created_at;
+    }
+
+    @Override
+    public void insertData() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void updateData() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void deleteData() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public ArrayList<Object> viewListData() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     

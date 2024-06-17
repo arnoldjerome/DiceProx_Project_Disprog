@@ -4,6 +4,7 @@
  */
 package account;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import model.MyModel;
 
@@ -11,12 +12,44 @@ import model.MyModel;
  *
  * @author Rome
  */
-public class Account extends MyModel{
-    
+public class Account extends MyModel {
+
+    // <editor-fold desc="Data Members">
     int UserID;
     private String Username;
     private String Password;
+    private String Fullname;
+    private String Email;
+// </editor-fold>
 
+    // <editor-fold desc="Constructors">
+    public Account(int UserID, String Username, String Password, String Email) {
+        this.UserID = UserID;
+        this.Username = Username;
+        this.Password = Password;
+        this.Email = Email;
+    }
+
+    //untuk login constructors
+    public Account(String Username, String Password) {
+        this.Username = Username;
+        this.Password = Password;
+    }
+
+    //untuk register constructors check email
+    public Account(String Email) {
+        this.Email = Email;
+    }
+
+    //untuk register constructors
+    public Account(String Username, String Password, String Email) {
+        this.Username = Username;
+        this.Password = Password;
+        this.Email = Email;
+    }
+// </editor-fold>
+
+    // <editor-fold desc="Properties">
     public int getUserID() {
         return UserID;
     }
@@ -41,15 +74,104 @@ public class Account extends MyModel{
         this.Password = Password;
     }
 
-    public Account(int UserID, String Username, String Password) {
-        this.UserID = UserID;
-        this.Username = Username;
-        this.Password = Password;
+    public String getFullname() {
+        return Fullname;
     }
-    
-    
-    
 
-   
-    
+    public void setFullname(String Fullname) {
+        this.Fullname = Fullname;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String Email) {
+        this.Email = Email;
+    }
+// </editor-fold>
+
+    // <editor-fold desc="Methods">
+    public boolean check_login() {
+        boolean status = false;
+        try {
+            if (!MyModel.conn.isClosed()) { //jika sudah terbentuk koneksi
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                        "SELECT * FROM users WHERE Username = ? AND Password = ?"
+                );
+
+                sql.setString(1, this.Username);
+                sql.setString(2, this.Password);
+                this.result = sql.executeQuery();
+                if (this.result.next()) {
+                    status = true;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error di check login : " + e);
+        }
+        return status;
+    }
+
+    public boolean check_register() {
+        boolean status = false;
+        try {
+            if (!MyModel.conn.isClosed()) { //jika sudah terbentuk koneksi
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                        "SELECT * FROM users WHERE Email = ?"
+                );
+
+                sql.setString(1, this.Email);
+                this.result = sql.executeQuery();
+                if (this.result.next()) {
+                    status = true;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error di check login : " + e);
+        }
+        return status;
+    }
+
+    @Override
+    public void insertData() {
+        try {
+            if (!MyModel.conn.isClosed()) { //jika sudah terbentuk koneksi
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                        "INSERT into users(Username, Password, Fullname, Email)"
+                        + "VALUES(?, ?, ?, ?)");
+
+                sql.setString(1, this.Username);
+                sql.setString(2, this.Password);
+                sql.setString(3, this.Fullname);
+                sql.setString(4, this.Email);
+                sql.executeUpdate();
+                sql.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error di insert data : " + e);
+        }
+    }
+
+    @Override
+    public void updateData() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void deleteData() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public ArrayList<Object> viewListData() {
+        ArrayList<Object> collections = new ArrayList<>();
+        try {
+            // Kode di dalam blok try
+        } catch (Exception e) {
+            System.out.println("error " + e.getMessage());
+        }
+        return collections;
+    }
+// </editor-fold>
 }
