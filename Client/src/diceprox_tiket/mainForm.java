@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package subsistem_acara;
+package diceprox_tiket;
 
 /**
  *
@@ -37,9 +37,19 @@ public class mainForm extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("DICEPROX Ticket Service");
 
-        buttonFindTicket.setText("Find Tickets");
+        buttonFindTicket.setText("Find Event Tickets");
+        buttonFindTicket.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonFindTicketMouseClicked(evt);
+            }
+        });
 
-        buttonClaimTicket.setText("Claim Tickets");
+        buttonClaimTicket.setText("Book Parking Lot");
+        buttonClaimTicket.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonClaimTicketMouseClicked(evt);
+            }
+        });
 
         jLabel3.setText("Welcome to our service, what would you do today?");
 
@@ -49,20 +59,16 @@ public class mainForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(126, 126, 126)))
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(buttonFindTicket)
-                        .addGap(122, 122, 122)
-                        .addComponent(buttonClaimTicket)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonClaimTicket))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel1))
+                .addGap(20, 20, 20)
+                .addComponent(jLabel2)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -85,6 +91,18 @@ public class mainForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void buttonFindTicketMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonFindTicketMouseClicked
+        // TODO add your handling code here:
+        bookAcara acara = new bookAcara();
+        acara.setVisible(true);
+    }//GEN-LAST:event_buttonFindTicketMouseClicked
+
+    private void buttonClaimTicketMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonClaimTicketMouseClicked
+        // TODO add your handling code here:
+         bookParkir parkir = new bookParkir();
+         parkir.setVisible(true);
+    }//GEN-LAST:event_buttonClaimTicketMouseClicked
 
     /**
      * @param args the command line arguments
