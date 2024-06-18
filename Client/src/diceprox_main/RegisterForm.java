@@ -4,6 +4,7 @@
  */
 package diceprox_main;
 
+import javax.swing.JOptionPane;
 import subsistem_event.*;
 
 /**
@@ -17,6 +18,12 @@ public class RegisterForm extends javax.swing.JFrame {
      */
     public RegisterForm() {
         initComponents();
+
+        //untuk center
+        this.setLocationRelativeTo(null);
+
+        // Maximize the frame
+        setExtendedState(LoginForm.MAXIMIZED_BOTH);
     }
 
     /**
@@ -28,83 +35,263 @@ public class RegisterForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        passwordText1 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        registerButton = new javax.swing.JButton();
+        termsCheckbox = new javax.swing.JCheckBox();
+        privacyCheckbox = new javax.swing.JCheckBox();
+        daftarButton = new javax.swing.JButton();
         usernameText = new javax.swing.JTextField();
-        passwordText = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        emailText = new javax.swing.JTextField();
+        fullnameText = new javax.swing.JTextField();
+        passwordText = new javax.swing.JPasswordField();
+        repeatPasswordText = new javax.swing.JPasswordField();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        logo = new javax.swing.JLabel();
+        salamLabel = new javax.swing.JLabel();
+        bagian_kanan = new javax.swing.JLabel();
+        background_kiri = new javax.swing.JLabel();
+        background_kanan = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1920, 1080));
+        setMinimumSize(new java.awt.Dimension(1920, 1080));
+        setPreferredSize(new java.awt.Dimension(1920, 1080));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setText("New Password:");
+        termsCheckbox.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        termsCheckbox.setForeground(new java.awt.Color(57, 62, 70));
+        termsCheckbox.setText("Menyetujui Kebijakan Privasi");
+        termsCheckbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                termsCheckboxActionPerformed(evt);
+            }
+        });
+        getContentPane().add(termsCheckbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 870, -1, -1));
 
-        jLabel3.setText("Repeat Password:");
+        privacyCheckbox.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        privacyCheckbox.setForeground(new java.awt.Color(57, 62, 70));
+        privacyCheckbox.setText("Menyetujui Ketentuan Layanan Kami");
+        privacyCheckbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                privacyCheckboxActionPerformed(evt);
+            }
+        });
+        getContentPane().add(privacyCheckbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 920, -1, -1));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel4.setText("Form Register");
+        daftarButton.setBackground(new java.awt.Color(187, 224, 253));
+        daftarButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        daftarButton.setText("Daftar");
+        daftarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                daftarButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(daftarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 890, 210, -1));
 
-        registerButton.setText("Register Account");
+        usernameText.setBackground(new java.awt.Color(207, 219, 229));
+        usernameText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        usernameText.setText("Username");
+        usernameText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                usernameTextFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                usernameTextFocusLost(evt);
+            }
+        });
+        getContentPane().add(usernameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 300, 1020, 67));
 
-        jLabel1.setText("Username:");
+        emailText.setBackground(new java.awt.Color(207, 219, 229));
+        emailText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        emailText.setText("Email");
+        emailText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                emailTextFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                emailTextFocusLost(evt);
+            }
+        });
+        getContentPane().add(emailText, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 420, 1020, 67));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel3)
-                        .addGap(63, 63, 63)
-                        .addComponent(passwordText1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(passwordText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(usernameText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(57, 57, 57))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(126, 126, 126)
-                        .addComponent(registerButton)))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jLabel4)
-                .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(usernameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(passwordText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(passwordText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                .addComponent(registerButton)
-                .addGap(33, 33, 33))
-        );
+        fullnameText.setBackground(new java.awt.Color(207, 219, 229));
+        fullnameText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        fullnameText.setText("Fullname");
+        fullnameText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                fullnameTextFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                fullnameTextFocusLost(evt);
+            }
+        });
+        getContentPane().add(fullnameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, 1020, 67));
+
+        passwordText.setBackground(new java.awt.Color(207, 219, 229));
+        passwordText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        passwordText.setText("Password");
+        passwordText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                passwordTextFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                passwordTextFocusLost(evt);
+            }
+        });
+        getContentPane().add(passwordText, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 520, 1020, 70));
+
+        repeatPasswordText.setBackground(new java.awt.Color(207, 219, 229));
+        repeatPasswordText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        repeatPasswordText.setText("Password");
+        repeatPasswordText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                repeatPasswordTextFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                repeatPasswordTextFocusLost(evt);
+            }
+        });
+        repeatPasswordText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                repeatPasswordTextActionPerformed(evt);
+            }
+        });
+        getContentPane().add(repeatPasswordText, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 630, 1020, 70));
+
+        jDateChooser1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 740, 1020, 70));
+
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
+        logo.setPreferredSize(new java.awt.Dimension(120, 125));
+        getContentPane().add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 10, 240, 200));
+
+        salamLabel.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        salamLabel.setForeground(new java.awt.Color(57, 62, 70));
+        salamLabel.setText("SELAMAT DATANG DI DICEPROX !");
+        getContentPane().add(salamLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, -1, -1));
+
+        bagian_kanan.setBackground(new java.awt.Color(187, 187, 187));
+        bagian_kanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bagian_kanan.png"))); // NOI18N
+        getContentPane().add(bagian_kanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(1450, 310, 430, 410));
+
+        background_kiri.setBackground(new java.awt.Color(187, 187, 187));
+        background_kiri.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background_main_kiri.png"))); // NOI18N
+        getContentPane().add(background_kiri, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1410, 1080));
+
+        background_kanan.setBackground(new java.awt.Color(187, 187, 187));
+        background_kanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background_main_kanan.png"))); // NOI18N
+        getContentPane().add(background_kanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(1410, 0, 510, 1080));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void termsCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_termsCheckboxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_termsCheckboxActionPerformed
+
+    private void privacyCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_privacyCheckboxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_privacyCheckboxActionPerformed
+
+    private void daftarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_daftarButtonActionPerformed
+
+        try {
+//            if (!termsCheckbox.isSelected() || !privacyCheckbox.isSelected()) {
+//                JOptionPane.showMessageDialog(this, "Anda harus menyetujui Syarat dan Ketentuan dan Pernyataan Privasi.", "Perhatian", JOptionPane.WARNING_MESSAGE);
+//                return;
+//            }
+//
+//            Date selectedDateDOB = dobDate.getDate();
+//            Date selectedDateMemberSince = memberSinceDate.getDate();
+//            if (selectedDateDOB == null || selectedDateMemberSince == null) {
+//                JOptionPane.showMessageDialog(this, "Tanggal lahir dan tanggal keanggotaan harus diisi.", "Perhatian", JOptionPane.WARNING_MESSAGE);
+//                return;
+//            }
+//
+//            LocalDateTime selectedDateDOBTime = LocalDateTime.ofInstant(selectedDateDOB.toInstant(), ZoneId.systemDefault());
+//            LocalDateTime selectedDateMemberSinceTime = LocalDateTime.ofInstant(selectedDateMemberSince.toInstant(), ZoneId.systemDefault());
+//
+//            int nextUserId = findNextUserId();
+//
+//            Pengguna penggunaBaru = new Pengguna(); // Pastikan konstruktor tidak melempar Unsupported Operation Exception
+//            penggunaBaru.setId(nextUserId);
+//            penggunaBaru.setFullname(fullnameText.getText());
+//            penggunaBaru.setUsername(usernameText.getText());
+//            penggunaBaru.setPassword(new String(passwordText.getPassword()));
+//            penggunaBaru.setEmail(emailText.getText());
+//            penggunaBaru.setDob(selectedDateDOBTime);
+//            penggunaBaru.setMemberSince(selectedDateMemberSinceTime);
+//
+//            saveUserToFile(penggunaBaru);
+
+            JOptionPane.showMessageDialog(this, "Data Berhasil Disimpan !!", "Pendaftaran Berhasil", JOptionPane.INFORMATION_MESSAGE);
+            MainForm windowPlane = new MainForm();
+            windowPlane.setVisible(true);
+            this.dispose();
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error saat menyimpan data: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_daftarButtonActionPerformed
+
+    private void usernameTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usernameTextFocusGained
+        if (usernameText.getText().equals("Username")) {
+            usernameText.setText("");
+        }
+    }//GEN-LAST:event_usernameTextFocusGained
+
+    private void usernameTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usernameTextFocusLost
+        if (usernameText.getText().equals("")) {
+            usernameText.setText("Username");
+        }
+    }//GEN-LAST:event_usernameTextFocusLost
+
+    private void emailTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailTextFocusGained
+        if (emailText.getText().equals("Email")) {
+            emailText.setText("");
+        }
+    }//GEN-LAST:event_emailTextFocusGained
+
+    private void emailTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailTextFocusLost
+        if (emailText.getText().equals("")) {
+            emailText.setText("Email");
+        }
+    }//GEN-LAST:event_emailTextFocusLost
+
+    private void passwordTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordTextFocusGained
+        if (passwordText.getText().equals("Password")) {
+            passwordText.setText("");
+        }
+    }//GEN-LAST:event_passwordTextFocusGained
+
+    private void passwordTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordTextFocusLost
+        if (passwordText.getText().equals("")) {
+            passwordText.setText("Password");
+        }
+    }//GEN-LAST:event_passwordTextFocusLost
+
+    private void repeatPasswordTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_repeatPasswordTextFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_repeatPasswordTextFocusGained
+
+    private void repeatPasswordTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_repeatPasswordTextFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_repeatPasswordTextFocusLost
+
+    private void repeatPasswordTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_repeatPasswordTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_repeatPasswordTextActionPerformed
+
+    private void fullnameTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fullnameTextFocusGained
+        if (fullnameText.getText().equals("Fullname")) {
+            fullnameText.setText("");
+        }
+    }//GEN-LAST:event_fullnameTextFocusGained
+
+    private void fullnameTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fullnameTextFocusLost
+        if (fullnameText.getText().equals("")) {
+            fullnameText.setText("Fullname");
+        }
+    }//GEN-LAST:event_fullnameTextFocusLost
 
     /**
      * @param args the command line arguments
@@ -145,13 +332,19 @@ public class RegisterForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField passwordText;
-    private javax.swing.JTextField passwordText1;
-    private javax.swing.JButton registerButton;
+    private javax.swing.JLabel background_kanan;
+    private javax.swing.JLabel background_kiri;
+    private javax.swing.JLabel bagian_kanan;
+    private javax.swing.JButton daftarButton;
+    private javax.swing.JTextField emailText;
+    private javax.swing.JTextField fullnameText;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JLabel logo;
+    private javax.swing.JPasswordField passwordText;
+    private javax.swing.JCheckBox privacyCheckbox;
+    private javax.swing.JPasswordField repeatPasswordText;
+    private javax.swing.JLabel salamLabel;
+    private javax.swing.JCheckBox termsCheckbox;
     private javax.swing.JTextField usernameText;
     // End of variables declaration//GEN-END:variables
 }
