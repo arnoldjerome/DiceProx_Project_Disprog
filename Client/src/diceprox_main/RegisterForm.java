@@ -53,7 +53,6 @@ public class RegisterForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1920, 1080));
         setMinimumSize(new java.awt.Dimension(1920, 1080));
-        setPreferredSize(new java.awt.Dimension(1920, 1080));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         termsCheckbox.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
@@ -97,7 +96,7 @@ public class RegisterForm extends javax.swing.JFrame {
                 usernameTextFocusLost(evt);
             }
         });
-        getContentPane().add(usernameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 300, 1020, 67));
+        getContentPane().add(usernameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 330, 1020, 67));
 
         emailText.setBackground(new java.awt.Color(207, 219, 229));
         emailText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -110,7 +109,7 @@ public class RegisterForm extends javax.swing.JFrame {
                 emailTextFocusLost(evt);
             }
         });
-        getContentPane().add(emailText, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 420, 1020, 67));
+        getContentPane().add(emailText, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 440, 1020, 67));
 
         fullnameText.setBackground(new java.awt.Color(207, 219, 229));
         fullnameText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -123,7 +122,7 @@ public class RegisterForm extends javax.swing.JFrame {
                 fullnameTextFocusLost(evt);
             }
         });
-        getContentPane().add(fullnameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, 1020, 67));
+        getContentPane().add(fullnameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, 1020, 67));
 
         passwordText.setBackground(new java.awt.Color(207, 219, 229));
         passwordText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -136,7 +135,7 @@ public class RegisterForm extends javax.swing.JFrame {
                 passwordTextFocusLost(evt);
             }
         });
-        getContentPane().add(passwordText, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 520, 1020, 70));
+        getContentPane().add(passwordText, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 550, 1020, 70));
 
         repeatPasswordText.setBackground(new java.awt.Color(207, 219, 229));
         repeatPasswordText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -154,10 +153,10 @@ public class RegisterForm extends javax.swing.JFrame {
                 repeatPasswordTextActionPerformed(evt);
             }
         });
-        getContentPane().add(repeatPasswordText, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 630, 1020, 70));
+        getContentPane().add(repeatPasswordText, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 660, 1020, 70));
 
         jDateChooser1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 740, 1020, 70));
+        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 770, 1020, 70));
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
         logo.setPreferredSize(new java.awt.Dimension(120, 125));
