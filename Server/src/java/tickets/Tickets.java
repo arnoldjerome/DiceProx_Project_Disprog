@@ -7,7 +7,7 @@ package tickets;
 import com.sun.xml.rpc.processor.modeler.j2ee.xml.string;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import model.MyModel;
+import servertcp_diceprox.model.MyModel;
 
 /**
  *

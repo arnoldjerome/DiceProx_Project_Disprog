@@ -51,19 +51,9 @@ public class ticketingServices {
      */
     @WebMethod(operationName = "insertDataRegister")
     @Oneway
-    public void insertDataRegister(@WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "fullname") String fullName, @WebParam(name = "email") String email, @WebParam(name = "dateOfBirth") Timestamp dateOfBirth) {
+    public void insertDataRegister(@WebParam(name = "Username") String username, @WebParam(name = "password") String password, @WebParam(name = "fullname") String fullName, @WebParam(name = "email") String email, @WebParam(name = "DateOfBirth") Timestamp dateOfBirth) {
         a = new Account(username, password, fullName, email, dateOfBirth);
         a.insertData();
     }
 
-    /**
-     * Web ser
-     * /*
-    @WebMethod(operationName = "insertData")
-    public void insertData(@WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "email") String email, @WebParam(name = "dateOfBirth") Timestamp dateOfBirth) {
-        //TODO write your implementation code here:
-        a = new Account(username, password, email, dateOfBirth);
-        a.insertData();
-    }
-    * */
 }

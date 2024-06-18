@@ -5,7 +5,7 @@
 package parkingLots;
 
 import java.util.ArrayList;
-import model.MyModel;
+import servertcp_diceprox.model.MyModel;
 
 /**
  *

@@ -6,7 +6,7 @@ package parkingReservations;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import model.MyModel;
+import servertcp_diceprox.model.MyModel;
 
 /**
  *
