@@ -50,7 +50,6 @@ public class LoginForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1920, 1080));
         setMinimumSize(new java.awt.Dimension(1920, 1080));
-        setPreferredSize(new java.awt.Dimension(1920, 1080));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         logoUsername.setText("jLabel4");
@@ -174,6 +173,12 @@ public class LoginForm extends javax.swing.JFrame {
         try {
 
             if (setujuText.isSelected()) {
+                
+                String username = usernameText.getText();
+                String email = emailText.getText();
+                String password = passwordText.getText();
+                
+                
                 RegisterForm windowPlane = new RegisterForm();
 
                 if (windowPlane == null || !windowPlane.isVisible()) {

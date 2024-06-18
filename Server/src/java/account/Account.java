@@ -5,6 +5,7 @@
 package account;
 
 import java.sql.PreparedStatement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import model.MyModel;
 
@@ -15,19 +16,21 @@ import model.MyModel;
 public class Account extends MyModel {
 
     // <editor-fold desc="Data Members">
-    int UserID;
+    private int UserID;
     private String Username;
     private String Password;
     private String Fullname;
     private String Email;
-// </editor-fold>
+    private Timestamp DateOfBirth;
+    // </editor-fold>
 
     // <editor-fold desc="Constructors">
-    public Account(int UserID, String Username, String Password, String Email) {
+    public Account(int UserID, String Username, String Password, String Email, Timestamp DateOfBirth) {
         this.UserID = UserID;
         this.Username = Username;
         this.Password = Password;
         this.Email = Email;
+        this.DateOfBirth = DateOfBirth;
     }
 
     //untuk login constructors
@@ -42,12 +45,14 @@ public class Account extends MyModel {
     }
 
     //untuk register constructors
-    public Account(String Username, String Password, String Email) {
+    public Account(String Username, String Password, String Fullname, String Email, Timestamp DateOfBirth) {
         this.Username = Username;
         this.Password = Password;
+        this.Fullname = Fullname;
         this.Email = Email;
+        this.DateOfBirth = DateOfBirth;
     }
-// </editor-fold>
+    // </editor-fold>
 
     // <editor-fold desc="Properties">
     public int getUserID() {
@@ -89,7 +94,15 @@ public class Account extends MyModel {
     public void setEmail(String Email) {
         this.Email = Email;
     }
-// </editor-fold>
+
+    public Timestamp getDateOfBirth() {
+        return DateOfBirth;
+    }
+
+    public void setDateOfBirth(Timestamp DateOfBirth) {
+        this.DateOfBirth = DateOfBirth;
+    }
+    // </editor-fold>
 
     // <editor-fold desc="Methods">
     public boolean check_login() {
@@ -138,13 +151,14 @@ public class Account extends MyModel {
         try {
             if (!MyModel.conn.isClosed()) { //jika sudah terbentuk koneksi
                 PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
-                        "INSERT into users(Username, Password, Fullname, Email)"
-                        + "VALUES(?, ?, ?, ?)");
+                        "INSERT into users(Username, Password, Fullname, Email, DateOfBirth)"
+                        + "VALUES(?, ?, ?, ?, ?)");
 
                 sql.setString(1, this.Username);
                 sql.setString(2, this.Password);
                 sql.setString(3, this.Fullname);
                 sql.setString(4, this.Email);
+                sql.setString(5, String.valueOf(this.DateOfBirth));
                 sql.executeUpdate();
                 sql.close();
             }

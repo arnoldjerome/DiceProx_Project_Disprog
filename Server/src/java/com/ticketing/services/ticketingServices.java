@@ -5,6 +5,8 @@
 package com.ticketing.services;
 
 import account.Account;
+import java.sql.Timestamp;
+import javax.jws.Oneway;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -47,11 +49,21 @@ public class ticketingServices {
     /**
      * Web service operation
      */
-    @WebMethod(operationName = "insertData")
-    public void insertData(@WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "email") String email) {
-        //TODO write your implementation code here:
-        a = new Account(username, password, email);
+    @WebMethod(operationName = "insertDataRegister")
+    @Oneway
+    public void insertDataRegister(@WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "fullname") String fullName, @WebParam(name = "email") String email, @WebParam(name = "dateOfBirth") Timestamp dateOfBirth) {
+        a = new Account(username, password, fullName, email, dateOfBirth);
         a.insertData();
-//        return null;
     }
+
+    /**
+     * Web ser
+     * /*
+    @WebMethod(operationName = "insertData")
+    public void insertData(@WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "email") String email, @WebParam(name = "dateOfBirth") Timestamp dateOfBirth) {
+        //TODO write your implementation code here:
+        a = new Account(username, password, email, dateOfBirth);
+        a.insertData();
+    }
+    * */
 }
