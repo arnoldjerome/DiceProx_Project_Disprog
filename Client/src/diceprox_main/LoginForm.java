@@ -173,6 +173,12 @@ public class LoginForm extends javax.swing.JFrame {
         try {
 
             if (setujuText.isSelected()) {
+                
+                String username = usernameText.getText();
+                String email = emailText.getText();
+                String password = passwordText.getText();
+                
+                
                 RegisterForm windowPlane = new RegisterForm();
 
                 if (windowPlane == null || !windowPlane.isVisible()) {
