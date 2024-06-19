@@ -210,31 +210,17 @@ public class RegisterForm extends javax.swing.JFrame {
                 String fullname = fullnameText.getText();
                 String email = emailText.getText();
                 Date dateOfBirthUtil = jDateOfBirth.getDate();
-                java.sql.Timestamp dateOfBirthTimestamp = new java.sql.Timestamp(dateOfBirthUtil.getTime());
-//
-//// Konversi dari java.sql.Timestamp ke com.ticketing.services.Timestamp
-//                com.ticketing.services.Timestamp dateOfBirth = new com.ticketing.services.Timestamp();
-//                dateOfBirth.setTime(dateOfBirthTimestamp.getTime());
+                java.sql.Timestamp dateOfBirthTimestamp = null;
 
-// Konversi dari java.sql.Timestamp ke java.util.Date
-                Date dateOfBirthDate = new Date(dateOfBirthTimestamp.getTime());
+                if (dateOfBirthUtil != null) {
+                    dateOfBirthTimestamp = new java.sql.Timestamp(dateOfBirthUtil.getTime());
+                }
 
-                // Asumsikan ada konstruktor Timestamp(Date date)
-//                com.ticketing.services.Timestamp dateOfBirth = new com.ticketing.services.Timestamp(dateOfBirthDate);
-
-// Panggil method insertDataRegister dengan parameter yang sesuai
-//                insertDataRegister(username, password, fullname, email, dateOfBirth);
-
-                System.out.println(dateOfBirthUtil);
-                System.out.println(dateOfBirthTimestamp);
+                System.out.println("getDate() : " + dateOfBirthUtil);
+                System.out.println("java.sql.Timestamp : " + dateOfBirthTimestamp);
+//                insertDataRegister(username, password, fullname, email, dateOfBirthDate);
                 
                 
-
-// Periksa metode yang tersedia di kelas com.ticketing.services.Timestamp
-for (Method method : com.ticketing.services.Timestamp.class.getMethods()) {
-    System.out.println(method.getName());
-}
-
 
 //                SimpleDateFormat dateOfBirth = new SimpleDateFormat("yyyy/MM/dd");
 //                String regisDoB = dateOfBirth.format(dOB);
