@@ -15,12 +15,12 @@ import java.net.Socket;
  */
 public class HandleSocket extends Thread {
     
-    FormServer parent;
+    ServerForm parent;
     Socket client;
     DataOutputStream out;
     BufferedReader in;
     
-    public HandleSocket(FormServer _parent, Socket _client) {
+    public HandleSocket(ServerForm _parent, Socket _client) {
         this.parent = _parent;
         this.client = _client;
         try {

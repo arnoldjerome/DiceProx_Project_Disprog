@@ -4,6 +4,13 @@
  */
 package diceprox_main;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import subsistem_event.*;
 import javax.swing.JOptionPane;
 
@@ -11,19 +18,37 @@ import javax.swing.JOptionPane;
  *
  * @author Yosef
  */
-public class LoginForm extends javax.swing.JFrame {
-
+public class LoginForm extends javax.swing.JFrame implements Runnable {
+    
+    Socket client;
+    BufferedReader in;
+    DataOutputStream out;
+    Thread t;
     /**
      * Creates new form login
      */
     public LoginForm() {
-        initComponents();
-
-        //untuk center
-        this.setLocationRelativeTo(null);
-
-        // Maximize the frame
-        setExtendedState(LoginForm.MAXIMIZED_BOTH);
+        try {
+            initComponents();
+            client = new Socket("localhost", 5005);
+            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            out = new DataOutputStream(client.getOutputStream());
+            start();
+            //untuk center
+            this.setLocationRelativeTo(null);
+            
+            // Maximize the frame
+            setExtendedState(LoginForm.MAXIMIZED_BOTH);
+        } catch (IOException ex) {
+            System.out.println("Error di login form: " + e);
+        }
+    }
+    
+    private void start(){
+        if (t == null) {
+            t = new Thread(this, "LoginForm");
+            t.start();
+        }
     }
 
     /**
@@ -193,12 +218,21 @@ public class LoginForm extends javax.swing.JFrame {
 
                 String username = usernameText.getText();
                 String email = emailText.getText();
-                String password = passwordText.getText();
-
+                String password = String.valueOf(passwordText.getPassword());
+                
+                String formattedMessage = "LOGIN~" + username + "~" + email + "~" + password + "\n";
+                    
+                out.writeBytes(formattedMessage);
+                
                 boolean login = checkLogin(username, password);
 
                 if (login) {
-                    JOptionPane.showMessageDialog(this, "User is Found!");
+                    
+                    String response = in.readLine();
+                    
+                    JOptionPane.showMessageDialog(this, response);
+                    
+                    JOptionPane.showMessageDialog(this, "Login Successful!");
 
                     MainForm windowPlane = new MainForm();
 

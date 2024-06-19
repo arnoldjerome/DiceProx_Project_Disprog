@@ -16,12 +16,12 @@ import servertcp_diceprox.model.HistoryLogin;
  *
  * @author ASUS
  */
-public class FormServer extends javax.swing.JFrame implements Runnable {
+public class ServerForm extends javax.swing.JFrame implements Runnable {
 
     
     String chatClient, chatServer;
     String groupName;
-    String name;
+    String fullname, username, email, password;
     Socket incoming;
     HistoryLogin history;
     ServerSocket s;
@@ -32,18 +32,18 @@ public class FormServer extends javax.swing.JFrame implements Runnable {
     /**
      * Creates new form FormServer
      */
-    public FormServer() {
+    public ServerForm() {
         try {
             initComponents();
             
-            s = new ServerSocket(6005);
+            s = new ServerSocket(5005);
             //getChat();
             if (t == null) {
-                t = new Thread(this, "Simple Chat Client");
+                t = new Thread(this, "RegistrationForm");
                 t.start();
             }
         } catch (IOException ex) {
-            Logger.getLogger(FormServer.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error di server form: " + ex);
         }
     }
     
@@ -69,20 +69,21 @@ public class FormServer extends javax.swing.JFrame implements Runnable {
     }
     
     public void showChat(String msg) {
-        if (msg.contains("masuk~~")) {
-            String msgSplit[] = msg.split("masuk~~");
-            name = msgSplit[1];
-            chatTxt.append("**RING** "
-                    + "New Client with name " + name + " request to join! "
-                    + "Please send 'YES' to confirm "
-                    + "and 'NO' to decline request!" + msg + "\n");
-            //broadCast(msg);
+        if (msg.contains("LOGIN~")) {
+            String msgSplit[] = msg.split("~");
+            username = msgSplit[1];
+            email = msgSplit[2];
+            password = msgSplit[3];
+            chatTxt.append(msg + "\n");
+            broadCast(msg);
         }
         
-        else {
-            String msgSplit[] = msg.split(":");
-            String username = msgSplit[0];
-            String content = msgSplit[1];
+        else if (msg.contains("REGISTER~")) {
+            String msgSplit[] = msg.split("~");
+            fullname = msgSplit[1];
+            username = msgSplit[2];
+            email = msgSplit[3];
+            password = msgSplit[4];
             
             /*
             chat = new Chat();
@@ -93,6 +94,10 @@ public class FormServer extends javax.swing.JFrame implements Runnable {
             
             chatTxt.append(msg + "\n");
             broadCast(msg);
+        }
+        
+        else {
+            System.out.println("Error displaying chat!");
         }
     }
     
@@ -181,20 +186,21 @@ public class FormServer extends javax.swing.JFrame implements Runnable {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormServer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ServerForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormServer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ServerForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormServer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ServerForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormServer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ServerForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormServer().setVisible(true);
+                new ServerForm().setVisible(true);
             }
         });
     }
