@@ -195,17 +195,25 @@ public class LoginForm extends javax.swing.JFrame {
                 String email = emailText.getText();
                 String password = passwordText.getText();
 
-                MainForm windowPlane = new MainForm();
+                boolean login = checkLogin(username, password);
 
-                if (windowPlane == null || !windowPlane.isVisible()) {
-                    windowPlane.setVisible(true);
+                if (login) {
+                    JOptionPane.showMessageDialog(this, "User is Found!");
+
+                    MainForm windowPlane = new MainForm();
+
+                    if (windowPlane == null || !windowPlane.isVisible()) {
+                        windowPlane.setVisible(true);
+                    }
+                    
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Your email or password is wrong!");
+                    usernameText.setText("");
+                    emailText.setText("");
+                    passwordText.setText("");
                 }
 
-                usernameText.setText("");
-                emailText.setText("");
-                passwordText.setText("");
-
-                this.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Anda Harus Menyetujui Persyaratan !!");
                 return;
@@ -280,4 +288,10 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JCheckBox setujuText;
     private javax.swing.JTextField usernameText;
     // End of variables declaration//GEN-END:variables
+
+    private static Boolean checkLogin(java.lang.String username, java.lang.String password) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.checkLogin(username, password);
+    }
 }
