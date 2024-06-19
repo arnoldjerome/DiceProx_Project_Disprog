@@ -41,6 +41,12 @@ public class RegisterForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        logoUsername = new javax.swing.JLabel();
+        logoEmail = new javax.swing.JLabel();
+        logoRepeatPassword = new javax.swing.JLabel();
+        logoPassword = new javax.swing.JLabel();
+        logoUsername1 = new javax.swing.JLabel();
+        logoUsername2 = new javax.swing.JLabel();
         termsCheckbox = new javax.swing.JCheckBox();
         privacyCheckbox = new javax.swing.JCheckBox();
         daftarButton = new javax.swing.JButton();
@@ -60,6 +66,30 @@ public class RegisterForm extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(1920, 1080));
         setMinimumSize(new java.awt.Dimension(1920, 1080));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        logoUsername.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon_username.png"))); // NOI18N
+        logoUsername.setText("jLabel4");
+        getContentPane().add(logoUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 340, 50, 50));
+
+        logoEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon_email.png"))); // NOI18N
+        logoEmail.setText("jLabel4");
+        getContentPane().add(logoEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 450, 50, 50));
+
+        logoRepeatPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon_password.png"))); // NOI18N
+        logoRepeatPassword.setText("jLabel4");
+        getContentPane().add(logoRepeatPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 670, 50, 50));
+
+        logoPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon_password.png"))); // NOI18N
+        logoPassword.setText("jLabel4");
+        getContentPane().add(logoPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 560, 50, 50));
+
+        logoUsername1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon_fullname.png"))); // NOI18N
+        logoUsername1.setText("jLabel4");
+        getContentPane().add(logoUsername1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 230, 50, 50));
+
+        logoUsername2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon_dob.png"))); // NOI18N
+        logoUsername2.setText("jLabel4");
+        getContentPane().add(logoUsername2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 780, 50, 50));
 
         termsCheckbox.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         termsCheckbox.setForeground(new java.awt.Color(57, 62, 70));
@@ -145,7 +175,7 @@ public class RegisterForm extends javax.swing.JFrame {
 
         repeatPasswordText.setBackground(new java.awt.Color(207, 219, 229));
         repeatPasswordText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        repeatPasswordText.setText("Repeat Password");
+        repeatPasswordText.setText("RepeatPassword");
         repeatPasswordText.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 repeatPasswordTextFocusGained(evt);
@@ -312,14 +342,14 @@ public class RegisterForm extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordTextFocusLost
 
     private void repeatPasswordTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_repeatPasswordTextFocusGained
-        if (passwordText.getText().equals("Repeat Password")) {
-            passwordText.setText("");
+        if (repeatPasswordText.getText().equals("RepeatPassword")) {
+            repeatPasswordText.setText("");
         }
     }//GEN-LAST:event_repeatPasswordTextFocusGained
 
     private void repeatPasswordTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_repeatPasswordTextFocusLost
-        if (passwordText.getText().equals("")) {
-            passwordText.setText("Repeat Password");
+        if (repeatPasswordText.getText().equals("")) {
+            repeatPasswordText.setText("RepeatPassword");
         }
     }//GEN-LAST:event_repeatPasswordTextFocusLost
 
@@ -386,6 +416,12 @@ public class RegisterForm extends javax.swing.JFrame {
     private javax.swing.JTextField fullnameText;
     private com.toedter.calendar.JDateChooser jDateOfBirth;
     private javax.swing.JLabel logo;
+    private javax.swing.JLabel logoEmail;
+    private javax.swing.JLabel logoPassword;
+    private javax.swing.JLabel logoRepeatPassword;
+    private javax.swing.JLabel logoUsername;
+    private javax.swing.JLabel logoUsername1;
+    private javax.swing.JLabel logoUsername2;
     private javax.swing.JPasswordField passwordText;
     private javax.swing.JCheckBox privacyCheckbox;
     private javax.swing.JPasswordField repeatPasswordText;
