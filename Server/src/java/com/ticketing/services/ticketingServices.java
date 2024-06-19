@@ -6,6 +6,7 @@ package com.ticketing.services;
 
 import account.Account;
 import java.sql.Timestamp;
+import java.util.Date;
 import javax.jws.Oneway;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -17,6 +18,7 @@ import javax.jws.WebParam;
  */
 @WebService(serviceName = "ticketingServices")
 public class ticketingServices {
+
     Account a;
 
     /**
@@ -51,8 +53,8 @@ public class ticketingServices {
      */
     @WebMethod(operationName = "insertDataRegister")
     @Oneway
-    public void insertDataRegister(@WebParam(name = "Username") String username, @WebParam(name = "password") String password, @WebParam(name = "fullname") String fullName, @WebParam(name = "email") String email, @WebParam(name = "DateOfBirth") Timestamp dateOfBirth) {
-        a = new Account(username, password, fullName, email, dateOfBirth);
+    public void insertDataRegister(@WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "fullname") String fullname, @WebParam(name = "email") String email, @WebParam(name = "dateOfBirth") java.sql.Timestamp dateOfBirth) {
+        a = new Account(username, password, fullname, email, dateOfBirth);
         a.insertData();
     }
 

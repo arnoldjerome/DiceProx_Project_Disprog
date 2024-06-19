@@ -5,8 +5,8 @@
 package account;
 
 import java.sql.PreparedStatement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.sql.Timestamp;
 import servertcp_diceprox.model.MyModel;
 
 /**
@@ -160,6 +160,7 @@ public class Account extends MyModel {
                 sql.setString(4, this.Email);
                 sql.setTimestamp(5, this.DateOfBirth);
                 sql.executeUpdate();
+
                 sql.close();
             }
         } catch (Exception e) {

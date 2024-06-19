@@ -4,8 +4,13 @@
  */
 package diceprox_main;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import subsistem_event.*;
+import com.ticketing.services.TicketingServices_Service;
+import com.ticketing.services.TicketingServices;
 
 /**
  *
@@ -43,7 +48,7 @@ public class RegisterForm extends javax.swing.JFrame {
         fullnameText = new javax.swing.JTextField();
         passwordText = new javax.swing.JPasswordField();
         repeatPasswordText = new javax.swing.JPasswordField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDateOfBirth = new com.toedter.calendar.JDateChooser();
         logo = new javax.swing.JLabel();
         salamLabel = new javax.swing.JLabel();
         bagian_kanan = new javax.swing.JLabel();
@@ -139,7 +144,7 @@ public class RegisterForm extends javax.swing.JFrame {
 
         repeatPasswordText.setBackground(new java.awt.Color(207, 219, 229));
         repeatPasswordText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        repeatPasswordText.setText("Password");
+        repeatPasswordText.setText("Repeat Password");
         repeatPasswordText.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 repeatPasswordTextFocusGained(evt);
@@ -155,8 +160,8 @@ public class RegisterForm extends javax.swing.JFrame {
         });
         getContentPane().add(repeatPasswordText, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 660, 1020, 70));
 
-        jDateChooser1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 770, 1020, 70));
+        jDateOfBirth.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        getContentPane().add(jDateOfBirth, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 770, 1020, 70));
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
         logo.setPreferredSize(new java.awt.Dimension(120, 125));
@@ -193,10 +198,47 @@ public class RegisterForm extends javax.swing.JFrame {
     private void daftarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_daftarButtonActionPerformed
 
         try {
-//            if (!termsCheckbox.isSelected() || !privacyCheckbox.isSelected()) {
-//                JOptionPane.showMessageDialog(this, "Anda harus menyetujui Syarat dan Ketentuan dan Pernyataan Privasi.", "Perhatian", JOptionPane.WARNING_MESSAGE);
-//                return;
-//            }
+            if (!termsCheckbox.isSelected() || !privacyCheckbox.isSelected()) {
+                JOptionPane.showMessageDialog(this, "Anda harus menyetujui kebijakan privasi dan ketentuan layanan kami !!!", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            } else {
+
+                String username = usernameText.getText();
+                String password = String.valueOf(passwordText.getPassword());
+                String rePassword = String.valueOf(repeatPasswordText.getPassword());
+                String fullname = fullnameText.getText();
+                String email = emailText.getText();
+                Date dateOfBirthUtil = jDateOfBirth.getDate();
+                java.sql.Timestamp dateOfBirthTimestamp = new java.sql.Timestamp(dateOfBirthUtil.getTime());
+
+// Konversi dari java.sql.Timestamp ke com.ticketing.services.Timestamp
+                com.ticketing.services.Timestamp dateOfBirth = new com.ticketing.services.Timestamp();
+//                dateOfBirth.setTime(dateOfBirthTimestamp.getTime());
+
+// Panggil method insertDataRegister dengan parameter yang sesuai
+                insertDataRegister(username, password, fullname, email, dateOfBirth);
+
+                System.out.println(dateOfBirthUtil);
+                System.out.println(dateOfBirthTimestamp);
+
+//                SimpleDateFormat dateOfBirth = new SimpleDateFormat("yyyy/MM/dd");
+//                String regisDoB = dateOfBirth.format(dOB);
+                if (password.equals(rePassword)) {
+                    // Account a = new Account(usernameText.getText(), passwordText.getText(), emailText.getText());
+                    boolean register = checkRegister(email);
+
+                    if (register) { //check email jika ada email sama di database
+                        JOptionPane.showMessageDialog(this, "Email has been used by another user!");
+                    } else {
+                        insertDataRegister(username, password, fullname, email, dateOfBirth);
+
+                        JOptionPane.showMessageDialog(this, "New account registration was successfull. Please Re-Login!");
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Password not matched!");
+                }
+            }
 //
 //            Date selectedDateDOB = dobDate.getDate();
 //            Date selectedDateMemberSince = memberSinceDate.getDate();
@@ -222,7 +264,7 @@ public class RegisterForm extends javax.swing.JFrame {
 //            saveUserToFile(penggunaBaru);
 
             JOptionPane.showMessageDialog(this, "Data Berhasil Disimpan !!", "Pendaftaran Berhasil", JOptionPane.INFORMATION_MESSAGE);
-            MainForm windowPlane = new MainForm();
+            LoginForm windowPlane = new LoginForm();
             windowPlane.setVisible(true);
             this.dispose();
 
@@ -269,11 +311,15 @@ public class RegisterForm extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordTextFocusLost
 
     private void repeatPasswordTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_repeatPasswordTextFocusGained
-        // TODO add your handling code here:
+        if (passwordText.getText().equals("Repeat Password")) {
+            passwordText.setText("");
+        }
     }//GEN-LAST:event_repeatPasswordTextFocusGained
 
     private void repeatPasswordTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_repeatPasswordTextFocusLost
-        // TODO add your handling code here:
+        if (passwordText.getText().equals("")) {
+            passwordText.setText("Repeat Password");
+        }
     }//GEN-LAST:event_repeatPasswordTextFocusLost
 
     private void repeatPasswordTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_repeatPasswordTextActionPerformed
@@ -337,7 +383,7 @@ public class RegisterForm extends javax.swing.JFrame {
     private javax.swing.JButton daftarButton;
     private javax.swing.JTextField emailText;
     private javax.swing.JTextField fullnameText;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateOfBirth;
     private javax.swing.JLabel logo;
     private javax.swing.JPasswordField passwordText;
     private javax.swing.JCheckBox privacyCheckbox;
@@ -346,4 +392,17 @@ public class RegisterForm extends javax.swing.JFrame {
     private javax.swing.JCheckBox termsCheckbox;
     private javax.swing.JTextField usernameText;
     // End of variables declaration//GEN-END:variables
+
+    private static Boolean checkRegister(java.lang.String email) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.checkRegister(email);
+    }
+
+    private static void insertDataRegister(java.lang.String username, java.lang.String password, java.lang.String fullname, java.lang.String email, com.ticketing.services.Timestamp dateOfBirth) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        port.insertDataRegister(username, password, fullname, email, dateOfBirth);
+    }
+
 }

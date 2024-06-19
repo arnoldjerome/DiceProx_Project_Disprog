@@ -43,9 +43,11 @@ public class LoginForm extends javax.swing.JFrame {
         setujuText = new javax.swing.JCheckBox();
         salamLabel = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
+        registerButton = new javax.swing.JButton();
         bagian_kanan = new javax.swing.JLabel();
         background_kiri = new javax.swing.JLabel();
         background_kanan = new javax.swing.JLabel();
+        background_kiri1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1920, 1080));
@@ -102,12 +104,12 @@ public class LoginForm extends javax.swing.JFrame {
                 masukButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(masukButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 900, 150, -1));
+        getContentPane().add(masukButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 880, 200, -1));
 
         setujuText.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         setujuText.setForeground(new java.awt.Color(57, 62, 70));
         setujuText.setText("Setuju Ketentuan Layanan, Syarat, dan Kebijakan Privasi");
-        getContentPane().add(setujuText, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 920, -1, -1));
+        getContentPane().add(setujuText, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 890, -1, -1));
 
         salamLabel.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         salamLabel.setForeground(new java.awt.Color(57, 62, 70));
@@ -118,17 +120,32 @@ public class LoginForm extends javax.swing.JFrame {
         logo.setPreferredSize(new java.awt.Dimension(120, 125));
         getContentPane().add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 10, 240, 200));
 
+        registerButton.setBackground(new java.awt.Color(187, 224, 253));
+        registerButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        registerButton.setText("Register");
+        registerButton.setToolTipText("");
+        registerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 880, 200, -1));
+
         bagian_kanan.setBackground(new java.awt.Color(187, 187, 187));
         bagian_kanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bagian_kanan.png"))); // NOI18N
         getContentPane().add(bagian_kanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(1450, 310, 430, 410));
 
         background_kiri.setBackground(new java.awt.Color(187, 187, 187));
         background_kiri.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background_main_kiri.png"))); // NOI18N
-        getContentPane().add(background_kiri, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1410, 1080));
+        getContentPane().add(background_kiri, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 1410, 1080));
 
         background_kanan.setBackground(new java.awt.Color(187, 187, 187));
         background_kanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background_main_kanan.png"))); // NOI18N
         getContentPane().add(background_kanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(1410, 0, 510, 1080));
+
+        background_kiri1.setBackground(new java.awt.Color(187, 187, 187));
+        background_kiri1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background_main_kiri.png"))); // NOI18N
+        getContentPane().add(background_kiri1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, -60, 1410, 1080));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -173,13 +190,12 @@ public class LoginForm extends javax.swing.JFrame {
         try {
 
             if (setujuText.isSelected()) {
-                
+
                 String username = usernameText.getText();
                 String email = emailText.getText();
                 String password = passwordText.getText();
-                
-                
-                RegisterForm windowPlane = new RegisterForm();
+
+                MainForm windowPlane = new MainForm();
 
                 if (windowPlane == null || !windowPlane.isVisible()) {
                     windowPlane.setVisible(true);
@@ -199,6 +215,17 @@ public class LoginForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error di Button Login !!");
         }
     }//GEN-LAST:event_masukButtonActionPerformed
+
+    private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        // TODO add your handling code here:
+        RegisterForm windowPlane = new RegisterForm();
+
+        if (windowPlane == null || !windowPlane.isVisible()) {
+            windowPlane.setVisible(true);
+        }
+
+        this.dispose();
+    }//GEN-LAST:event_registerButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -241,12 +268,14 @@ public class LoginForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background_kanan;
     private javax.swing.JLabel background_kiri;
+    private javax.swing.JLabel background_kiri1;
     private javax.swing.JLabel bagian_kanan;
     private javax.swing.JTextField emailText;
     private javax.swing.JLabel logo;
     private javax.swing.JLabel logoUsername;
     private javax.swing.JButton masukButton;
     private javax.swing.JPasswordField passwordText;
+    private javax.swing.JButton registerButton;
     private javax.swing.JLabel salamLabel;
     private javax.swing.JCheckBox setujuText;
     private javax.swing.JTextField usernameText;
