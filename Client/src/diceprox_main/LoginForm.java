@@ -40,7 +40,7 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
             // Maximize the frame
             setExtendedState(LoginForm.MAXIMIZED_BOTH);
         } catch (IOException ex) {
-            System.out.println("Error di login form: " + e);
+            System.out.println("Error di login form: " + ex);
         }
     }
     
@@ -327,5 +327,13 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
         return port.checkLogin(username, password);
+    }
+
+    @Override
+    public void run() {
+        try {
+            
+        } catch (Exception e) {
+        }
     }
 }
