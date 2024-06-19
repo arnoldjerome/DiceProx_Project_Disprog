@@ -19,32 +19,35 @@ import javax.swing.JOptionPane;
  * @author Yosef
  */
 public class LoginForm extends javax.swing.JFrame implements Runnable {
-    
+
     Socket client;
     BufferedReader in;
     DataOutputStream out;
     Thread t;
+
     /**
      * Creates new form login
      */
     public LoginForm() {
         try {
             initComponents();
+
+            //untuk center
+            this.setLocationRelativeTo(null);
+
+            // Maximize the frame
+            setExtendedState(LoginForm.MAXIMIZED_BOTH);
+
             client = new Socket("localhost", 5005);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             out = new DataOutputStream(client.getOutputStream());
             start();
-            //untuk center
-            this.setLocationRelativeTo(null);
-            
-            // Maximize the frame
-            setExtendedState(LoginForm.MAXIMIZED_BOTH);
         } catch (IOException ex) {
             System.out.println("Error di login form: " + ex);
         }
     }
-    
-    private void start(){
+
+    private void start() {
         if (t == null) {
             t = new Thread(this, "LoginForm");
             t.start();
@@ -60,7 +63,9 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        logoPassword = new javax.swing.JLabel();
         logoUsername = new javax.swing.JLabel();
+        logoEmail = new javax.swing.JLabel();
         usernameText = new javax.swing.JTextField();
         emailText = new javax.swing.JTextField();
         passwordText = new javax.swing.JPasswordField();
@@ -79,8 +84,17 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
         setMinimumSize(new java.awt.Dimension(1920, 1080));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        logoPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon_password.png"))); // NOI18N
+        logoPassword.setText("jLabel4");
+        getContentPane().add(logoPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 730, 50, 50));
+
+        logoUsername.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon_username.png"))); // NOI18N
         logoUsername.setText("jLabel4");
-        getContentPane().add(logoUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 360, 50, 50));
+        getContentPane().add(logoUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 360, 50, 50));
+
+        logoEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon_email.png"))); // NOI18N
+        logoEmail.setText("jLabel4");
+        getContentPane().add(logoEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 540, 50, 50));
 
         usernameText.setBackground(new java.awt.Color(207, 219, 229));
         usernameText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -219,19 +233,19 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
                 String username = usernameText.getText();
                 String email = emailText.getText();
                 String password = String.valueOf(passwordText.getPassword());
-                
+
                 String formattedMessage = "LOGIN~" + username + "~" + email + "~" + password + "\n";
-                    
+
                 out.writeBytes(formattedMessage);
-                
+
                 boolean login = checkLogin(username, password);
 
                 if (login) {
-                    
+
                     String response = in.readLine();
-                    
+
                     JOptionPane.showMessageDialog(this, response);
-                    
+
                     JOptionPane.showMessageDialog(this, "Login Successful!");
 
                     MainForm windowPlane = new MainForm();
@@ -239,7 +253,7 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
                     if (windowPlane == null || !windowPlane.isVisible()) {
                         windowPlane.setVisible(true);
                     }
-                    
+
                     this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "Your email or password is wrong!");
@@ -314,6 +328,8 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel bagian_kanan;
     private javax.swing.JTextField emailText;
     private javax.swing.JLabel logo;
+    private javax.swing.JLabel logoEmail;
+    private javax.swing.JLabel logoPassword;
     private javax.swing.JLabel logoUsername;
     private javax.swing.JButton masukButton;
     private javax.swing.JPasswordField passwordText;
@@ -332,7 +348,7 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
     @Override
     public void run() {
         try {
-            
+
         } catch (Exception e) {
         }
     }
