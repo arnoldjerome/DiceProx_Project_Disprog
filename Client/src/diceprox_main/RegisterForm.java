@@ -4,6 +4,7 @@
  */
 package diceprox_main;
 
+import subsistem_event.MainForm;
 import javax.swing.JOptionPane;
 import subsistem_event.*;
 
