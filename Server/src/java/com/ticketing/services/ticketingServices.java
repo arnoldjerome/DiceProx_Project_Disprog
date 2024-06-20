@@ -53,7 +53,7 @@ public class ticketingServices {
      */
     @WebMethod(operationName = "insertDataRegister")
     @Oneway
-    public void insertDataRegister(@WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "fullname") String fullname, @WebParam(name = "email") String email, @WebParam(name = "dateOfBirth") java.sql.Timestamp dateOfBirth) {
+    public void insertDataRegister(@WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "fullname") String fullname, @WebParam(name = "email") String email, @WebParam(name = "dateOfBirth") Timestamp dateOfBirth) {
         a = new Account(username, password, fullname, email, dateOfBirth);
         a.insertData();
     }

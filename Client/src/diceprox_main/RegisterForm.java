@@ -248,7 +248,7 @@ public class RegisterForm extends javax.swing.JFrame {
 
                 System.out.println("getDate() : " + dateOfBirthUtil);
                 System.out.println("java.sql.Timestamp : " + dateOfBirthTimestamp);
-//                insertDataRegister(username, password, fullname, email, dateOfBirthDate);
+                insertDataRegister(username, password, fullname, email, dateOfBirthTimestamp);
                 
                 
 
@@ -435,6 +435,12 @@ public class RegisterForm extends javax.swing.JFrame {
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
         return port.checkRegister(email);
     }
+
+//    private static void insertDataRegister(java.lang.String username, java.lang.String password, java.lang.String fullname, java.lang.String email, com.ticketing.services.Timestamp dateOfBirth) {
+//        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+//        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+//        port.insertDataRegister(username, password, fullname, email, dateOfBirth);
+//    }
 
     private static void insertDataRegister(java.lang.String username, java.lang.String password, java.lang.String fullname, java.lang.String email, com.ticketing.services.Timestamp dateOfBirth) {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
