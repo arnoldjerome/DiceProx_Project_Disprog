@@ -45,17 +45,16 @@ public class ticketingServices {
     @WebMethod(operationName = "checkRegister")
     public Boolean checkRegister(@WebParam(name = "email") String email) {
         a = new Account(email);
-        return a.check_register();
+        return a.check_register(email);
     }
 
     /**
      * Web service operation
      */
-    @WebMethod(operationName = "insertDataRegister")
+    @WebMethod(operationName = "insertAccRegist")
     @Oneway
-    public void insertDataRegister(@WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "fullname") String fullname, @WebParam(name = "email") String email, @WebParam(name = "dateOfBirth") Timestamp dateOfBirth) {
+    public void insertAccRegist(@WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "fullname") String fullname, @WebParam(name = "email") String email, @WebParam(name = "dateOfBirth") String dateOfBirth) {
         a = new Account(username, password, fullname, email, dateOfBirth);
         a.insertData();
     }
-
 }

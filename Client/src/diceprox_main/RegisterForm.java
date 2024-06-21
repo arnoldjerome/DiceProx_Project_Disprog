@@ -4,32 +4,62 @@
  */
 package diceprox_main;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import subsistem_event.*;
 import com.ticketing.services.TicketingServices_Service;
 import com.ticketing.services.TicketingServices;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Method;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Yosef
  */
-public class RegisterForm extends javax.swing.JFrame {
+public class RegisterForm extends javax.swing.JFrame implements Runnable {
 
+    
+    Socket client;
+    BufferedReader in;
+    DataOutputStream out;
+    Thread t;
+    
     /**
      * Creates new form register
      */
     public RegisterForm() {
-        initComponents();
-
-        //untuk center
-        this.setLocationRelativeTo(null);
-
-        // Maximize the frame
-        setExtendedState(LoginForm.MAXIMIZED_BOTH);
+        try {
+            initComponents();
+            
+            //untuk center
+            this.setLocationRelativeTo(null);
+            
+            // Maximize the frame
+            setExtendedState(LoginForm.MAXIMIZED_BOTH);
+            
+            client = new Socket("localhost", 5005);
+            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            out = new DataOutputStream(client.getOutputStream());
+            start();
+        } 
+        
+        catch (IOException ex) {
+            System.out.println("Error di register form: " + ex);;
+        }
+    }
+    
+    private void start() {
+        if (t == null) {
+            t = new Thread(this, "RegisterForm");
+            t.start();
+        }
     }
 
     /**
@@ -229,77 +259,65 @@ public class RegisterForm extends javax.swing.JFrame {
     private void daftarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_daftarButtonActionPerformed
 
         try {
+            
             if (!termsCheckbox.isSelected() || !privacyCheckbox.isSelected()) {
                 JOptionPane.showMessageDialog(this, "Anda harus menyetujui kebijakan privasi dan ketentuan layanan kami !!!", "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
-            } else {
-
+            } 
+            
+            else {
                 String username = usernameText.getText();
                 String password = String.valueOf(passwordText.getPassword());
                 String rePassword = String.valueOf(repeatPasswordText.getPassword());
                 String fullname = fullnameText.getText();
                 String email = emailText.getText();
-                Date dateOfBirthUtil = jDateOfBirth.getDate();
-                java.sql.Timestamp dateOfBirthTimestamp = null;
-
-                if (dateOfBirthUtil != null) {
-                    dateOfBirthTimestamp = new java.sql.Timestamp(dateOfBirthUtil.getTime());
+                Date dOB = jDateOfBirth.getDate();
+                SimpleDateFormat dateOfBirth = new SimpleDateFormat("yyyy-MM-dd");
+                String regisDOB = dateOfBirth.format(dOB);
+                
+                String formattedMessage = "REGISTER~" + fullname + "~" + username + "~" + email + "~" + password + "~" + rePassword + "~" + regisDOB;
+                
+                out.writeBytes(formattedMessage);
+                
+                boolean register = checkRegister(email);
+                
+                if (register) {    
+                    
+                    if (password.equals(rePassword)) {
+                        
+                        String response = in.readLine();
+                        
+                        JOptionPane.showMessageDialog(this, response);
+                        
+                        //JOptionPane.showMessageDialog(this, "Registrasi sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                        
+                        insertAccRegist(username, password, fullname, email, regisDOB);                 
+                        
+                        LoginForm windowPlane = new LoginForm();
+                        
+                        if (windowPlane == null || !windowPlane.isVisible()) {
+                            windowPlane.setVisible(true);
+                        }
+                        
+                        this.dispose();
+                    }
+                }  
+                
+                else {
+                    
+                    JOptionPane.showMessageDialog(this, "Email ini sudah digunakan, mohon gunakan email lain!", "Warning", JOptionPane.WARNING_MESSAGE);
+//                    fullnameText.setText("");
+//                    usernameText.setText("");
+//                    emailText.setText("");
+//                    passwordText.setText("");
+//                    repeatPasswordText.setText("");
+//                    jDateOfBirth.setDateFormatString("");
+                    
                 }
-
-                System.out.println("getDate() : " + dateOfBirthUtil);
-                System.out.println("java.sql.Timestamp : " + dateOfBirthTimestamp);
-                insertDataRegister(username, password, fullname, email, dateOfBirthTimestamp);
-                
-                
-
-//                SimpleDateFormat dateOfBirth = new SimpleDateFormat("yyyy/MM/dd");
-//                String regisDoB = dateOfBirth.format(dOB);
-//                if (password.equals(rePassword)) {
-//                    // Account a = new Account(usernameText.getText(), passwordText.getText(), emailText.getText());
-//                    boolean register = checkRegister(email);
-//
-//                    if (register) { //check email jika ada email sama di database
-//                        JOptionPane.showMessageDialog(this, "Email has been used by another user!");
-//                    } else {
-//                        insertDataRegister(username, password, fullname, email, dateOfBirth);
-//
-//                        JOptionPane.showMessageDialog(this, "New account registration was successfull. Please Re-Login!");
-//                    }
-//
-//                } else {
-//                    JOptionPane.showMessageDialog(this, "Password not matched!");
-//                }
             }
-//
-//            Date selectedDateDOB = dobDate.getDate();
-//            Date selectedDateMemberSince = memberSinceDate.getDate();
-//            if (selectedDateDOB == null || selectedDateMemberSince == null) {
-//                JOptionPane.showMessageDialog(this, "Tanggal lahir dan tanggal keanggotaan harus diisi.", "Perhatian", JOptionPane.WARNING_MESSAGE);
-//                return;
-//            }
-//
-//            LocalDateTime selectedDateDOBTime = LocalDateTime.ofInstant(selectedDateDOB.toInstant(), ZoneId.systemDefault());
-//            LocalDateTime selectedDateMemberSinceTime = LocalDateTime.ofInstant(selectedDateMemberSince.toInstant(), ZoneId.systemDefault());
-//
-//            int nextUserId = findNextUserId();
-//
-//            Pengguna penggunaBaru = new Pengguna(); // Pastikan konstruktor tidak melempar Unsupported Operation Exception
-//            penggunaBaru.setId(nextUserId);
-//            penggunaBaru.setFullname(fullnameText.getText());
-//            penggunaBaru.setUsername(usernameText.getText());
-//            penggunaBaru.setPassword(new String(passwordText.getPassword()));
-//            penggunaBaru.setEmail(emailText.getText());
-//            penggunaBaru.setDob(selectedDateDOBTime);
-//            penggunaBaru.setMemberSince(selectedDateMemberSinceTime);
-//
-//            saveUserToFile(penggunaBaru);
-
-            JOptionPane.showMessageDialog(this, "Data Berhasil Disimpan !!", "Pendaftaran Berhasil", JOptionPane.INFORMATION_MESSAGE);
-            LoginForm windowPlane = new LoginForm();
-            windowPlane.setVisible(true);
-            this.dispose();
-
-        } catch (Exception ex) {
+        }
+        
+        catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error saat menyimpan data: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
@@ -330,25 +348,25 @@ public class RegisterForm extends javax.swing.JFrame {
     }//GEN-LAST:event_emailTextFocusLost
 
     private void passwordTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordTextFocusGained
-        if (passwordText.getText().equals("Password")) {
+        if (passwordText.getPassword().equals("Password")) {
             passwordText.setText("");
         }
     }//GEN-LAST:event_passwordTextFocusGained
 
     private void passwordTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordTextFocusLost
-        if (passwordText.getText().equals("")) {
+        if (passwordText.getPassword().equals("")) {
             passwordText.setText("Password");
         }
     }//GEN-LAST:event_passwordTextFocusLost
 
     private void repeatPasswordTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_repeatPasswordTextFocusGained
-        if (repeatPasswordText.getText().equals("RepeatPassword")) {
+        if (repeatPasswordText.getPassword().equals("RepeatPassword")) {
             repeatPasswordText.setText("");
         }
     }//GEN-LAST:event_repeatPasswordTextFocusGained
 
     private void repeatPasswordTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_repeatPasswordTextFocusLost
-        if (repeatPasswordText.getText().equals("")) {
+        if (repeatPasswordText.getPassword().equals("")) {
             repeatPasswordText.setText("RepeatPassword");
         }
     }//GEN-LAST:event_repeatPasswordTextFocusLost
@@ -430,22 +448,24 @@ public class RegisterForm extends javax.swing.JFrame {
     private javax.swing.JTextField usernameText;
     // End of variables declaration//GEN-END:variables
 
+    
     private static Boolean checkRegister(java.lang.String email) {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
         return port.checkRegister(email);
     }
-
-//    private static void insertDataRegister(java.lang.String username, java.lang.String password, java.lang.String fullname, java.lang.String email, com.ticketing.services.Timestamp dateOfBirth) {
-//        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
-//        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
-//        port.insertDataRegister(username, password, fullname, email, dateOfBirth);
-//    }
-
-    private static void insertDataRegister(java.lang.String username, java.lang.String password, java.lang.String fullname, java.lang.String email, com.ticketing.services.Timestamp dateOfBirth) {
+    
+    private static void insertAccRegist(java.lang.String username, java.lang.String password, java.lang.String fullname, java.lang.String email, java.lang.String dateOfBirth) {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
-        port.insertDataRegister(username, password, fullname, email, dateOfBirth);
+        port.insertAccRegist(username, password, fullname, email, dateOfBirth);
     }
 
+    @Override
+    public void run() {
+        try {
+            
+        } catch (Exception e) {
+        }
+    }
 }

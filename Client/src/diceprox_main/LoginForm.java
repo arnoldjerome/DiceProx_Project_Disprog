@@ -9,8 +9,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import subsistem_event.*;
 import javax.swing.JOptionPane;
 
@@ -214,13 +212,13 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_emailTextFocusLost
 
     private void passwordTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordTextFocusGained
-        if (passwordText.getText().equals("Password")) {
+        if (passwordText.getPassword().equals("Password")) {
             passwordText.setText("");
         }
     }//GEN-LAST:event_passwordTextFocusGained
 
     private void passwordTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordTextFocusLost
-        if (passwordText.getText().equals("")) {
+        if (passwordText.getPassword().equals("")) {
             passwordText.setText("Password");
         }
     }//GEN-LAST:event_passwordTextFocusLost
@@ -246,7 +244,7 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
 
                     JOptionPane.showMessageDialog(this, response);
 
-                    JOptionPane.showMessageDialog(this, "Login Successful!");
+                    //JOptionPane.showMessageDialog(this, "Login Sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
 
                     MainForm windowPlane = new MainForm();
 
@@ -256,14 +254,14 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
 
                     this.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Your email or password is wrong!");
+                    JOptionPane.showMessageDialog(this, "Email atau password salah!", "Warning", JOptionPane.WARNING_MESSAGE);
                     usernameText.setText("");
                     emailText.setText("");
                     passwordText.setText("");
                 }
 
             } else {
-                JOptionPane.showMessageDialog(null, "Anda Harus Menyetujui Persyaratan !!");
+                JOptionPane.showMessageDialog(null, "Setujui persyaratan terlebih dahulu!");
                 return;
             }
         } catch (Exception ex) {

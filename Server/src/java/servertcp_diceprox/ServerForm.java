@@ -21,7 +21,7 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
     
     String chatClient, chatServer;
     String groupName;
-    String fullname, username, email, password;
+    String fullname, username, email, password, rePassword, regisDOB;
     Socket incoming;
     HistoryLogin history;
     ServerSocket s;
@@ -76,6 +76,14 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             password = msgSplit[3];
             chatTxt.append(msg + "\n");
             broadCast(msg);
+            
+            confirmClient.sendChat("Login sukses!");
+            
+            history = new HistoryLogin();
+            history.setUsername(username);
+            history.insertData();
+            
+            confirmClient = null;
         }
         
         else if (msg.contains("REGISTER~")) {
@@ -84,16 +92,15 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             username = msgSplit[2];
             email = msgSplit[3];
             password = msgSplit[4];
-            
-            /*
-            chat = new Chat();
-            chat.setContent(content);
-            chat.setUsername(username);
-            chat.insertData();
-            */
+            rePassword = msgSplit[5];
+            regisDOB = msgSplit[6];
             
             chatTxt.append(msg + "\n");
             broadCast(msg);
+            
+            confirmClient.sendChat("Registrasi sukses!");
+            
+            confirmClient = null;
         }
         
         else {
@@ -121,6 +128,7 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
         btnSend = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         chatTxt = new javax.swing.JTextArea();
+        lblMessage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -128,10 +136,17 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
         jLabelServer.setText("SERVER");
 
         btnSend.setText("Send");
+        btnSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSendActionPerformed(evt);
+            }
+        });
 
         chatTxt.setColumns(20);
         chatTxt.setRows(5);
         jScrollPane1.setViewportView(chatTxt);
+
+        lblMessage.setText("Message:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -141,26 +156,29 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(58, 58, 58)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 663, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(msgTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(55, 55, 55)
+                                .addComponent(lblMessage)
+                                .addGap(28, 28, 28)
+                                .addComponent(msgTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnSend))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(325, 325, 325)
+                        .addGap(314, 314, 314)
                         .addComponent(jLabelServer)))
                 .addContainerGap(59, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
+                .addGap(52, 52, 52)
                 .addComponent(jLabelServer)
-                .addGap(49, 49, 49)
+                .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(msgTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSend))
+                    .addComponent(btnSend)
+                    .addComponent(lblMessage))
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(37, Short.MAX_VALUE))
@@ -168,6 +186,10 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSendActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,6 +232,7 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JTextArea chatTxt;
     private javax.swing.JLabel jLabelServer;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblMessage;
     private javax.swing.JTextField msgTxt;
     // End of variables declaration//GEN-END:variables
 

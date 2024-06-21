@@ -6,7 +6,6 @@ package account;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
-import java.sql.Timestamp;
 import servertcp_diceprox.model.MyModel;
 
 /**
@@ -21,11 +20,11 @@ public class Account extends MyModel {
     private String Password;
     private String Fullname;
     private String Email;
-    private Timestamp DateOfBirth;
+    private String DateOfBirth;
     // </editor-fold>
 
     // <editor-fold desc="Constructors">
-    public Account(int UserID, String Username, String Password, String Email, Timestamp DateOfBirth) {
+    public Account(int UserID, String Username, String Password, String Email, String DateOfBirth) {
         this.UserID = UserID;
         this.Username = Username;
         this.Password = Password;
@@ -45,7 +44,7 @@ public class Account extends MyModel {
     }
 
     //untuk register constructors
-    public Account(String Username, String Password, String Fullname, String Email, Timestamp DateOfBirth) {
+    public Account(String Username, String Password, String Fullname, String Email, String DateOfBirth) {
         this.Username = Username;
         this.Password = Password;
         this.Fullname = Fullname;
@@ -95,11 +94,11 @@ public class Account extends MyModel {
         this.Email = Email;
     }
 
-    public Timestamp getDateOfBirth() {
+    public String getDateOfBirth() {
         return DateOfBirth;
     }
 
-    public void setDateOfBirth(Timestamp DateOfBirth) {
+    public void setDateOfBirth(String DateOfBirth) {
         this.DateOfBirth = DateOfBirth;
     }
     // </editor-fold>
@@ -126,7 +125,7 @@ public class Account extends MyModel {
         return status;
     }
 
-    public boolean check_register() {
+    public boolean check_register(String Email) {
         boolean status = false;
         try {
             if (!MyModel.conn.isClosed()) { //jika sudah terbentuk koneksi
@@ -137,13 +136,13 @@ public class Account extends MyModel {
                 sql.setString(1, this.Email);
                 this.result = sql.executeQuery();
                 if (this.result.next()) {
-                    status = true;
+                    return false;
                 }
             }
         } catch (Exception e) {
             System.out.println("Error di check login : " + e);
         }
-        return status;
+        return true;
     }
 
     @Override
@@ -152,13 +151,13 @@ public class Account extends MyModel {
             if (!MyModel.conn.isClosed()) { //jika sudah terbentuk koneksi
                 PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
                         "INSERT into users(Username, Password, Fullname, Email, DateOfBirth)"
-                        + "VALUES(?, ?, ?, ?, ?)");
+                        + "VALUES(?, ?, ?, ?, ?);");
 
                 sql.setString(1, this.Username);
                 sql.setString(2, this.Password);
                 sql.setString(3, this.Fullname);
                 sql.setString(4, this.Email);
-                sql.setTimestamp(5, this.DateOfBirth);
+                sql.setString(5, this.DateOfBirth);
                 sql.executeUpdate();
 
                 sql.close();
