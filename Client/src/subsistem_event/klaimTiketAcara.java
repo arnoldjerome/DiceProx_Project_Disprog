@@ -4,6 +4,8 @@
  */
 package subsistem_event;
 
+import diceprox_main.MainForm;
+
 /**
  *
  * @author asus
@@ -15,6 +17,12 @@ public class klaimTiketAcara extends javax.swing.JFrame {
      */
     public klaimTiketAcara() {
         initComponents();
+
+        //untuk center
+        this.setLocationRelativeTo(null);
+
+        // Maximize the frame
+        setExtendedState(klaimTiketAcara.MAXIMIZED_BOTH);
     }
 
     /**
@@ -26,21 +34,90 @@ public class klaimTiketAcara extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        salamTiket = new javax.swing.JLabel();
+        ticketText = new javax.swing.JTextField();
+        cekButton = new javax.swing.JButton();
+        back = new javax.swing.JLabel();
+        bagian_kanan = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        salamTiket.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        salamTiket.setForeground(new java.awt.Color(57, 62, 70));
+        salamTiket.setText("ENTER YOUR TICKET CODE");
+        getContentPane().add(salamTiket, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 60, -1, -1));
+
+        ticketText.setBackground(new java.awt.Color(207, 219, 229));
+        ticketText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        ticketText.setText("Ticket Code");
+        ticketText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                ticketTextFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                ticketTextFocusLost(evt);
+            }
+        });
+        getContentPane().add(ticketText, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 220, 1020, 67));
+
+        cekButton.setBackground(new java.awt.Color(187, 224, 253));
+        cekButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        cekButton.setText("Check");
+        cekButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cekButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cekButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1410, 220, 210, 70));
+
+        back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconBack.png"))); // NOI18N
+        back.setPreferredSize(new java.awt.Dimension(120, 125));
+        back.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backMouseClicked(evt);
+            }
+        });
+        getContentPane().add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 70, 70));
+
+        bagian_kanan.setBackground(new java.awt.Color(187, 187, 187));
+        bagian_kanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background_main_kiri.png"))); // NOI18N
+        getContentPane().add(bagian_kanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 1080));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ticketTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ticketTextFocusGained
+        if (ticketText.getText().equals("Ticket Code")) {
+            ticketText.setText("");
+        }
+    }//GEN-LAST:event_ticketTextFocusGained
+
+    private void ticketTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ticketTextFocusLost
+        if (ticketText.getText().equals("")) {
+            ticketText.setText("Ticket Code");
+        }
+    }//GEN-LAST:event_ticketTextFocusLost
+
+    private void cekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cekButtonActionPerformed
+        klaimTiketAcara windowPlane = new klaimTiketAcara();
+
+        if (windowPlane == null || !windowPlane.isVisible()) {
+            windowPlane.setVisible(true);
+        }
+
+        this.dispose();
+    }//GEN-LAST:event_cekButtonActionPerformed
+
+    private void backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseClicked
+        MainForm windowPlane = new MainForm();
+
+        if (windowPlane == null || !windowPlane.isVisible()) {
+            windowPlane.setVisible(true);
+        }
+
+        this.dispose();
+    }//GEN-LAST:event_backMouseClicked
 
     /**
      * @param args the command line arguments
@@ -78,5 +155,10 @@ public class klaimTiketAcara extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel back;
+    private javax.swing.JLabel bagian_kanan;
+    private javax.swing.JButton cekButton;
+    private javax.swing.JLabel salamTiket;
+    private javax.swing.JTextField ticketText;
     // End of variables declaration//GEN-END:variables
 }

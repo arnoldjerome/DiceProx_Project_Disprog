@@ -32,14 +32,26 @@ public class bookAcara extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        reservationButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
+        logo = new javax.swing.JLabel();
         bagian_kanan = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1920, 1080));
         setMinimumSize(new java.awt.Dimension(1920, 1080));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        reservationButton.setBackground(new java.awt.Color(187, 224, 253));
+        reservationButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        reservationButton.setText("Reservation");
+        reservationButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reservationButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(reservationButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 340, 360, 110));
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -54,7 +66,11 @@ public class bookAcara extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(table);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 160, 710, 590));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 60, 710, 590));
+
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
+        logo.setPreferredSize(new java.awt.Dimension(120, 125));
+        getContentPane().add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 10, 240, 200));
 
         bagian_kanan.setBackground(new java.awt.Color(187, 187, 187));
         bagian_kanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background_main_kiri.png"))); // NOI18N
@@ -62,6 +78,16 @@ public class bookAcara extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void reservationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationButtonActionPerformed
+        bookAcara windowPlane = new bookAcara();
+
+        if (windowPlane == null || !windowPlane.isVisible()) {
+            windowPlane.setVisible(true);
+        }
+
+        this.dispose();
+    }//GEN-LAST:event_reservationButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -101,6 +127,8 @@ public class bookAcara extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bagian_kanan;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel logo;
+    private javax.swing.JButton reservationButton;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

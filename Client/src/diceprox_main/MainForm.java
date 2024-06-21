@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import subsistem_event.bookAcara;
 import subsistem_event.bookAcara;
 import subsistem_event.bookAcara;
+import subsistem_event.klaimTiketAcara;
 import subsistem_parking.bookParkir;
 
 /**
@@ -49,7 +50,9 @@ public class MainForm extends javax.swing.JFrame {
         sambutanLabel2 = new javax.swing.JLabel();
         namaLabel = new javax.swing.JLabel();
         logoutButton = new javax.swing.JButton();
+        klaimTicketButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
+        logo = new javax.swing.JLabel();
         bagian_kanan = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -77,7 +80,7 @@ public class MainForm extends javax.swing.JFrame {
 
         parkingTicketButton.setBackground(new java.awt.Color(187, 224, 253));
         parkingTicketButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        parkingTicketButton.setText("Book Parking Lot");
+        parkingTicketButton.setText("Find Parking Lot");
         parkingTicketButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 parkingTicketButtonActionPerformed(evt);
@@ -115,7 +118,17 @@ public class MainForm extends javax.swing.JFrame {
                 logoutButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1590, 70, 150, -1));
+        getContentPane().add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1590, 150, 150, -1));
+
+        klaimTicketButton.setBackground(new java.awt.Color(187, 224, 253));
+        klaimTicketButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        klaimTicketButton.setText("Claim Ticket");
+        klaimTicketButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                klaimTicketButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(klaimTicketButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1590, 80, 310, -1));
 
         exitButton.setBackground(new java.awt.Color(187, 224, 253));
         exitButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -125,7 +138,11 @@ public class MainForm extends javax.swing.JFrame {
                 exitButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(exitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1750, 70, 150, -1));
+        getContentPane().add(exitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1750, 150, 150, -1));
+
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
+        logo.setPreferredSize(new java.awt.Dimension(120, 125));
+        getContentPane().add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 10, 240, 200));
 
         bagian_kanan.setBackground(new java.awt.Color(187, 187, 187));
         bagian_kanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background_main_kiri.png"))); // NOI18N
@@ -179,6 +196,16 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_exitButtonActionPerformed
 
+    private void klaimTicketButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_klaimTicketButtonActionPerformed
+        klaimTiketAcara windowPlane = new klaimTiketAcara();
+
+        if (windowPlane == null || !windowPlane.isVisible()) {
+            windowPlane.setVisible(true);
+        }
+
+        this.dispose();
+    }//GEN-LAST:event_klaimTicketButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -223,6 +250,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton exitButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton klaimTicketButton;
+    private javax.swing.JLabel logo;
     private javax.swing.JLabel logoEvent;
     private javax.swing.JLabel logoParking;
     private javax.swing.JButton logoutButton;
