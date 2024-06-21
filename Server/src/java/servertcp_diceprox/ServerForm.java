@@ -36,6 +36,9 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
         try {
             initComponents();
             
+            //untuk center
+            this.setLocationRelativeTo(null);
+            
             s = new ServerSocket(5005);
             //getChat();
             if (t == null) {
@@ -123,73 +126,29 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabelServer = new javax.swing.JLabel();
-        msgTxt = new javax.swing.JTextField();
-        btnSend = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         chatTxt = new javax.swing.JTextArea();
-        lblMessage = new javax.swing.JLabel();
+        salamLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabelServer.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabelServer.setText("SERVER");
-
-        btnSend.setText("Send");
-        btnSend.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSendActionPerformed(evt);
-            }
-        });
+        setBackground(new java.awt.Color(175, 186, 255));
+        setMinimumSize(new java.awt.Dimension(790, 500));
+        setPreferredSize(new java.awt.Dimension(721, 600));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         chatTxt.setColumns(20);
         chatTxt.setRows(5);
         jScrollPane1.setViewportView(chatTxt);
 
-        lblMessage.setText("Message:");
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 140, 663, 360));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 663, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblMessage)
-                                .addGap(28, 28, 28)
-                                .addComponent(msgTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnSend))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(314, 314, 314)
-                        .addComponent(jLabelServer)))
-                .addContainerGap(59, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addComponent(jLabelServer)
-                .addGap(51, 51, 51)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(msgTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSend)
-                    .addComponent(lblMessage))
-                .addGap(29, 29, 29)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
-        );
+        salamLabel.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        salamLabel.setForeground(new java.awt.Color(57, 62, 70));
+        salamLabel.setText("SERVER");
+        getContentPane().add(salamLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSendActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,12 +187,9 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSend;
     private javax.swing.JTextArea chatTxt;
-    private javax.swing.JLabel jLabelServer;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblMessage;
-    private javax.swing.JTextField msgTxt;
+    private javax.swing.JLabel salamLabel;
     // End of variables declaration//GEN-END:variables
 
 }

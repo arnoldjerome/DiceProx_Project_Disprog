@@ -42,7 +42,7 @@ public class RegisterForm extends javax.swing.JFrame implements Runnable {
             this.setLocationRelativeTo(null);
             
             // Maximize the frame
-            setExtendedState(LoginForm.MAXIMIZED_BOTH);
+            setExtendedState(RegisterForm.MAXIMIZED_BOTH);
             
             client = new Socket("localhost", 5005);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
