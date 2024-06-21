@@ -212,13 +212,13 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_emailTextFocusLost
 
     private void passwordTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordTextFocusGained
-        if (passwordText.getPassword().equals("Password")) {
+        if (passwordText.getText().equals("Password")) {
             passwordText.setText("");
         }
     }//GEN-LAST:event_passwordTextFocusGained
 
     private void passwordTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordTextFocusLost
-        if (passwordText.getPassword().equals("")) {
+        if (passwordText.getText().equals("")) {
             passwordText.setText("Password");
         }
     }//GEN-LAST:event_passwordTextFocusLost
@@ -236,7 +236,7 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
 
                 out.writeBytes(formattedMessage);
 
-                boolean login = checkLogin(username, password);
+                boolean login = checkLogin(username, password, email);
 
                 if (login) {
 
@@ -337,11 +337,6 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JTextField usernameText;
     // End of variables declaration//GEN-END:variables
 
-    private static Boolean checkLogin(java.lang.String username, java.lang.String password) {
-        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
-        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
-        return port.checkLogin(username, password);
-    }
 
     @Override
     public void run() {
@@ -349,5 +344,11 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
 
         } catch (Exception e) {
         }
+    }
+
+    private static Boolean checkLogin(java.lang.String username, java.lang.String password, java.lang.String email) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.checkLogin(username, password, email);
     }
 }

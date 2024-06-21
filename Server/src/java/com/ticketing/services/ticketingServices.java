@@ -33,9 +33,9 @@ public class ticketingServices {
      * Web service operation
      */
     @WebMethod(operationName = "checkLogin")
-    public Boolean checkLogin(@WebParam(name = "username") String username, @WebParam(name = "password") String password) {
+    public Boolean checkLogin(@WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "email") String email) {
         //TODO write your implementation code here:
-        a = new Account(username, password);
+        a = new Account(username, password, email);
         return a.check_login(); //bisa true atau false
     }
 

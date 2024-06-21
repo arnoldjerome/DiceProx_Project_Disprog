@@ -33,9 +33,10 @@ public class Account extends MyModel {
     }
 
     //untuk login constructors
-    public Account(String Username, String Password) {
+    public Account(String Username, String Password, String Email) {
         this.Username = Username;
         this.Password = Password;
+        this.Email = Email;
     }
 
     //untuk register constructors check email
@@ -109,11 +110,12 @@ public class Account extends MyModel {
         try {
             if (!MyModel.conn.isClosed()) { //jika sudah terbentuk koneksi
                 PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
-                        "SELECT * FROM users WHERE Username = ? AND Password = ?"
+                        "SELECT * FROM users WHERE Username = ? AND Password = ? AND Email = ?"
                 );
 
                 sql.setString(1, this.Username);
                 sql.setString(2, this.Password);
+                sql.setString(3, this.Email);
                 this.result = sql.executeQuery();
                 if (this.result.next()) {
                     status = true;

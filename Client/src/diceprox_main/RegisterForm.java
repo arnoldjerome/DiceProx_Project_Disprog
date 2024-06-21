@@ -348,25 +348,25 @@ public class RegisterForm extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_emailTextFocusLost
 
     private void passwordTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordTextFocusGained
-        if (passwordText.getPassword().equals("Password")) {
+        if (passwordText.getText().equals("Password")) {
             passwordText.setText("");
         }
     }//GEN-LAST:event_passwordTextFocusGained
 
     private void passwordTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordTextFocusLost
-        if (passwordText.getPassword().equals("")) {
+        if (passwordText.getText().equals("")) {
             passwordText.setText("Password");
         }
     }//GEN-LAST:event_passwordTextFocusLost
 
     private void repeatPasswordTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_repeatPasswordTextFocusGained
-        if (repeatPasswordText.getPassword().equals("RepeatPassword")) {
+        if (repeatPasswordText.getText().equals("RepeatPassword")) {
             repeatPasswordText.setText("");
         }
     }//GEN-LAST:event_repeatPasswordTextFocusGained
 
     private void repeatPasswordTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_repeatPasswordTextFocusLost
-        if (repeatPasswordText.getPassword().equals("")) {
+        if (repeatPasswordText.getText().equals("")) {
             repeatPasswordText.setText("RepeatPassword");
         }
     }//GEN-LAST:event_repeatPasswordTextFocusLost

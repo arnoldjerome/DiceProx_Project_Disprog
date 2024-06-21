@@ -4,17 +4,20 @@
 <xsd:import namespace="http://services.ticketing.com/" schemaLocation="http://localhost:8080/Server/ticketingServices?xsd=1"/>
 </xsd:schema>
 </types>
+<message name="checkLogin">
+<part name="parameters" element="tns:checkLogin"/>
+</message>
+<message name="checkLoginResponse">
+<part name="parameters" element="tns:checkLoginResponse"/>
+</message>
 <message name="hello">
 <part name="parameters" element="tns:hello"/>
 </message>
 <message name="helloResponse">
 <part name="parameters" element="tns:helloResponse"/>
 </message>
-<message name="checkLogin">
-<part name="parameters" element="tns:checkLogin"/>
-</message>
-<message name="checkLoginResponse">
-<part name="parameters" element="tns:checkLoginResponse"/>
+<message name="insertAccRegist">
+<part name="parameters" element="tns:insertAccRegist"/>
 </message>
 <message name="checkRegister">
 <part name="parameters" element="tns:checkRegister"/>
@@ -22,37 +25,25 @@
 <message name="checkRegisterResponse">
 <part name="parameters" element="tns:checkRegisterResponse"/>
 </message>
-<message name="insertAccRegist">
-<part name="parameters" element="tns:insertAccRegist"/>
-</message>
 <portType name="ticketingServices">
+<operation name="checkLogin">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/checkLoginRequest" message="tns:checkLogin"/>
+<output wsam:Action="http://services.ticketing.com/ticketingServices/checkLoginResponse" message="tns:checkLoginResponse"/>
+</operation>
 <operation name="hello">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/helloRequest" message="tns:hello"/>
 <output wsam:Action="http://services.ticketing.com/ticketingServices/helloResponse" message="tns:helloResponse"/>
 </operation>
-<operation name="checkLogin">
-<input wsam:Action="http://services.ticketing.com/ticketingServices/checkLoginRequest" message="tns:checkLogin"/>
-<output wsam:Action="http://services.ticketing.com/ticketingServices/checkLoginResponse" message="tns:checkLoginResponse"/>
+<operation name="insertAccRegist">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/insertAccRegist" message="tns:insertAccRegist"/>
 </operation>
 <operation name="checkRegister">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/checkRegisterRequest" message="tns:checkRegister"/>
 <output wsam:Action="http://services.ticketing.com/ticketingServices/checkRegisterResponse" message="tns:checkRegisterResponse"/>
 </operation>
-<operation name="insertAccRegist">
-<input wsam:Action="http://services.ticketing.com/ticketingServices/insertAccRegist" message="tns:insertAccRegist"/>
-</operation>
 </portType>
 <binding name="ticketingServicesPortBinding" type="tns:ticketingServices">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="hello">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
 <operation name="checkLogin">
 <soap:operation soapAction=""/>
 <input>
@@ -62,7 +53,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="checkRegister">
+<operation name="hello">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -76,6 +67,15 @@
 <input>
 <soap:body use="literal"/>
 </input>
+</operation>
+<operation name="checkRegister">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
 </operation>
 </binding>
 <service name="ticketingServices">
