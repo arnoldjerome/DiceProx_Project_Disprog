@@ -78,7 +78,6 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
         background_kiri1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1920, 1080));
         setMinimumSize(new java.awt.Dimension(1920, 1080));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -245,6 +244,9 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
                     JOptionPane.showMessageDialog(this, response);
 
                     //JOptionPane.showMessageDialog(this, "Login Sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                    
+                    UserSession.setUsername(usernameText.getText());
+                    UserSession.setEmail(emailText.getText());
 
                     MainForm windowPlane = new MainForm();
 

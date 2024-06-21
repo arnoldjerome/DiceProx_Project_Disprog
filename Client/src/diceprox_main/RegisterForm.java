@@ -275,7 +275,7 @@ public class RegisterForm extends javax.swing.JFrame implements Runnable {
                 SimpleDateFormat dateOfBirth = new SimpleDateFormat("yyyy-MM-dd");
                 String regisDOB = dateOfBirth.format(dOB);
                 
-                String formattedMessage = "REGISTER~" + fullname + "~" + username + "~" + email + "~" + password + "~" + rePassword + "~" + regisDOB;
+                String formattedMessage = "REGISTER~" + fullname + "~" + username + "~" + email + "~" + password + "~" + rePassword + "~" + regisDOB + "\n";
                 
                 out.writeBytes(formattedMessage);
                 

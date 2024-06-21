@@ -4,6 +4,7 @@
  */
 package diceprox_main;
 
+import javax.swing.JOptionPane;
 import subsistem_event.bookAcara;
 import subsistem_event.bookAcara;
 import subsistem_event.bookAcara;
@@ -20,6 +21,14 @@ public class MainForm extends javax.swing.JFrame {
      */
     public MainForm() {
         initComponents();
+
+        //untuk center
+        this.setLocationRelativeTo(null);
+
+        // Maximize the frame
+        setExtendedState(LoginForm.MAXIMIZED_BOTH);
+
+        namaLabel.setText(UserSession.getUsername());
     }
 
     /**
@@ -32,82 +41,115 @@ public class MainForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        buttonFindTicket = new javax.swing.JButton();
-        buttonClaimTicket = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        logoParking = new javax.swing.JLabel();
+        logoEvent = new javax.swing.JLabel();
+        parkingTicketButton = new javax.swing.JButton();
+        eventTicketButton = new javax.swing.JButton();
+        profile = new javax.swing.JLabel();
+        sambutanLabel2 = new javax.swing.JLabel();
+        namaLabel = new javax.swing.JLabel();
+        logoutButton = new javax.swing.JButton();
+        bagian_kanan = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1920, 1080));
+        setMinimumSize(new java.awt.Dimension(1920, 1080));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setText("DICEPROX Ticket Service");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(57, 62, 70));
+        jLabel1.setText("DICEPROX TICKET SERVICE");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 70, -1, -1));
 
-        buttonFindTicket.setText("Find Event Tickets");
-        buttonFindTicket.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                buttonFindTicketMouseClicked(evt);
-            }
-        });
-
-        buttonClaimTicket.setText("Book Parking Lot");
-        buttonClaimTicket.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                buttonClaimTicketMouseClicked(evt);
-            }
-        });
-
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(57, 62, 70));
         jLabel3.setText("Welcome to our service, what would you do today?");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 160, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(buttonFindTicket)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonClaimTicket))
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel1))
-                .addGap(20, 20, 20)
-                .addComponent(jLabel2)
-                .addContainerGap(188, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 198, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonFindTicket)
-                    .addComponent(buttonClaimTicket))
-                .addGap(54, 54, 54))
-        );
+        logoParking.setBackground(new java.awt.Color(187, 187, 187));
+        logoParking.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logoParking.png"))); // NOI18N
+        getContentPane().add(logoParking, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 330, 430, 410));
+
+        logoEvent.setBackground(new java.awt.Color(187, 187, 187));
+        logoEvent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logoEvent.png"))); // NOI18N
+        getContentPane().add(logoEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 340, 430, 410));
+
+        parkingTicketButton.setBackground(new java.awt.Color(187, 224, 253));
+        parkingTicketButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        parkingTicketButton.setText("Book Parking Lot");
+        parkingTicketButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                parkingTicketButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(parkingTicketButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 780, 360, 110));
+
+        eventTicketButton.setBackground(new java.awt.Color(187, 224, 253));
+        eventTicketButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        eventTicketButton.setText("Find Event Tickets");
+        eventTicketButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eventTicketButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(eventTicketButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 780, 360, 110));
+
+        profile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconProfile.png"))); // NOI18N
+        profile.setPreferredSize(new java.awt.Dimension(120, 125));
+        getContentPane().add(profile, new org.netbeans.lib.awtextra.AbsoluteConstraints(1730, 0, 170, 200));
+
+        sambutanLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        sambutanLabel2.setForeground(new java.awt.Color(57, 62, 70));
+        sambutanLabel2.setText("Halo ");
+        sambutanLabel2.setToolTipText("");
+        getContentPane().add(sambutanLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, -1));
+
+        namaLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        namaLabel.setForeground(new java.awt.Color(57, 62, 70));
+        namaLabel.setText("Guest Default");
+        namaLabel.setToolTipText("");
+        getContentPane().add(namaLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 200, -1, -1));
+
+        logoutButton.setBackground(new java.awt.Color(187, 224, 253));
+        logoutButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        logoutButton.setText("Logout");
+        logoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 200, -1));
+
+        bagian_kanan.setBackground(new java.awt.Color(187, 187, 187));
+        bagian_kanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background_main_kiri.png"))); // NOI18N
+        getContentPane().add(bagian_kanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 1080));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonFindTicketMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonFindTicketMouseClicked
-        // TODO add your handling code here:
-        bookAcara acara = new bookAcara();
-        acara.setVisible(true);
-    }//GEN-LAST:event_buttonFindTicketMouseClicked
+    private void parkingTicketButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parkingTicketButtonActionPerformed
 
-    private void buttonClaimTicketMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonClaimTicketMouseClicked
+    }//GEN-LAST:event_parkingTicketButtonActionPerformed
+
+    private void eventTicketButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventTicketButtonActionPerformed
         // TODO add your handling code here:
-         bookParkir parkir = new bookParkir();
-         parkir.setVisible(true);
-    }//GEN-LAST:event_buttonClaimTicketMouseClicked
+    }//GEN-LAST:event_eventTicketButtonActionPerformed
+
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
+        int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
+            // Reset user session
+            UserSession.resetSession();
+
+            // Buka form login
+            LoginForm loginForm = new LoginForm();
+            loginForm.setVisible(true);
+
+            // Tutup form utama (MainForm)
+            this.dispose();
+        }
+    }//GEN-LAST:event_logoutButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,10 +190,16 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonClaimTicket;
-    private javax.swing.JButton buttonFindTicket;
+    private javax.swing.JLabel bagian_kanan;
+    private javax.swing.JButton eventTicketButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel logoEvent;
+    private javax.swing.JLabel logoParking;
+    private javax.swing.JButton logoutButton;
+    private javax.swing.JLabel namaLabel;
+    private javax.swing.JButton parkingTicketButton;
+    private javax.swing.JLabel profile;
+    private javax.swing.JLabel sambutanLabel2;
     // End of variables declaration//GEN-END:variables
 }
