@@ -4,6 +4,8 @@
  */
 package subsistem_parking;
 
+import diceprox_main.MainForm;
+
 /**
  *
  * @author Yosef
@@ -15,6 +17,12 @@ public class bookParkir extends javax.swing.JFrame {
      */
     public bookParkir() {
         initComponents();
+
+        //untuk center
+        this.setLocationRelativeTo(null);
+
+        // Maximize the frame
+        setExtendedState(bookParkir.MAXIMIZED_BOTH);
     }
 
     /**
@@ -40,16 +48,25 @@ public class bookParkir extends javax.swing.JFrame {
         textBrand = new javax.swing.JTextField();
         textClass = new javax.swing.JTextField();
         textColor = new javax.swing.JTextField();
+        back = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1920, 1080));
+        setMinimumSize(new java.awt.Dimension(1920, 1080));
+        setPreferredSize(new java.awt.Dimension(1920, 1080));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         buttonCancel.setText("Cancel Booking");
+        getContentPane().add(buttonCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(233, 242, 200, -1));
 
         buttonBook.setText("Book Parking");
+        getContentPane().add(buttonBook, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 242, 200, -1));
 
         jLabel5.setText("Color");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 180, -1, -1));
 
         jLabel4.setText("Class");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 146, -1, -1));
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -64,84 +81,45 @@ public class bookParkir extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(table);
 
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(439, 44, -1, -1));
+
         labelBrand.setText("Brand");
+        getContentPane().add(labelBrand, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 115, -1, -1));
 
         labelPlateNumber.setText("Number Plate");
+        getContentPane().add(labelPlateNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 81, -1, -1));
 
         textId.setEnabled(false);
+        getContentPane().add(textId, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 44, 237, -1));
 
         labelID.setText("ID");
+        getContentPane().add(labelID, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 47, -1, -1));
+        getContentPane().add(textPlateNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(142, 78, 291, -1));
+        getContentPane().add(textBrand, new org.netbeans.lib.awtextra.AbsoluteConstraints(142, 112, 291, -1));
+        getContentPane().add(textClass, new org.netbeans.lib.awtextra.AbsoluteConstraints(142, 146, 291, -1));
+        getContentPane().add(textColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(142, 180, 291, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(labelPlateNumber)
-                                .addComponent(labelBrand)
-                                .addComponent(labelID))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(46, 46, 46)))
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textPlateNumber)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(textId, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(textBrand)
-                            .addComponent(textClass)
-                            .addComponent(textColor)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(buttonBook, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelID)
-                            .addComponent(textId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelPlateNumber)
-                            .addComponent(textPlateNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelBrand)
-                            .addComponent(textBrand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(textClass, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(buttonBook)
-                            .addComponent(buttonCancel))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconBack.png"))); // NOI18N
+        back.setPreferredSize(new java.awt.Dimension(120, 125));
+        back.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backMouseClicked(evt);
+            }
+        });
+        getContentPane().add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 70, 70));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseClicked
+        MainForm windowPlane = new MainForm();
+
+        if (windowPlane == null || !windowPlane.isVisible()) {
+            windowPlane.setVisible(true);
+        }
+
+        this.dispose();
+    }//GEN-LAST:event_backMouseClicked
 
     /**
      * @param args the command line arguments
@@ -179,6 +157,7 @@ public class bookParkir extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel back;
     private javax.swing.JButton buttonBook;
     private javax.swing.JButton buttonCancel;
     private javax.swing.JLabel jLabel4;

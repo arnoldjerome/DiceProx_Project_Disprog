@@ -4,6 +4,8 @@
  */
 package subsistem_event;
 
+import diceprox_main.MainForm;
+
 /**
  *
  * @author Yosef
@@ -35,6 +37,7 @@ public class bookAcara extends javax.swing.JFrame {
         reservationButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
+        back = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
         bagian_kanan = new javax.swing.JLabel();
 
@@ -68,6 +71,15 @@ public class bookAcara extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 60, 710, 590));
 
+        back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconBack.png"))); // NOI18N
+        back.setPreferredSize(new java.awt.Dimension(120, 125));
+        back.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backMouseClicked(evt);
+            }
+        });
+        getContentPane().add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, 70, 70));
+
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
         logo.setPreferredSize(new java.awt.Dimension(120, 125));
         getContentPane().add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 10, 240, 200));
@@ -88,6 +100,16 @@ public class bookAcara extends javax.swing.JFrame {
 
         this.dispose();
     }//GEN-LAST:event_reservationButtonActionPerformed
+
+    private void backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseClicked
+        MainForm windowPlane = new MainForm();
+
+        if (windowPlane == null || !windowPlane.isVisible()) {
+            windowPlane.setVisible(true);
+        }
+
+        this.dispose();
+    }//GEN-LAST:event_backMouseClicked
 
     /**
      * @param args the command line arguments
@@ -125,6 +147,7 @@ public class bookAcara extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel back;
     private javax.swing.JLabel bagian_kanan;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel logo;
