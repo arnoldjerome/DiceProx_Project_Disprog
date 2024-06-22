@@ -13,17 +13,29 @@ import servertcp_diceprox.model.MyModel;
  *
  * @author Rome
  */
-public class Events extends MyModel{
-    int EventID;
+public class Events extends MyModel {
+
+    // <editor-fold desc="Data Members">
+    private int EventID;
     private String EventName;
     private Date EventDate;
     private String EventLocation;
-    int Quota;
-    int VIPQuota;
-    int FestivalQuota;
-    int TribunQuota;
-    private Timestamp created_at;
+    // </editor-fold>
 
+    // <editor-fold desc="Constructors">
+    public Events(int EventID, String EventName, Date EventDate, String EventLocation) {
+        this.EventID = EventID;
+        this.EventName = EventName;
+        this.EventDate = EventDate;
+        this.EventLocation = EventLocation;
+    }
+
+    public Events() {
+
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="Properties">
     public int getEventID() {
         return EventID;
     }
@@ -55,59 +67,9 @@ public class Events extends MyModel{
     public void setEventLocation(String EventLocation) {
         this.EventLocation = EventLocation;
     }
+    // </editor-fold>
 
-    public int getQuota() {
-        return Quota;
-    }
-
-    public void setQuota(int Quota) {
-        this.Quota = Quota;
-    }
-
-    public int getVIPQuota() {
-        return VIPQuota;
-    }
-
-    public void setVIPQuota(int VIPQuota) {
-        this.VIPQuota = VIPQuota;
-    }
-
-    public int getFestivalQuota() {
-        return FestivalQuota;
-    }
-
-    public void setFestivalQuota(int FestivalQuota) {
-        this.FestivalQuota = FestivalQuota;
-    }
-
-    public int getTribunQuota() {
-        return TribunQuota;
-    }
-
-    public void setTribunQuota(int TribunQuota) {
-        this.TribunQuota = TribunQuota;
-    }
-
-    public Timestamp getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(Timestamp created_at) {
-        this.created_at = created_at;
-    }
-
-    public Events(int EventID, String EventName, Date EventDate, String EventLocation, int Quota, int VIPQuota, int FestivalQuota, int TribunQuota, Timestamp created_at) {
-        this.EventID = EventID;
-        this.EventName = EventName;
-        this.EventDate = EventDate;
-        this.EventLocation = EventLocation;
-        this.Quota = Quota;
-        this.VIPQuota = VIPQuota;
-        this.FestivalQuota = FestivalQuota;
-        this.TribunQuota = TribunQuota;
-        this.created_at = created_at;
-    }
-
+    // <editor-fold desc="Methods">
     @Override
     public void insertData() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -127,7 +89,6 @@ public class Events extends MyModel{
     public ArrayList<Object> viewListData() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-    
-    
+    // </editor-fold>
+
 }

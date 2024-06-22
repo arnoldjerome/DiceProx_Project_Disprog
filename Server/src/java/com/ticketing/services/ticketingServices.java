@@ -5,7 +5,9 @@
 package com.ticketing.services;
 
 import account.Account;
+import events.Events;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.jws.Oneway;
 import javax.jws.WebService;
@@ -20,6 +22,7 @@ import javax.jws.WebParam;
 public class ticketingServices {
 
     Account a;
+    Events e;
 
     /**
      * This is a sample web service operation
@@ -57,4 +60,18 @@ public class ticketingServices {
         a = new Account(username, password, fullname, email, dateOfBirth);
         a.insertData();
     }
+
+//    @WebMethod
+//    public ArrayList<Events> selectAllEvents() {
+//        System.out.println("Calling selectAllEvents...");
+//        Events events = new Events();
+//        ArrayList<Vehicle> vehicleList = new ArrayList<>();
+//        for (Object obj : vehicle.viewListData()) {
+//            if (obj instanceof Vehicle) {
+//                vehicleList.add((Vehicle) obj);
+//            }
+//        }
+//        System.out.println("Returned vehicle list with size: " + vehicleList.size());
+//        return vehicleList;
+//    }
 }

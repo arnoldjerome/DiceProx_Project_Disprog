@@ -29,7 +29,7 @@ public class UserSession {
     }
     
     public static void resetSession() {
-        UserSession.username = "Guest Default";
-        UserSession.email = "Guest Default";
+        username = null;
+        email = null;
     }
 }
