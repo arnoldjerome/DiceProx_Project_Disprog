@@ -448,13 +448,12 @@ public class RegisterForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JTextField usernameText;
     // End of variables declaration//GEN-END:variables
 
-    
     private static Boolean checkRegister(java.lang.String email) {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
         return port.checkRegister(email);
     }
-    
+
     private static void insertAccRegist(java.lang.String username, java.lang.String password, java.lang.String fullname, java.lang.String email, java.lang.String dateOfBirth) {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
