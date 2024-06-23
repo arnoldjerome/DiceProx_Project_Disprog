@@ -7,9 +7,8 @@ package servertcp_diceprox;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import servertcp_diceprox.model.HistoryLogin;
 
 /**
@@ -22,6 +21,7 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
     String chatClient, chatServer;
     String groupName;
     String fullname, username, email, password, rePassword, regisDOB;
+    Timestamp time_login;
     Socket incoming;
     HistoryLogin history;
     ServerSocket s;
@@ -83,7 +83,7 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             confirmClient.sendChat("Login sukses!");
             
             history = new HistoryLogin();
-            history.setUsername(username);
+            history.setTime_login(time_login);
             history.insertData();
             
             confirmClient = null;
@@ -106,8 +106,24 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             confirmClient = null;
         }
         
+        else if (msg.contains("EVENT~")) {
+            String msgSplit[] = msg.split("EVENT~");
+            username = msgSplit[1];
+            
+            chatTxt.append(msg + "\n");
+            broadCast(msg);
+        }
+        
+        else if (msg.contains("PARKING~")) {
+            String msgSplit[] = msg.split("PARKING~");
+            username = msgSplit[1];
+            
+            chatTxt.append(msg + "\n");
+            broadCast(msg);
+        }
+        
         else {
-            System.out.println("Error displaying chat!");
+            System.out.println("Error displaying page!");
         }
     }
     
@@ -140,12 +156,12 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
         chatTxt.setRows(5);
         jScrollPane1.setViewportView(chatTxt);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 140, 663, 360));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 663, 360));
 
         salamLabel.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        salamLabel.setForeground(new java.awt.Color(57, 62, 70));
+        salamLabel.setForeground(new java.awt.Color(255, 255, 255));
         salamLabel.setText("SERVER");
-        getContentPane().add(salamLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, -1, -1));
+        getContentPane().add(salamLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

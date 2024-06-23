@@ -5,6 +5,7 @@
 package events;
 
 import java.sql.Date;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import servertcp_diceprox.model.MyModel;
@@ -18,12 +19,12 @@ public class Events extends MyModel {
     // <editor-fold desc="Data Members">
     private int EventID;
     private String EventName;
-    private Date EventDate;
+    private String EventDate;
     private String EventLocation;
     // </editor-fold>
 
     // <editor-fold desc="Constructors">
-    public Events(int EventID, String EventName, Date EventDate, String EventLocation) {
+    public Events(int EventID, String EventName, String EventDate, String EventLocation) {
         this.EventID = EventID;
         this.EventName = EventName;
         this.EventDate = EventDate;
@@ -52,11 +53,11 @@ public class Events extends MyModel {
         this.EventName = EventName;
     }
 
-    public Date getEventDate() {
+    public String getEventDate() {
         return EventDate;
     }
 
-    public void setEventDate(Date EventDate) {
+    public void setEventDate(String EventDate) {
         this.EventDate = EventDate;
     }
 
@@ -84,11 +85,35 @@ public class Events extends MyModel {
     public void deleteData() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    @Override
+    
+    
     public ArrayList<Object> viewListData() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        ArrayList<Object> listOfVehicles = new ArrayList<>();
+        try {
+            // untuk select
+            // statement -> create statement -> resultset
+            this.statement = (Statement)MyModel.conn.createStatement();
+            this.result = this.statement.executeQuery("SELECT * FROM events");
+
+            while(this.result.next()) {
+                Events ev = new Events(
+                        this.result.getInt("EventID"),
+                        this.result.getString("EventName"),
+                        this.result.getString("EventDate"),
+                        this.result.getString("EventLocation")
+                );
+
+                listOfVehicles.add(ev);
+            }
+
+        } 
+
+        catch (Exception e) {
+            System.out.println("Error di view list data: " + e);
+        }
+
+        return listOfVehicles;
+    } 
     // </editor-fold>
 
 }

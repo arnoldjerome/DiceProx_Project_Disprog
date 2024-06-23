@@ -47,9 +47,9 @@ public class HistoryLogin extends MyModel {
         try {
             if (!MyModel.conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement)MyModel.conn.prepareStatement(
-                        "INSERT INTO users(username) "
+                        "INSERT INTO users(Timelogin) "
                                 + "VALUES (?);");
-                sql.setString(1, this.username);
+                sql.setTimestamp(1, this.time_login);
                 sql.executeUpdate();
                 sql.close();
             }

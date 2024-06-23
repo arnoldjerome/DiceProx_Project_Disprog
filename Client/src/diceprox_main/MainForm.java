@@ -4,6 +4,13 @@
  */
 package diceprox_main;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import subsistem_event.bookAcara;
 import subsistem_event.bookAcara;
@@ -16,21 +23,41 @@ import subsistem_parking.checkOutParkir;
  *
  * @author Yosef
  */
-public class MainForm extends javax.swing.JFrame {
+public class MainForm extends javax.swing.JFrame implements Runnable {
 
+    Socket client;
+    BufferedReader in;
+    DataOutputStream out;
+    Thread t;
     /**
      * Creates new form mainForm
      */
     public MainForm() {
-        initComponents();
-
-        //untuk center
-        this.setLocationRelativeTo(null);
-
-        // Maximize the frame
-        setExtendedState(MainForm.MAXIMIZED_BOTH);
-
-        namaLabel.setText(UserSession.getUsername());
+        try {
+            initComponents();
+            
+            //untuk center
+            this.setLocationRelativeTo(null);
+            
+            // Maximize the frame
+            setExtendedState(MainForm.MAXIMIZED_BOTH);
+            
+            namaLabel.setText(UserSession.getUsername());
+            
+            client = new Socket("localhost", 5005);
+            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            out = new DataOutputStream(client.getOutputStream());
+            start();
+        } catch (IOException ex) {
+            System.out.println("Error di main form: " + ex);
+        }
+    }
+    
+    private void start() {
+        if (t == null) {
+            t = new Thread(this, "MainForm");
+            t.start();
+        }
     }
 
     /**
@@ -153,23 +180,57 @@ public class MainForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void parkingTicketButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parkingTicketButtonActionPerformed
-        bookParkir windowPlane = new bookParkir();
+        
+        try {
+            
+            String formattedMessage = "PARKING~" + namaLabel.getText() + "\n";
+            
+            out.writeBytes(formattedMessage);
+            
+            String response = in.readLine();
+            
+            JOptionPane.showMessageDialog(this, response);
+            
+            bookParkir windowPlane = new bookParkir();
 
-        if (windowPlane == null || !windowPlane.isVisible()) {
-            windowPlane.setVisible(true);
+            if (windowPlane == null || !windowPlane.isVisible()) {
+                windowPlane.setVisible(true);
+            }
+
+            this.dispose();
+        } 
+        
+        catch (Exception e) {
+            System.out.println("Error di button menu parking: " + e);
         }
-
-        this.dispose();
+        
     }//GEN-LAST:event_parkingTicketButtonActionPerformed
 
     private void eventTicketButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventTicketButtonActionPerformed
-        bookAcara windowPlane = new bookAcara();
+        
+        try {
+            
+            String formattedMessage = "EVENT~" + namaLabel.getText() + "\n";
+            
+            out.writeBytes(formattedMessage);
+            
+            String response = in.readLine();
+            
+            JOptionPane.showMessageDialog(this, response);
+            
+            bookAcara windowPlane = new bookAcara();
+        
+            if (windowPlane == null || !windowPlane.isVisible()) {
+                windowPlane.setVisible(true);
+            }
 
-        if (windowPlane == null || !windowPlane.isVisible()) {
-            windowPlane.setVisible(true);
+            this.dispose();
+        } 
+        
+        catch (Exception e) {
+            System.out.println("Error di button menu event: " + e);
         }
-
-        this.dispose();
+        
     }//GEN-LAST:event_eventTicketButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
@@ -260,4 +321,12 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton parkingTicketButton;
     private javax.swing.JLabel sambutanLabel2;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+        try {
+            
+        } catch (Exception e) {
+        }
+    }
 }

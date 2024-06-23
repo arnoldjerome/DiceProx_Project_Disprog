@@ -22,7 +22,7 @@ import javax.jws.WebParam;
 public class ticketingServices {
 
     Account a;
-    Events e;
+    Events ev;
 
     /**
      * This is a sample web service operation
@@ -60,6 +60,30 @@ public class ticketingServices {
         a = new Account(username, password, fullname, email, dateOfBirth);
         a.insertData();
     }
+    
+    
+//    public ArrayList<Events> viewListData() {
+//        //TODO write your implementation code here:
+//        try {
+//            ev = new Events();
+//            ArrayList<Object> originalEventsList = ev.viewListData();
+//            ArrayList<Events> listOfEvents = new ArrayList<>();
+//
+//            for (Object obj : originalEventsList) {
+//                if (obj instanceof Events) {
+//                    listOfEvents.add((Events)obj);
+//                }
+//            }
+//
+//            return listOfEvents;
+//        } 
+//
+//        catch (Exception e) {
+//            System.out.println("Error di view list data: " + e);
+//        }
+//
+//        return null;
+//    }
 
 //    @WebMethod
 //    public ArrayList<Events> selectAllEvents() {
@@ -74,4 +98,31 @@ public class ticketingServices {
 //        System.out.println("Returned vehicle list with size: " + vehicleList.size());
 //        return vehicleList;
 //    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "viewListDataEvent")
+    public ArrayList viewListDataEvent() {
+        //TODO write your implementation code here:
+        try {
+            ev = new Events();
+            ArrayList<Object> originalEventsList = ev.viewListData();
+            ArrayList<Events> listOfEvents = new ArrayList<>();
+
+            for (Object obj : originalEventsList) {
+                if (obj instanceof Events) {
+                    listOfEvents.add((Events)obj);
+                }
+            }
+
+            return listOfEvents;
+        } 
+
+        catch (Exception e) {
+            System.out.println("Error di view list data: " + e);
+        }
+
+        return null;
+    }
 }
