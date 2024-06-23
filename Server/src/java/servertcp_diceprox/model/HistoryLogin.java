@@ -47,22 +47,21 @@ public class HistoryLogin extends MyModel {
         try {
             if (!MyModel.conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement)MyModel.conn.prepareStatement(
-                        "INSERT INTO users(Timelogin) "
-                                + "VALUES (?);");
-                sql.setTimestamp(1, this.time_login);
+                        "INSERT INTO historylogins(UserID) VALUES ('?');");
+                sql.setInt(1, this.user_id);
                 sql.executeUpdate();
                 sql.close();
             }
         } 
         
         catch (Exception e) {
-            System.out.println("Error di insert: " + e);
+            System.out.println("Error di insert historylogins: " + e);
         }
     }
 
     @Override
     public void updateData() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
 
     @Override
