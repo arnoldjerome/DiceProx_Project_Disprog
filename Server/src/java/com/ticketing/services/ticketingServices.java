@@ -4,8 +4,8 @@
  */
 package com.ticketing.services;
 
-import account.Account;
-import events.Events;
+import com.ticketing.model.Account;
+import com.ticketing.model.Events;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -60,8 +60,21 @@ public class ticketingServices {
         a = new Account(username, password, fullname, email, dateOfBirth);
         a.insertData();
     }
-    
-    
+
+    @WebMethod
+    public ArrayList<Events> selectAllEvents() {
+        System.out.println("Calling selectAllEvents...");
+        Events even = new Events();
+        ArrayList<Events> eventList = new ArrayList<>();
+        for (Object obj : even.viewListData()) {
+            if (obj instanceof Events) {
+                eventList.add((Events) obj);
+            }
+        }
+        System.out.println("Returned event list with size: " + eventList.size());
+        return eventList;
+    }
+
 //    public ArrayList<Events> viewListData() {
 //        //TODO write your implementation code here:
 //        try {
@@ -84,7 +97,6 @@ public class ticketingServices {
 //
 //        return null;
 //    }
-
 //    @WebMethod
 //    public ArrayList<Events> selectAllEvents() {
 //        System.out.println("Calling selectAllEvents...");
@@ -98,31 +110,4 @@ public class ticketingServices {
 //        System.out.println("Returned vehicle list with size: " + vehicleList.size());
 //        return vehicleList;
 //    }
-
-    /**
-     * Web service operation
-     */
-    @WebMethod(operationName = "viewListDataEvent")
-    public ArrayList viewListDataEvent() {
-        //TODO write your implementation code here:
-        try {
-            ev = new Events();
-            ArrayList<Object> originalEventsList = ev.viewListData();
-            ArrayList<Events> listOfEvents = new ArrayList<>();
-
-            for (Object obj : originalEventsList) {
-                if (obj instanceof Events) {
-                    listOfEvents.add((Events)obj);
-                }
-            }
-
-            return listOfEvents;
-        } 
-
-        catch (Exception e) {
-            System.out.println("Error di view list data: " + e);
-        }
-
-        return null;
-    }
 }

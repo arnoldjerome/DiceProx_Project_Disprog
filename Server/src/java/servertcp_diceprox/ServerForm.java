@@ -4,13 +4,13 @@
  */
 package servertcp_diceprox;
 
-import account.Account;
+import com.ticketing.model.Account;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import servertcp_diceprox.model.HistoryLogin;
+import com.ticketing.model.HistoryLogin;
 
 /**
  *

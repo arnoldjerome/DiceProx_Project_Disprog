@@ -2,12 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package tickets;
+package com.ticketing.model;
 
 import com.sun.xml.rpc.processor.modeler.j2ee.xml.string;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import servertcp_diceprox.model.MyModel;
 
 /**
  *
