@@ -4,6 +4,7 @@
  */
 package servertcp_diceprox.model;
 
+import account.Account;
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -14,41 +15,53 @@ import java.util.ArrayList;
  */
 public class HistoryLogin extends MyModel {
     
-    private int user_id;
-    private String username;
-    private Timestamp time_login;
+    private int HistoryLoginID;   
+    private Timestamp TimeLogin;
+    private Account UserID;
     
-    public int getUser_id() {
-        return user_id;
+    public int getHistoryLoginID() {
+        return HistoryLoginID;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setHistoryLoginID(int HistoryLoginID) {
+        this.HistoryLoginID = HistoryLoginID;
     }
 
-    public String getUsername() {
-        return username;
+    public Timestamp getTimeLogin() {
+        return TimeLogin;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setTimeLogin(Timestamp TimeLogin) {
+        this.TimeLogin = TimeLogin;
     }
 
-    public Timestamp getTime_login() {
-        return time_login;
+    public Account getUserID() {
+        return UserID;
     }
 
-    public void setTime_login(Timestamp time_login) {
-        this.time_login = time_login;
+    public void setUserID(Account UserID) {
+        this.UserID = UserID;
     }
-
+    
+    public void selectUserID() {
+        try {
+            if (!MyModel.conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement)MyModel.conn.prepareStatement(
+                        "SELECT");
+                sql.setInt(1, this.UserID.getUserID());
+                sql.executeUpdate();
+                sql.close();
+            }
+        } catch (Exception e) {
+        }
+    }
     @Override
     public void insertData() {
         try {
             if (!MyModel.conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement)MyModel.conn.prepareStatement(
-                        "INSERT INTO historylogins(UserID) VALUES ('?');");
-                sql.setInt(1, this.user_id);
+                        "INSERT INTO historylogins(UserID) VALUES (?)");
+                sql.setInt(1, this.UserID.getUserID());
                 sql.executeUpdate();
                 sql.close();
             }

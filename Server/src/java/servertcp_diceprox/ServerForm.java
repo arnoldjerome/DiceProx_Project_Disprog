@@ -4,6 +4,7 @@
  */
 package servertcp_diceprox;
 
+import account.Account;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -20,7 +21,7 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
     
     String chatClient, chatServer;
     String groupName;
-    int user_id;
+    Account acc;
     String fullname, username, email, password, rePassword, regisDOB;
     Timestamp time_login;
     Socket incoming;
@@ -84,7 +85,7 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             confirmClient.sendChat("Login sukses!");
             
             history = new HistoryLogin();
-            history.setUser_id(user_id);
+            //history.setUserID(acc.getUserID());
             history.insertData();
             //history.updateData();
             
