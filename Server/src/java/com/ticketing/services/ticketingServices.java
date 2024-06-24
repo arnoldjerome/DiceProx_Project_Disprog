@@ -6,13 +6,16 @@ package com.ticketing.services;
 
 import com.ticketing.model.Account;
 import com.ticketing.model.Events;
+import com.ticketing.model.Tickets;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.jws.Oneway;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import sun.security.krb5.internal.Ticket;
 
 /**
  *
@@ -23,6 +26,10 @@ public class ticketingServices {
 
     Account a;
     Events ev;
+    Tickets t;
+
+    public ticketingServices() {
+    }
 
     /**
      * This is a sample web service operation
@@ -58,6 +65,16 @@ public class ticketingServices {
     public void insertAccRegist(@WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "fullname") String fullname, @WebParam(name = "email") String email, @WebParam(name = "dateOfBirth") String dateOfBirth) {
         a = new Account(username, password, fullname, email, dateOfBirth);
         a.insertData();
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "insertTicket")
+    @Oneway
+    public void insertTicket(@WebParam(name = "ticketID") int ticketID, @WebParam(name = "userID") int userID, @WebParam(name = "eventID") int eventID, @WebParam(name = "ticketTypeID") int ticketTypeID, @WebParam(name = "hargaTotal") int hargaTotal, @WebParam(name = "isClaimed") boolean isClaimed) {
+        t = new Tickets(ticketID, userID, eventID, ticketTypeID, hargaTotal, isClaimed);
+        t.insertData();
     }
 
     @WebMethod

@@ -4,6 +4,9 @@
 <xsd:import namespace="http://services.ticketing.com/" schemaLocation="http://localhost:8080/Server/ticketingServices?xsd=1"/>
 </xsd:schema>
 </types>
+<message name="insertTicket">
+<part name="parameters" element="tns:insertTicket"/>
+</message>
 <message name="checkLoginAndGetUserId">
 <part name="parameters" element="tns:checkLoginAndGetUserId"/>
 </message>
@@ -38,6 +41,9 @@
 <part name="parameters" element="tns:selectAllEventsTypeResponse"/>
 </message>
 <portType name="ticketingServices">
+<operation name="insertTicket">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/insertTicket" message="tns:insertTicket"/>
+</operation>
 <operation name="checkLoginAndGetUserId">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/checkLoginAndGetUserIdRequest" message="tns:checkLoginAndGetUserId"/>
 <output wsam:Action="http://services.ticketing.com/ticketingServices/checkLoginAndGetUserIdResponse" message="tns:checkLoginAndGetUserIdResponse"/>
@@ -64,6 +70,12 @@
 </portType>
 <binding name="ticketingServicesPortBinding" type="tns:ticketingServices">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<operation name="insertTicket">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
 <operation name="checkLoginAndGetUserId">
 <soap:operation soapAction=""/>
 <input>

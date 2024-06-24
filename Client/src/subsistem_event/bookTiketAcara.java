@@ -5,9 +5,14 @@
 package subsistem_event;
 
 import diceprox_main.MainForm;
+import diceprox_main.UserSession;
+import java.sql.Timestamp;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 public class bookTiketAcara extends javax.swing.JFrame {
 
     private String eventId;
+    private int TicketTypeID;
 
     /**
      * Creates new form bookTiketAcara
@@ -309,6 +315,34 @@ public class bookTiketAcara extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Pilih tiket terlebih dahulu.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
             return;
         } else {
+
+//            String hargaTotalStr = hargaTotal.getText().replaceAll("[^\\d]", "");
+//            int totalHarga = 0;
+//
+//            if (!hargaTotalStr.isEmpty()) {
+//                totalHarga = Integer.parseInt(hargaTotalStr);
+//            }
+            LocalDateTime now = LocalDateTime.now();
+
+            int currentSecond = now.getSecond();
+            int currentMinute = now.getMinute();
+            int currentHour = now.getHour();
+            int currentDay = now.getDayOfMonth();
+            int currentMonth = now.getMonthValue();
+            int currentYear = now.getYear() - 2000; // Assuming year 2000 as the starting point
+
+            // Encode the components into a single int
+            int code = (currentYear << 26) | (currentMonth << 22) | (currentDay << 17)
+                    | (currentHour << 12) | (currentMinute << 6) | currentSecond;
+
+            int userID = UserSession.getUserId();
+            int eventID = Integer.parseInt(eventId);
+            boolean isClaimed = false;
+            String numericString = hargaTotal.getText().replace("Rp", "").replace(".", "").trim();
+            int totalHarga = Integer.parseInt(numericString);
+
+            insertTicket(code, userID, eventID, TicketTypeID, totalHarga, isClaimed);
+
             JOptionPane.showMessageDialog(this, "Reservasi tiket berhasil.", "Informasi Reservasi", JOptionPane.INFORMATION_MESSAGE);
 
             MainForm windowPlane = new MainForm();
@@ -339,7 +373,7 @@ public class bookTiketAcara extends javax.swing.JFrame {
         Object[] rowData = new Object[8]; //total kolom tampil
 
         for (com.ticketing.services.Events obj : selectAllEventsType(eventId)) {
-            rowData[0] = obj.getEventID();
+            rowData[0] = obj.getTypeTicketID();
             rowData[1] = obj.getEventName();
             rowData[2] = obj.getEventDate();
             rowData[3] = obj.getEventLocation();
@@ -372,6 +406,8 @@ public class bookTiketAcara extends javax.swing.JFrame {
         availableTicketText.setText(RecordTable.getValueAt(SelectedRows, 7).toString());
 
         jSpinnerTotalTiket.setValue(1);
+
+        TicketTypeID = Integer.parseInt(RecordTable.getValueAt(SelectedRows, 0).toString());
         updateTotalHarga();
     }//GEN-LAST:event_jAcaraTabelMouseClicked
 
@@ -490,6 +526,12 @@ public class bookTiketAcara extends javax.swing.JFrame {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
         return port.selectAllEventsType(arg0);
+    }
+
+    private static void insertTicket(int ticketID, int userID, int eventID, int ticketTypeID, int hargaTotal, boolean isClaimed) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        port.insertTicket(ticketID, userID, eventID, ticketTypeID, hargaTotal, isClaimed);
     }
 
 }

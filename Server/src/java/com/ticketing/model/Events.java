@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class Events extends MyModel {
 
     // <editor-fold desc="Data Members">
+    private int TypeTicketID;
     private int EventID;
     private String EventName;
     private String EventDate;
@@ -27,8 +28,8 @@ public class Events extends MyModel {
     // </editor-fold>
 
     // <editor-fold desc="Constructors">
-    public Events(int EventID, String EventName, String EventDate, String EventLocation, String TicketType, int HargaTikets, int TotalQuota, int AvailableTickets) {
-        this.EventID = EventID;
+    public Events(int TypeTicketID, String EventName, String EventDate, String EventLocation, String TicketType, int HargaTikets, int TotalQuota, int AvailableTickets) {
+        this.TypeTicketID = TypeTicketID;
         this.EventName = EventName;
         this.EventDate = EventDate;
         this.EventLocation = EventLocation;
@@ -53,6 +54,14 @@ public class Events extends MyModel {
     // </editor-fold>
 
     // <editor-fold desc="Properties">
+    public int getTypeTicketID() {
+        return TypeTicketID;
+    }
+
+    public void setTypeTicketID(int TypeTicketID) {
+        this.TypeTicketID = TypeTicketID;
+    }
+
     public int getEventID() {
         return EventID;
     }
@@ -191,14 +200,14 @@ public class Events extends MyModel {
 
             this.statement = (Statement) MyModel.conn.createStatement();
             this.result = this.statement.executeQuery(
-                    "SELECT e.EventID, e.EventName, e.EventDate, e.EventLocation, t.TicketType, t.HargaTikets, t.TotalQuota, t.AvailableTickets "
+                    "SELECT t.TypeTicketID, e.EventName, e.EventDate, e.EventLocation, t.TicketType, t.HargaTikets, t.TotalQuota, t.AvailableTickets "
                     + "FROM events e "
                     + "JOIN typeTickets t ON e.EventID = t.EventID "
                     + "WHERE e.EventID = " + eventId);
 
             while (this.result.next()) {
                 Events ev = new Events(
-                        this.result.getInt("EventID"),
+                        this.result.getInt("TypeTicketID"),
                         this.result.getString("EventName"),
                         this.result.getString("EventDate"),
                         this.result.getString("EventLocation"),

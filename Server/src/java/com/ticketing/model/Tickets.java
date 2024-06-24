@@ -5,6 +5,7 @@
 package com.ticketing.model;
 
 import com.sun.xml.rpc.processor.modeler.j2ee.xml.string;
+import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -19,16 +20,25 @@ public class Tickets extends MyModel {
     private int EventID;
     private int TicketTypeID;
     private int HargaTotal;
-    private Timestamp ReservationDate;
+    private String ReservationDate;
     private Boolean IsClaimed;
 
-    public Tickets(int TicketID, int UserID, int EventID, int TicketTypeID, int HargaTotal, Timestamp ReservationDate, Boolean IsClaimed) {
+    public Tickets(int TicketID, int UserID, int EventID, int TicketTypeID, int HargaTotal, String ReservationDate, Boolean IsClaimed) {
         this.TicketID = TicketID;
         this.UserID = UserID;
         this.EventID = EventID;
         this.TicketTypeID = TicketTypeID;
         this.HargaTotal = HargaTotal;
         this.ReservationDate = ReservationDate;
+        this.IsClaimed = IsClaimed;
+    }
+
+    public Tickets(int TicketID, int UserID, int EventID, int TicketTypeID, int HargaTotal, Boolean IsClaimed) {
+        this.TicketID = TicketID;
+        this.UserID = UserID;
+        this.EventID = EventID;
+        this.TicketTypeID = TicketTypeID;
+        this.HargaTotal = HargaTotal;
         this.IsClaimed = IsClaimed;
     }
 
@@ -72,11 +82,11 @@ public class Tickets extends MyModel {
         this.HargaTotal = HargaTotal;
     }
 
-    public Timestamp getReservationDate() {
+    public String getReservationDate() {
         return ReservationDate;
     }
 
-    public void setReservationDate(Timestamp ReservationDate) {
+    public void setReservationDate(String ReservationDate) {
         this.ReservationDate = ReservationDate;
     }
 
@@ -90,7 +100,24 @@ public class Tickets extends MyModel {
 
     @Override
     public void insertData() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            if (!MyModel.conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                        "INSERT INTO tickets (TicketID, UserID, EventID, TypeTicketID, HargaTotal, IsClaimed) VALUES (?, ?, ?, ?, ?, ?)");
+
+                sql.setInt(1, this.TicketID);
+                sql.setInt(2, this.UserID);
+                sql.setInt(3, this.EventID);
+                sql.setInt(4, this.TicketTypeID);
+                sql.setInt(5, this.HargaTotal);
+                sql.setBoolean(6, this.IsClaimed);
+
+                sql.executeUpdate();
+                sql.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error di insert data: " + e);
+        }
     }
 
     @Override
