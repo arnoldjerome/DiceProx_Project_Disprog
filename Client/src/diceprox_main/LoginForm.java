@@ -4,6 +4,8 @@
  */
 package diceprox_main;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import subsistem_event.*;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 /**
  *
@@ -132,8 +135,9 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
         });
         getContentPane().add(passwordText, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 720, 1020, 70));
 
-        masukButton.setBackground(new java.awt.Color(187, 224, 253));
+        masukButton.setBackground(new java.awt.Color(0, 102, 255));
         masukButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        masukButton.setForeground(new java.awt.Color(204, 204, 204));
         masukButton.setText("Masuk");
         masukButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -156,8 +160,9 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
         logo.setPreferredSize(new java.awt.Dimension(120, 125));
         getContentPane().add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 10, 240, 200));
 
-        registerButton.setBackground(new java.awt.Color(187, 224, 253));
+        registerButton.setBackground(new java.awt.Color(255, 51, 51));
         registerButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        registerButton.setForeground(new java.awt.Color(204, 204, 204));
         registerButton.setText("Register");
         registerButton.setToolTipText("");
         registerButton.addActionListener(new java.awt.event.ActionListener() {
@@ -244,7 +249,6 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
                     JOptionPane.showMessageDialog(this, response);
 
                     //JOptionPane.showMessageDialog(this, "Login Sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-                    
                     UserSession.setUsername(usernameText.getText());
                     UserSession.setEmail(emailText.getText());
 
@@ -256,7 +260,7 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
 
                     this.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Email atau password salah!", "Warning", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Username atau Email atau Password salah!", "Warning", JOptionPane.WARNING_MESSAGE);
                     usernameText.setText("");
                     emailText.setText("");
                     passwordText.setText("");
@@ -338,7 +342,6 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JCheckBox setujuText;
     private javax.swing.JTextField usernameText;
     // End of variables declaration//GEN-END:variables
-
 
     @Override
     public void run() {

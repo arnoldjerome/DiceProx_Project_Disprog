@@ -65,6 +65,8 @@
 <xs:element name="eventID" type="xs:int"/>
 <xs:element name="eventLocation" type="xs:string" minOccurs="0"/>
 <xs:element name="eventName" type="xs:string" minOccurs="0"/>
+<xs:element name="hargaTikets" type="xs:int"/>
+<xs:element name="ticketType" type="xs:string" minOccurs="0"/>
 <xs:element name="totalQuota" type="xs:int"/>
 </xs:sequence>
 </xs:extension>

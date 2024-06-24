@@ -88,12 +88,12 @@ public class RegisterForm extends javax.swing.JFrame implements Runnable {
         jDateOfBirth = new com.toedter.calendar.JDateChooser();
         logo = new javax.swing.JLabel();
         salamLabel = new javax.swing.JLabel();
+        kembaliButton = new javax.swing.JButton();
         bagian_kanan = new javax.swing.JLabel();
         background_kiri = new javax.swing.JLabel();
         background_kanan = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1920, 1080));
         setMinimumSize(new java.awt.Dimension(1920, 1080));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -141,8 +141,9 @@ public class RegisterForm extends javax.swing.JFrame implements Runnable {
         });
         getContentPane().add(privacyCheckbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 920, -1, -1));
 
-        daftarButton.setBackground(new java.awt.Color(187, 224, 253));
+        daftarButton.setBackground(new java.awt.Color(0, 102, 255));
         daftarButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        daftarButton.setForeground(new java.awt.Color(204, 204, 204));
         daftarButton.setText("Daftar");
         daftarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -232,6 +233,18 @@ public class RegisterForm extends javax.swing.JFrame implements Runnable {
         salamLabel.setForeground(new java.awt.Color(57, 62, 70));
         salamLabel.setText("SELAMAT DATANG DI DICEPROX !");
         getContentPane().add(salamLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, -1, -1));
+
+        kembaliButton.setBackground(new java.awt.Color(255, 51, 51));
+        kembaliButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        kembaliButton.setForeground(new java.awt.Color(204, 204, 204));
+        kembaliButton.setText("Kembali");
+        kembaliButton.setToolTipText("");
+        kembaliButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kembaliButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(kembaliButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 890, 200, -1));
 
         bagian_kanan.setBackground(new java.awt.Color(187, 187, 187));
         bagian_kanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bagian_kanan.png"))); // NOI18N
@@ -387,6 +400,17 @@ public class RegisterForm extends javax.swing.JFrame implements Runnable {
         }
     }//GEN-LAST:event_fullnameTextFocusLost
 
+    private void kembaliButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kembaliButtonActionPerformed
+        // TODO add your handling code here:
+        LoginForm windowPlane = new LoginForm();
+
+        if (windowPlane == null || !windowPlane.isVisible()) {
+            windowPlane.setVisible(true);
+        }
+
+        this.dispose();
+    }//GEN-LAST:event_kembaliButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -433,6 +457,7 @@ public class RegisterForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JTextField emailText;
     private javax.swing.JTextField fullnameText;
     private com.toedter.calendar.JDateChooser jDateOfBirth;
+    private javax.swing.JButton kembaliButton;
     private javax.swing.JLabel logo;
     private javax.swing.JLabel logoEmail;
     private javax.swing.JLabel logoPassword;

@@ -22,9 +22,22 @@ public class Events extends MyModel {
     private String EventLocation;
     private int TotalQuota;
     private int AvailableTickets;
+    private String TicketType;
+    private int HargaTikets;
     // </editor-fold>
 
     // <editor-fold desc="Constructors">
+    public Events(int EventID, String EventName, String EventDate, String EventLocation, String TicketType, int HargaTikets, int TotalQuota, int AvailableTickets) {
+        this.EventID = EventID;
+        this.EventName = EventName;
+        this.EventDate = EventDate;
+        this.EventLocation = EventLocation;
+        this.TicketType = TicketType;
+        this.HargaTikets = HargaTikets;
+        this.TotalQuota = TotalQuota;
+        this.AvailableTickets = AvailableTickets;
+    }
+
     public Events(int EventID, String EventName, String EventDate, String EventLocation, int TotalQuota, int AvailableTickets) {
         this.EventID = EventID;
         this.EventName = EventName;
@@ -70,6 +83,22 @@ public class Events extends MyModel {
 
     public void setEventLocation(String EventLocation) {
         this.EventLocation = EventLocation;
+    }
+
+    public String getTicketType() {
+        return TicketType;
+    }
+
+    public void setTicketType(String TicketType) {
+        this.TicketType = TicketType;
+    }
+
+    public int getHargaTikets() {
+        return HargaTikets;
+    }
+
+    public void setHargaTikets(int HargaTikets) {
+        this.HargaTikets = HargaTikets;
     }
 
     public int getTotalQuota() {
@@ -162,7 +191,7 @@ public class Events extends MyModel {
 
             this.statement = (Statement) MyModel.conn.createStatement();
             this.result = this.statement.executeQuery(
-                    "SELECT e.EventID, e.EventName, e.EventDate, e.EventLocation, t.TotalQuota, t.AvailableTickets "
+                    "SELECT e.EventID, e.EventName, e.EventDate, e.EventLocation, t.TicketType, t.HargaTikets, t.TotalQuota, t.AvailableTickets "
                     + "FROM events e "
                     + "JOIN typeTickets t ON e.EventID = t.EventID "
                     + "WHERE e.EventID = " + eventId);
@@ -173,6 +202,8 @@ public class Events extends MyModel {
                         this.result.getString("EventName"),
                         this.result.getString("EventDate"),
                         this.result.getString("EventLocation"),
+                        this.result.getString("TicketType"),
+                        this.result.getInt("HargaTikets"),
                         this.result.getInt("TotalQuota"),
                         this.result.getInt("AvailableTickets")
                 );

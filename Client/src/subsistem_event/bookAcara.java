@@ -29,6 +29,13 @@ public class bookAcara extends javax.swing.JFrame {
 
         // Maximize the frame
         setExtendedState(bookAcara.MAXIMIZED_BOTH);
+
+        idText.setEditable(false);
+        nameText.setEditable(false);
+        dateText.setEditable(false);
+        locationText.setEditable(false);
+        totalQuotaText.setEditable(false);
+        availableTicketText.setEditable(false);
     }
 
     /**
@@ -232,13 +239,12 @@ public class bookAcara extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Pilih acara terlebih dahulu.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            
+
             LocalDate currentDate = LocalDate.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate eventDate = LocalDate.parse(dateText.getText(), formatter);
 
-
-            if (currentDate.isAfter(eventDate)){
+            if (currentDate.isAfter(eventDate)) {
                 JOptionPane.showMessageDialog(this, "Acara telah selesai.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
                 return;
             }
