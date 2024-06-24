@@ -248,6 +248,8 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
                     UserSession.setUserId(userId);
                     UserSession.setUsername(username);
                     UserSession.setEmail(email);
+                    
+                    insertHistoryLogin(userId);
 
                     MainForm windowPlane = new MainForm();
                     if (windowPlane == null || !windowPlane.isVisible()) {
@@ -348,5 +350,11 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
         return port.checkLoginAndGetUserId(username, password, email);
+    }
+
+    private static void insertHistoryLogin(int userID) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        port.insertHistoryLogin(userID);
     }
 }

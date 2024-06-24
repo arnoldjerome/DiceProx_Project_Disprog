@@ -83,12 +83,6 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             broadCast(msg);
             
             confirmClient.sendChat("Login sukses!");
-            
-            history = new HistoryLogin();
-            //history.setUserID(acc.getUserID());
-            history.insertData();
-            //history.updateData();
-            
             confirmClient = null;
         }
         

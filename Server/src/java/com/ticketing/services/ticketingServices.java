@@ -6,6 +6,7 @@ package com.ticketing.services;
 
 import com.ticketing.model.Account;
 import com.ticketing.model.Events;
+import com.ticketing.model.HistoryLogin;
 import com.ticketing.model.Tickets;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -27,6 +28,7 @@ public class ticketingServices {
     Account a;
     Events ev;
     Tickets t;
+    HistoryLogin h;
 
     public ticketingServices() {
     }
@@ -85,6 +87,16 @@ public class ticketingServices {
     public void insertTicket(@WebParam(name = "ticketID") int ticketID, @WebParam(name = "userID") int userID, @WebParam(name = "eventID") int eventID, @WebParam(name = "ticketTypeID") int ticketTypeID, @WebParam(name = "hargaTotal") int hargaTotal, @WebParam(name = "isClaimed") boolean isClaimed) {
         t = new Tickets(ticketID, userID, eventID, ticketTypeID, hargaTotal, isClaimed);
         t.insertData();
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "insertHistoryLogin")
+    @Oneway
+    public void insertHistoryLogin(@WebParam(name = "userID") int userID) {
+        h = new HistoryLogin(userID);
+        h.insertData();
     }
 
     @WebMethod

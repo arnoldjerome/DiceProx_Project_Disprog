@@ -16,7 +16,11 @@ public class HistoryLogin extends MyModel {
     
     private int HistoryLoginID;   
     private Timestamp TimeLogin;
-    private Account UserID;
+    private int UserID;
+    
+    public HistoryLogin(int UserID){
+        this.UserID = UserID;
+    }
     
     public int getHistoryLoginID() {
         return HistoryLoginID;
@@ -34,33 +38,21 @@ public class HistoryLogin extends MyModel {
         this.TimeLogin = TimeLogin;
     }
 
-    public Account getUserID() {
+    public int getUserID() {
         return UserID;
     }
 
-    public void setUserID(Account UserID) {
+    public void setUserID(int UserID) {
         this.UserID = UserID;
     }
     
-    public void selectUserID() {
-        try {
-            if (!MyModel.conn.isClosed()) {
-                PreparedStatement sql = (PreparedStatement)MyModel.conn.prepareStatement(
-                        "SELECT");
-                sql.setInt(1, this.UserID.getUserID());
-                sql.executeUpdate();
-                sql.close();
-            }
-        } catch (Exception e) {
-        }
-    }
     @Override
     public void insertData() {
         try {
             if (!MyModel.conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement)MyModel.conn.prepareStatement(
                         "INSERT INTO historylogins(UserID) VALUES (?)");
-                sql.setInt(1, this.UserID.getUserID());
+                sql.setInt(1, this.UserID);
                 sql.executeUpdate();
                 sql.close();
             }
