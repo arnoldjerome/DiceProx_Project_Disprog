@@ -41,6 +41,10 @@ public class Tickets extends MyModel {
         this.HargaTotal = HargaTotal;
         this.IsClaimed = IsClaimed;
     }
+    
+    public Tickets(){
+        
+    }
 
     public int getTicketID() {
         return TicketID;
@@ -96,6 +100,21 @@ public class Tickets extends MyModel {
 
     public void setIsClaimed(Boolean IsClaimed) {
         this.IsClaimed = IsClaimed;
+    }
+
+    public void updateAvailableTickets(int ticketTypeID, int ticketsReserved) {
+        try {
+            if (!MyModel.conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                        "UPDATE typetickets SET AvailableTickets = AvailableTickets - ? WHERE TypeTicketID = ?");
+                sql.setInt(1, ticketsReserved);
+                sql.setInt(2, ticketTypeID);
+                sql.executeUpdate();
+                sql.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error di update available tickets: " + e);
+        }
     }
 
     @Override

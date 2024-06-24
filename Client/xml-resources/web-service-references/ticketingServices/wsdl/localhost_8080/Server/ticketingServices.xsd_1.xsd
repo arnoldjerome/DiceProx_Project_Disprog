@@ -24,6 +24,8 @@
 
 <xs:element name="selectAllEventsTypeResponse" type="tns:selectAllEventsTypeResponse"/>
 
+<xs:element name="updateAvailableTickets" type="tns:updateAvailableTickets"/>
+
 <xs:complexType name="checkLoginAndGetUserId">
 <xs:sequence>
 <xs:element name="username" type="xs:string" minOccurs="0"/>
@@ -45,6 +47,13 @@
 <xs:element name="fullname" type="xs:string" minOccurs="0"/>
 <xs:element name="email" type="xs:string" minOccurs="0"/>
 <xs:element name="dateOfBirth" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="updateAvailableTickets">
+<xs:sequence>
+<xs:element name="ticketTypeID" type="xs:int"/>
+<xs:element name="ticketsReserved" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 

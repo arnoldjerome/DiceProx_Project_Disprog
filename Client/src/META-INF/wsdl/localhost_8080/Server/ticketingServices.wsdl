@@ -13,6 +13,9 @@
 <message name="checkLoginAndGetUserIdResponse">
 <part name="parameters" element="tns:checkLoginAndGetUserIdResponse"/>
 </message>
+<message name="updateAvailableTickets">
+<part name="parameters" element="tns:updateAvailableTickets"/>
+</message>
 <message name="hello">
 <part name="parameters" element="tns:hello"/>
 </message>
@@ -47,6 +50,9 @@
 <operation name="checkLoginAndGetUserId">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/checkLoginAndGetUserIdRequest" message="tns:checkLoginAndGetUserId"/>
 <output wsam:Action="http://services.ticketing.com/ticketingServices/checkLoginAndGetUserIdResponse" message="tns:checkLoginAndGetUserIdResponse"/>
+</operation>
+<operation name="updateAvailableTickets">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/updateAvailableTickets" message="tns:updateAvailableTickets"/>
 </operation>
 <operation name="hello">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/helloRequest" message="tns:hello"/>
@@ -84,6 +90,12 @@
 <output>
 <soap:body use="literal"/>
 </output>
+</operation>
+<operation name="updateAvailableTickets">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
 </operation>
 <operation name="hello">
 <soap:operation soapAction=""/>

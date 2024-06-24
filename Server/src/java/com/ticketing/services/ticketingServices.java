@@ -70,6 +70,16 @@ public class ticketingServices {
     /**
      * Web service operation
      */
+    @WebMethod(operationName = "updateAvailableTickets")
+    @Oneway
+    public void updateAvailableTickets(@WebParam(name = "ticketTypeID") int ticketTypeID, @WebParam(name = "ticketsReserved") int ticketsReserved) {
+        t = new Tickets();
+        t.updateAvailableTickets(ticketTypeID, ticketsReserved);
+    }
+
+    /**
+     * Web service operation
+     */
     @WebMethod(operationName = "insertTicket")
     @Oneway
     public void insertTicket(@WebParam(name = "ticketID") int ticketID, @WebParam(name = "userID") int userID, @WebParam(name = "eventID") int eventID, @WebParam(name = "ticketTypeID") int ticketTypeID, @WebParam(name = "hargaTotal") int hargaTotal, @WebParam(name = "isClaimed") boolean isClaimed) {

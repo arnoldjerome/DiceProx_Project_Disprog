@@ -316,12 +316,6 @@ public class bookTiketAcara extends javax.swing.JFrame {
             return;
         } else {
 
-//            String hargaTotalStr = hargaTotal.getText().replaceAll("[^\\d]", "");
-//            int totalHarga = 0;
-//
-//            if (!hargaTotalStr.isEmpty()) {
-//                totalHarga = Integer.parseInt(hargaTotalStr);
-//            }
             LocalDateTime now = LocalDateTime.now();
 
             int currentSecond = now.getSecond();
@@ -340,8 +334,10 @@ public class bookTiketAcara extends javax.swing.JFrame {
             boolean isClaimed = false;
             String numericString = hargaTotal.getText().replace("Rp", "").replace(".", "").trim();
             int totalHarga = Integer.parseInt(numericString);
+            int ticketsReserved = (int) jSpinnerTotalTiket.getValue();
 
             insertTicket(code, userID, eventID, TicketTypeID, totalHarga, isClaimed);
+            updateAvailableTickets(TicketTypeID, ticketsReserved);
 
             JOptionPane.showMessageDialog(this, "Reservasi tiket berhasil.", "Informasi Reservasi", JOptionPane.INFORMATION_MESSAGE);
 
@@ -532,6 +528,12 @@ public class bookTiketAcara extends javax.swing.JFrame {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
         port.insertTicket(ticketID, userID, eventID, ticketTypeID, hargaTotal, isClaimed);
+    }
+
+    private static void updateAvailableTickets(int ticketTypeID, int ticketsReserved) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        port.updateAvailableTickets(ticketTypeID, ticketsReserved);
     }
 
 }
