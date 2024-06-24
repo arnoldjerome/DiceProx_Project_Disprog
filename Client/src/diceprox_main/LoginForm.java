@@ -228,47 +228,40 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_passwordTextFocusLost
 
     private void masukButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_masukButtonActionPerformed
+
         try {
-
             if (setujuText.isSelected()) {
-
                 String username = usernameText.getText();
                 String email = emailText.getText();
                 String password = String.valueOf(passwordText.getPassword());
 
                 String formattedMessage = "LOGIN~" + username + "~" + email + "~" + password + "\n";
-
                 out.writeBytes(formattedMessage);
 
-                boolean login = checkLogin(username, password, email);
+                int userId = checkLoginAndGetUserId(username, password, email);
 
-                if (login) {
-
+                if (userId != -1) {
                     String response = in.readLine();
-
                     JOptionPane.showMessageDialog(this, response);
 
                     //JOptionPane.showMessageDialog(this, "Login Sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-                    UserSession.setUsername(usernameText.getText());
-                    UserSession.setEmail(emailText.getText());
+                    UserSession.setUserId(userId);
+                    UserSession.setUsername(username);
+                    UserSession.setEmail(email);
 
                     MainForm windowPlane = new MainForm();
-
                     if (windowPlane == null || !windowPlane.isVisible()) {
                         windowPlane.setVisible(true);
                     }
-
                     this.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Username atau Email atau Password salah!", "Warning", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Username, Email, atau Password salah!", "Warning", JOptionPane.WARNING_MESSAGE);
                     usernameText.setText("");
                     emailText.setText("");
                     passwordText.setText("");
                 }
-
             } else {
                 JOptionPane.showMessageDialog(null, "Setujui persyaratan terlebih dahulu!");
-                return;
             }
         } catch (Exception ex) {
             System.out.println("Error di Button Login : " + ex);
@@ -351,9 +344,9 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
         }
     }
 
-    private static Boolean checkLogin(java.lang.String username, java.lang.String password, java.lang.String email) {
+    private static int checkLoginAndGetUserId(java.lang.String username, java.lang.String password, java.lang.String email) {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
-        return port.checkLogin(username, password, email);
+        return port.checkLoginAndGetUserId(username, password, email);
     }
 }

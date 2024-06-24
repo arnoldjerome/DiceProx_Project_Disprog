@@ -4,17 +4,17 @@
 <xsd:import namespace="http://services.ticketing.com/" schemaLocation="http://localhost:8080/Server/ticketingServices?xsd=1"/>
 </xsd:schema>
 </types>
+<message name="checkLoginAndGetUserId">
+<part name="parameters" element="tns:checkLoginAndGetUserId"/>
+</message>
+<message name="checkLoginAndGetUserIdResponse">
+<part name="parameters" element="tns:checkLoginAndGetUserIdResponse"/>
+</message>
 <message name="hello">
 <part name="parameters" element="tns:hello"/>
 </message>
 <message name="helloResponse">
 <part name="parameters" element="tns:helloResponse"/>
-</message>
-<message name="checkLogin">
-<part name="parameters" element="tns:checkLogin"/>
-</message>
-<message name="checkLoginResponse">
-<part name="parameters" element="tns:checkLoginResponse"/>
 </message>
 <message name="checkRegister">
 <part name="parameters" element="tns:checkRegister"/>
@@ -38,13 +38,13 @@
 <part name="parameters" element="tns:selectAllEventsTypeResponse"/>
 </message>
 <portType name="ticketingServices">
+<operation name="checkLoginAndGetUserId">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/checkLoginAndGetUserIdRequest" message="tns:checkLoginAndGetUserId"/>
+<output wsam:Action="http://services.ticketing.com/ticketingServices/checkLoginAndGetUserIdResponse" message="tns:checkLoginAndGetUserIdResponse"/>
+</operation>
 <operation name="hello">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/helloRequest" message="tns:hello"/>
 <output wsam:Action="http://services.ticketing.com/ticketingServices/helloResponse" message="tns:helloResponse"/>
-</operation>
-<operation name="checkLogin">
-<input wsam:Action="http://services.ticketing.com/ticketingServices/checkLoginRequest" message="tns:checkLogin"/>
-<output wsam:Action="http://services.ticketing.com/ticketingServices/checkLoginResponse" message="tns:checkLoginResponse"/>
 </operation>
 <operation name="checkRegister">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/checkRegisterRequest" message="tns:checkRegister"/>
@@ -64,7 +64,7 @@
 </portType>
 <binding name="ticketingServicesPortBinding" type="tns:ticketingServices">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="hello">
+<operation name="checkLoginAndGetUserId">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -73,7 +73,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="checkLogin">
+<operation name="hello">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

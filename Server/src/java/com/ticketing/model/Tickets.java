@@ -13,13 +13,24 @@ import java.util.ArrayList;
  * @author Rome
  */
 public class Tickets extends MyModel {
-    int TicketID;
-    int UserID;
-    int EventID;
-    private String TicketType;
+
+    private int TicketID;
+    private int UserID;
+    private int EventID;
+    private int TicketTypeID;
+    private int HargaTotal;
     private Timestamp ReservationDate;
     private Boolean IsClaimed;
-    private Timestamp created_at;
+
+    public Tickets(int TicketID, int UserID, int EventID, int TicketTypeID, int HargaTotal, Timestamp ReservationDate, Boolean IsClaimed) {
+        this.TicketID = TicketID;
+        this.UserID = UserID;
+        this.EventID = EventID;
+        this.TicketTypeID = TicketTypeID;
+        this.HargaTotal = HargaTotal;
+        this.ReservationDate = ReservationDate;
+        this.IsClaimed = IsClaimed;
+    }
 
     public int getTicketID() {
         return TicketID;
@@ -45,12 +56,20 @@ public class Tickets extends MyModel {
         this.EventID = EventID;
     }
 
-    public String getTicketType() {
-        return TicketType;
+    public int getTicketTypeID() {
+        return TicketTypeID;
     }
 
-    public void setTicketType(String TicketType) {
-        this.TicketType = TicketType;
+    public void setTicketTypeID(int TicketTypeID) {
+        this.TicketTypeID = TicketTypeID;
+    }
+
+    public int getHargaTotal() {
+        return HargaTotal;
+    }
+
+    public void setHargaTotal(int HargaTotal) {
+        this.HargaTotal = HargaTotal;
     }
 
     public Timestamp getReservationDate() {
@@ -67,24 +86,6 @@ public class Tickets extends MyModel {
 
     public void setIsClaimed(Boolean IsClaimed) {
         this.IsClaimed = IsClaimed;
-    }
-
-    public Timestamp getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(Timestamp created_at) {
-        this.created_at = created_at;
-    }
-
-    public Tickets(int TicketID, int UserID, int EventID, String TicketType, Timestamp ReservationDate, Boolean IsClaimed, Timestamp created_at) {
-        this.TicketID = TicketID;
-        this.UserID = UserID;
-        this.EventID = EventID;
-        this.TicketType = TicketType;
-        this.ReservationDate = ReservationDate;
-        this.IsClaimed = IsClaimed;
-        this.created_at = created_at;
     }
 
     @Override
@@ -106,6 +107,5 @@ public class Tickets extends MyModel {
     public ArrayList<Object> viewListData() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-    
+
 }

@@ -104,12 +104,12 @@ public class Account extends MyModel {
     // </editor-fold>
 
     // <editor-fold desc="Methods">
-    public boolean check_login() {
-        boolean status = false;
+    public int check_login_and_get_user_id() {
+        int userId = -1;
         try {
-            if (!MyModel.conn.isClosed()) { //jika sudah terbentuk koneksi
+            if (!MyModel.conn.isClosed()) { // Jika sudah terbentuk koneksi
                 PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
-                        "SELECT * FROM users WHERE Username = ? AND Password = ? AND Email = ?"
+                        "SELECT UserID FROM users WHERE Username = ? AND Password = ? AND Email = ?"
                 );
 
                 sql.setString(1, this.Username);
@@ -117,13 +117,13 @@ public class Account extends MyModel {
                 sql.setString(3, this.Email);
                 this.result = sql.executeQuery();
                 if (this.result.next()) {
-                    status = true;
+                    userId = this.result.getInt("UserID");
                 }
             }
         } catch (Exception e) {
             System.out.println("Error di check login : " + e);
         }
-        return status;
+        return userId;
     }
 
     public boolean check_register(String Email) {

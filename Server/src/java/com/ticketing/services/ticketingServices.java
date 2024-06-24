@@ -35,11 +35,10 @@ public class ticketingServices {
     /**
      * Web service operation
      */
-    @WebMethod(operationName = "checkLogin")
-    public Boolean checkLogin(@WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "email") String email) {
-        //TODO write your implementation code here:
+    @WebMethod(operationName = "checkLoginAndGetUserId")
+    public int checkLoginAndGetUserId(@WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "email") String email) {
         a = new Account(username, password, email);
-        return a.check_login(); //bisa true atau false
+        return a.check_login_and_get_user_id();
     }
 
     /**
@@ -61,19 +60,6 @@ public class ticketingServices {
         a.insertData();
     }
 
-//    @WebMethod
-//    public ArrayList<Events> selectAllEvents() {
-//        System.out.println("Calling selectAllEvents...");
-//        Events even = new Events();
-//        ArrayList<Events> eventList = new ArrayList<>();
-//        for (Object obj : even.viewListData()) {
-//            if (obj instanceof Events) {
-//                eventList.add((Events) obj);
-//            }
-//        }
-//        System.out.println("Returned event list with size: " + eventList.size());
-//        return eventList;
-//    }
     @WebMethod
     public ArrayList<Events> selectAllEvents() {
         System.out.println("Calling selectAllEvents...");
