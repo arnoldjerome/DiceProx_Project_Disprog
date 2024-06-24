@@ -5,6 +5,8 @@
 package subsistem_event;
 
 import diceprox_main.MainForm;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -228,6 +230,16 @@ public class bookAcara extends javax.swing.JFrame {
             int selectedRow = jAcaraTabel.getSelectedRow();
             if (selectedRow == -1) {
                 JOptionPane.showMessageDialog(this, "Pilih acara terlebih dahulu.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate eventDate = LocalDate.parse(dateText.getText(), formatter);
+
+
+            if (currentDate.isAfter(eventDate)){
+                JOptionPane.showMessageDialog(this, "Acara telah selesai.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 

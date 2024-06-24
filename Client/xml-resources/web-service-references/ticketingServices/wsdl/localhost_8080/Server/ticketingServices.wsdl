@@ -10,15 +10,6 @@
 <message name="helloResponse">
 <part name="parameters" element="tns:helloResponse"/>
 </message>
-<message name="insertAccRegist">
-<part name="parameters" element="tns:insertAccRegist"/>
-</message>
-<message name="selectAllEvents">
-<part name="parameters" element="tns:selectAllEvents"/>
-</message>
-<message name="selectAllEventsResponse">
-<part name="parameters" element="tns:selectAllEventsResponse"/>
-</message>
 <message name="checkLogin">
 <part name="parameters" element="tns:checkLogin"/>
 </message>
@@ -31,6 +22,15 @@
 <message name="checkRegisterResponse">
 <part name="parameters" element="tns:checkRegisterResponse"/>
 </message>
+<message name="insertAccRegist">
+<part name="parameters" element="tns:insertAccRegist"/>
+</message>
+<message name="selectAllEvents">
+<part name="parameters" element="tns:selectAllEvents"/>
+</message>
+<message name="selectAllEventsResponse">
+<part name="parameters" element="tns:selectAllEventsResponse"/>
+</message>
 <message name="selectAllEventsType">
 <part name="parameters" element="tns:selectAllEventsType"/>
 </message>
@@ -42,13 +42,6 @@
 <input wsam:Action="http://services.ticketing.com/ticketingServices/helloRequest" message="tns:hello"/>
 <output wsam:Action="http://services.ticketing.com/ticketingServices/helloResponse" message="tns:helloResponse"/>
 </operation>
-<operation name="insertAccRegist">
-<input wsam:Action="http://services.ticketing.com/ticketingServices/insertAccRegist" message="tns:insertAccRegist"/>
-</operation>
-<operation name="selectAllEvents">
-<input wsam:Action="http://services.ticketing.com/ticketingServices/selectAllEventsRequest" message="tns:selectAllEvents"/>
-<output wsam:Action="http://services.ticketing.com/ticketingServices/selectAllEventsResponse" message="tns:selectAllEventsResponse"/>
-</operation>
 <operation name="checkLogin">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/checkLoginRequest" message="tns:checkLogin"/>
 <output wsam:Action="http://services.ticketing.com/ticketingServices/checkLoginResponse" message="tns:checkLoginResponse"/>
@@ -56,6 +49,13 @@
 <operation name="checkRegister">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/checkRegisterRequest" message="tns:checkRegister"/>
 <output wsam:Action="http://services.ticketing.com/ticketingServices/checkRegisterResponse" message="tns:checkRegisterResponse"/>
+</operation>
+<operation name="insertAccRegist">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/insertAccRegist" message="tns:insertAccRegist"/>
+</operation>
+<operation name="selectAllEvents">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/selectAllEventsRequest" message="tns:selectAllEvents"/>
+<output wsam:Action="http://services.ticketing.com/ticketingServices/selectAllEventsResponse" message="tns:selectAllEventsResponse"/>
 </operation>
 <operation name="selectAllEventsType">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/selectAllEventsTypeRequest" message="tns:selectAllEventsType"/>
@@ -73,21 +73,6 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="insertAccRegist">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-</operation>
-<operation name="selectAllEvents">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
 <operation name="checkLogin">
 <soap:operation soapAction=""/>
 <input>
@@ -98,6 +83,21 @@
 </output>
 </operation>
 <operation name="checkRegister">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="insertAccRegist">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
+<operation name="selectAllEvents">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

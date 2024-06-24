@@ -56,7 +56,6 @@ public class bookTiketAcara extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1920, 1080));
         setMinimumSize(new java.awt.Dimension(1920, 1080));
-        setPreferredSize(new java.awt.Dimension(1920, 1080));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         nameText.setBackground(new java.awt.Color(207, 219, 229));
@@ -299,7 +298,8 @@ public class bookTiketAcara extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new bookTiketAcara().setVisible(true);
+                String eventId = "1";
+                new bookTiketAcara(eventId).setVisible(true);
             }
         });
     }
@@ -320,9 +320,10 @@ public class bookTiketAcara extends javax.swing.JFrame {
     private javax.swing.JButton reserveButton;
     // End of variables declaration//GEN-END:variables
 
-    private static java.util.List<com.ticketing.services.Events> selectAllEventsType(String eventId) {
+    private static java.util.List<com.ticketing.services.Events> selectAllEventsType(java.lang.String arg0) {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
-        return port.selectAllEventsType();
+        return port.selectAllEventsType(arg0);
     }
+
 }
