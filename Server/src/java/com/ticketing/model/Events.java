@@ -1,6 +1,6 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+     * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+     * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.ticketing.model;
 
@@ -108,20 +108,20 @@ public class Events extends MyModel {
     public ArrayList<Object> viewListData() {
         ArrayList<Object> listOfEvents = new ArrayList<>();
         try {
-//            // untuk select
-//            // statement -> create statement -> resultset
-//            this.statement = (Statement) MyModel.conn.createStatement();
-//            this.result = this.statement.executeQuery("SELECT * FROM events");
-//
-//            while (this.result.next()) {
-//                Events ev = new Events(
-//                        this.result.getInt("EventID"),
-//                        this.result.getString("EventName"),
-//                        this.result.getString("EventDate"),
-//                        this.result.getString("EventLocation")
-//                );
-//
-//                listOfVehicles.add(ev);
+            //            // untuk select
+            //            // statement -> create statement -> resultset
+            //            this.statement = (Statement) MyModel.conn.createStatement();
+            //            this.result = this.statement.executeQuery("SELECT * FROM events");
+            //
+            //            while (this.result.next()) {
+            //                Events ev = new Events(
+            //                        this.result.getInt("EventID"),
+            //                        this.result.getString("EventName"),
+            //                        this.result.getString("EventDate"),
+            //                        this.result.getString("EventLocation")
+            //                );
+            //
+            //                listOfVehicles.add(ev);
 
             this.statement = (Statement) MyModel.conn.createStatement();
             this.result = this.statement.executeQuery(
@@ -135,6 +135,37 @@ public class Events extends MyModel {
                     + "FROM events e "
                     + "JOIN typeTickets t ON e.EventID = t.EventID "
                     + "GROUP BY e.EventID, e.EventName, e.EventDate, e.EventLocation");
+
+            while (this.result.next()) {
+                Events ev = new Events(
+                        this.result.getInt("EventID"),
+                        this.result.getString("EventName"),
+                        this.result.getString("EventDate"),
+                        this.result.getString("EventLocation"),
+                        this.result.getInt("TotalQuota"),
+                        this.result.getInt("AvailableTickets")
+                );
+                listOfEvents.add(ev);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error di view list data: " + e);
+        }
+
+        return listOfEvents;
+    }
+
+    public ArrayList<Object> viewListDataType(String eventId) {
+        ArrayList<Object> listOfEvents = new ArrayList<>();
+        try {
+
+            this.statement = (Statement) MyModel.conn.createStatement();
+            this.result = this.statement.executeQuery(
+                    "SELECT e.EventID, e.EventName, e.EventDate, e.EventLocation, t.TotalQuota, t.AvailableTickets "
+                    + "FROM events e "
+                    + "JOIN typeTickets t ON e.EventID = t.EventID "
+                    + "WHERE e.EventID = " + eventId);
 
             while (this.result.next()) {
                 Events ev = new Events(

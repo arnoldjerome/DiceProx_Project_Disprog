@@ -18,6 +18,10 @@
 
 <xs:element name="selectAllEventsResponse" type="tns:selectAllEventsResponse"/>
 
+<xs:element name="selectAllEventsType" type="tns:selectAllEventsType"/>
+
+<xs:element name="selectAllEventsTypeResponse" type="tns:selectAllEventsTypeResponse"/>
+
 <xs:complexType name="insertAccRegist">
 <xs:sequence>
 <xs:element name="username" type="xs:string" minOccurs="0"/>
@@ -40,11 +44,11 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="selectAllEvents">
+<xs:complexType name="selectAllEventsType">
 <xs:sequence/>
 </xs:complexType>
 
-<xs:complexType name="selectAllEventsResponse">
+<xs:complexType name="selectAllEventsTypeResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:events" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
@@ -67,6 +71,16 @@
 
 <xs:complexType name="myModel" abstract="true">
 <xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="selectAllEvents">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="selectAllEventsResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:events" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
 </xs:complexType>
 
 <xs:complexType name="checkLogin">

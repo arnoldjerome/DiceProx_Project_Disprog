@@ -88,4 +88,18 @@ public class ticketingServices {
         return eventList;
     }
 
+    @WebMethod
+    public ArrayList<Events> selectAllEventsType(String eventId) {
+        System.out.println("Calling selectAllEventsType...");
+        Events even = new Events();
+        ArrayList<Events> eventList = new ArrayList<>();
+        for (Object obj : even.viewListDataType(eventId)) {
+            if (obj instanceof Events) {
+                eventList.add((Events) obj);
+            }
+        }
+        System.out.println("Returned event list with size: " + eventList.size());
+        return eventList;
+    }
+
 }

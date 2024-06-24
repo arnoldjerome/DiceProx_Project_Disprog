@@ -4,17 +4,30 @@
  */
 package subsistem_event;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author asus
  */
 public class bookTiketAcara extends javax.swing.JFrame {
 
+    private String eventId;
     /**
      * Creates new form bookTiketAcara
      */
-    public bookTiketAcara() {
+    public bookTiketAcara(String eventId) {
+        this.eventId = eventId;
         initComponents();
+
+        //untuk center
+        this.setLocationRelativeTo(null);
+
+        // Maximize the frame
+        setExtendedState(bookAcara.MAXIMIZED_BOTH);
+        
+        refreshTable();
     }
 
     /**
@@ -26,7 +39,18 @@ public class bookTiketAcara extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        nameText = new javax.swing.JTextField();
+        dateText = new javax.swing.JTextField();
+        locationText = new javax.swing.JTextField();
         logo = new javax.swing.JLabel();
+        reserveButton = new javax.swing.JButton();
+        nameLabel = new javax.swing.JLabel();
+        dateLabel = new javax.swing.JLabel();
+        locationLabel = new javax.swing.JLabel();
+        availableReservationLabel = new javax.swing.JLabel();
+        availableTicketText = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jAcaraTabel = new javax.swing.JTable();
         bagian_kanan = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -35,9 +59,111 @@ public class bookTiketAcara extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(1920, 1080));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        nameText.setBackground(new java.awt.Color(207, 219, 229));
+        nameText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        nameText.setText("Name");
+        nameText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                nameTextFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                nameTextFocusLost(evt);
+            }
+        });
+        getContentPane().add(nameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 320, 500, 67));
+
+        dateText.setBackground(new java.awt.Color(207, 219, 229));
+        dateText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        dateText.setText("Date");
+        dateText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                dateTextFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                dateTextFocusLost(evt);
+            }
+        });
+        getContentPane().add(dateText, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 420, 500, 67));
+
+        locationText.setBackground(new java.awt.Color(207, 219, 229));
+        locationText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        locationText.setText("Location");
+        locationText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                locationTextFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                locationTextFocusLost(evt);
+            }
+        });
+        getContentPane().add(locationText, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 520, 500, 67));
+
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
         logo.setPreferredSize(new java.awt.Dimension(120, 125));
         getContentPane().add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 10, 240, 200));
+
+        reserveButton.setBackground(new java.awt.Color(187, 224, 253));
+        reserveButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        reserveButton.setText("Reserve");
+        reserveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reserveButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(reserveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 780, 360, 110));
+
+        nameLabel.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        nameLabel.setForeground(new java.awt.Color(57, 62, 70));
+        nameLabel.setText("Name");
+        getContentPane().add(nameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 330, 140, -1));
+
+        dateLabel.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        dateLabel.setForeground(new java.awt.Color(57, 62, 70));
+        dateLabel.setText("Date");
+        getContentPane().add(dateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 430, 140, -1));
+
+        locationLabel.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        locationLabel.setForeground(new java.awt.Color(57, 62, 70));
+        locationLabel.setText("Location");
+        getContentPane().add(locationLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 530, 140, -1));
+
+        availableReservationLabel.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        availableReservationLabel.setForeground(new java.awt.Color(57, 62, 70));
+        availableReservationLabel.setText("Available Tickets");
+        getContentPane().add(availableReservationLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 630, 280, -1));
+
+        availableTicketText.setBackground(new java.awt.Color(207, 219, 229));
+        availableTicketText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        availableTicketText.setText("Available Tickets");
+        availableTicketText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                availableTicketTextFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                availableTicketTextFocusLost(evt);
+            }
+        });
+        getContentPane().add(availableTicketText, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 620, 500, 67));
+
+        jAcaraTabel.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Name", "Date", "Location", "Total Quota", "Available Tickets"
+            }
+        ));
+        jAcaraTabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jAcaraTabelMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jAcaraTabel);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 40, 850, 910));
 
         bagian_kanan.setBackground(new java.awt.Color(187, 187, 187));
         bagian_kanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background_main_kiri.png"))); // NOI18N
@@ -45,6 +171,103 @@ public class bookTiketAcara extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void nameTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nameTextFocusGained
+        if (nameText.getText().equals("Name")) {
+            nameText.setText("");
+        }
+    }//GEN-LAST:event_nameTextFocusGained
+
+    private void nameTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nameTextFocusLost
+        if (nameText.getText().equals("")) {
+            nameText.setText("Name");
+        }
+    }//GEN-LAST:event_nameTextFocusLost
+
+    private void dateTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dateTextFocusGained
+        if (dateText.getText().equals("Date")) {
+            dateText.setText("");
+        }
+    }//GEN-LAST:event_dateTextFocusGained
+
+    private void dateTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dateTextFocusLost
+        if (dateText.getText().equals("")) {
+            dateText.setText("Date");
+        }
+    }//GEN-LAST:event_dateTextFocusLost
+
+    private void locationTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_locationTextFocusGained
+        if (locationText.getText().equals("Location")) {
+            locationText.setText("");
+        }
+    }//GEN-LAST:event_locationTextFocusGained
+
+    private void locationTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_locationTextFocusLost
+        if (locationText.getText().equals("")) {
+            locationText.setText("Location");
+        }
+    }//GEN-LAST:event_locationTextFocusLost
+
+    private void reserveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reserveButtonActionPerformed
+//// Implementasi logika reservasi tiket di sini
+//        String ticketType = cmbTicketType.getSelectedItem().toString();
+//        int quantity = (int) spnTicketQuantity.getValue();
+//
+//        // Lakukan reservasi tiket dengan detail yang dipilih
+//        try {
+//            // Panggil metode web service untuk menyimpan data reservasi
+//            reserveTickets(eventID, ticketType, quantity);
+//            JOptionPane.showMessageDialog(this, "Reserved " + quantity + " " + ticketType + " tickets for " + eventName + ".");
+//            this.dispose();
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(this, "Error reserving tickets: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+    }//GEN-LAST:event_reserveButtonActionPerformed
+
+    private void availableTicketTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_availableTicketTextFocusGained
+        if (availableTicketText.getText().equals("Available Tickets")) {
+            availableTicketText.setText("");
+        }
+    }//GEN-LAST:event_availableTicketTextFocusGained
+
+    private void availableTicketTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_availableTicketTextFocusLost
+        if (availableTicketText.getText().equals("")) {
+            availableTicketText.setText("Available Tickets");
+        }
+    }//GEN-LAST:event_availableTicketTextFocusLost
+
+    public void refreshTable() {
+        DefaultTableModel model = (DefaultTableModel) jAcaraTabel.getModel();
+        model.setRowCount(0);
+        Object[] rowData = new Object[6]; //total kolom tampil
+
+        for (com.ticketing.services.Events obj : selectAllEventsType(eventId)) {
+            rowData[0] = obj.getEventID();
+            rowData[1] = obj.getEventName();
+            rowData[2] = obj.getEventDate();
+            rowData[3] = obj.getEventLocation();
+            rowData[4] = obj.getTotalQuota();
+            rowData[5] = obj.getAvailableTickets();
+            model.addRow(rowData);
+        }
+    }
+    
+    private void jAcaraTabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jAcaraTabelMouseClicked
+        // TODO add your handling code here:
+
+        DefaultTableModel RecordTable = (DefaultTableModel) jAcaraTabel.getModel();
+        int SelectedRows = jAcaraTabel.getSelectedRow();
+
+        nameText.setEditable(false);
+        dateText.setEditable(false);
+        locationText.setEditable(false);
+        availableTicketText.setEditable(false);
+
+        nameText.setText(RecordTable.getValueAt(SelectedRows, 1).toString());
+        dateText.setText(RecordTable.getValueAt(SelectedRows, 2).toString());
+        locationText.setText(RecordTable.getValueAt(SelectedRows, 3).toString());
+        availableTicketText.setText(RecordTable.getValueAt(SelectedRows, 5).toString());
+    }//GEN-LAST:event_jAcaraTabelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -82,7 +305,24 @@ public class bookTiketAcara extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel availableReservationLabel;
+    private javax.swing.JTextField availableTicketText;
     private javax.swing.JLabel bagian_kanan;
+    private javax.swing.JLabel dateLabel;
+    private javax.swing.JTextField dateText;
+    private javax.swing.JTable jAcaraTabel;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel locationLabel;
+    private javax.swing.JTextField locationText;
     private javax.swing.JLabel logo;
+    private javax.swing.JLabel nameLabel;
+    private javax.swing.JTextField nameText;
+    private javax.swing.JButton reserveButton;
     // End of variables declaration//GEN-END:variables
+
+    private static java.util.List<com.ticketing.services.Events> selectAllEventsType(String eventId) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.selectAllEventsType();
+    }
 }

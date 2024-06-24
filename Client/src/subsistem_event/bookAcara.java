@@ -225,7 +225,15 @@ public class bookAcara extends javax.swing.JFrame {
         if (availableTicketText.getText().equals("0")) {
             JOptionPane.showMessageDialog(this, "Tickets are no longer available for this event.", "Reservation Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            klaimTiketAcara windowPlane = new klaimTiketAcara();
+            int selectedRow = jAcaraTabel.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Pilih acara terlebih dahulu.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String eventId = idText.getText();
+
+            bookTiketAcara windowPlane = new bookTiketAcara(eventId);
 
             if (windowPlane == null || !windowPlane.isVisible()) {
                 windowPlane.setVisible(true);

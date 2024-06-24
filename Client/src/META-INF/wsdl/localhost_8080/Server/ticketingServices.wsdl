@@ -31,6 +31,12 @@
 <message name="checkRegisterResponse">
 <part name="parameters" element="tns:checkRegisterResponse"/>
 </message>
+<message name="selectAllEventsType">
+<part name="parameters" element="tns:selectAllEventsType"/>
+</message>
+<message name="selectAllEventsTypeResponse">
+<part name="parameters" element="tns:selectAllEventsTypeResponse"/>
+</message>
 <portType name="ticketingServices">
 <operation name="hello">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/helloRequest" message="tns:hello"/>
@@ -50,6 +56,10 @@
 <operation name="checkRegister">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/checkRegisterRequest" message="tns:checkRegister"/>
 <output wsam:Action="http://services.ticketing.com/ticketingServices/checkRegisterResponse" message="tns:checkRegisterResponse"/>
+</operation>
+<operation name="selectAllEventsType">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/selectAllEventsTypeRequest" message="tns:selectAllEventsType"/>
+<output wsam:Action="http://services.ticketing.com/ticketingServices/selectAllEventsTypeResponse" message="tns:selectAllEventsTypeResponse"/>
 </operation>
 </portType>
 <binding name="ticketingServicesPortBinding" type="tns:ticketingServices">
@@ -88,6 +98,15 @@
 </output>
 </operation>
 <operation name="checkRegister">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="selectAllEventsType">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
