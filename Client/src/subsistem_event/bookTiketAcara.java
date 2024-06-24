@@ -4,6 +4,11 @@
  */
 package subsistem_event;
 
+import diceprox_main.MainForm;
+import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -28,7 +33,21 @@ public class bookTiketAcara extends javax.swing.JFrame {
         // Maximize the frame
         setExtendedState(bookAcara.MAXIMIZED_BOTH);
 
+        nameText.setEditable(false);
+        dateText.setEditable(false);
+        locationText.setEditable(false);
+        availableTicketText.setEditable(false);
+        tipeText.setEditable(false);
+        hargaText.setEditable(false);
+
         refreshTable();
+
+        // Tambahkan listener ke jSpinnerTotalTiket
+        jSpinnerTotalTiket.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                updateTotalHarga();
+            }
+        });
     }
 
     /**
@@ -46,6 +65,9 @@ public class bookTiketAcara extends javax.swing.JFrame {
         logo = new javax.swing.JLabel();
         reserveButton = new javax.swing.JButton();
         nameLabel = new javax.swing.JLabel();
+        hargaTotal = new javax.swing.JLabel();
+        hargaTotalLabel = new javax.swing.JLabel();
+        totalTiketLabel = new javax.swing.JLabel();
         dateLabel = new javax.swing.JLabel();
         locationLabel = new javax.swing.JLabel();
         availableReservationLabel = new javax.swing.JLabel();
@@ -57,6 +79,7 @@ public class bookTiketAcara extends javax.swing.JFrame {
         tipeText = new javax.swing.JTextField();
         hargaLabel = new javax.swing.JLabel();
         tipeLabel = new javax.swing.JLabel();
+        jSpinnerTotalTiket = new javax.swing.JSpinner();
         bagian_kanan = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -121,6 +144,21 @@ public class bookTiketAcara extends javax.swing.JFrame {
         nameLabel.setForeground(new java.awt.Color(57, 62, 70));
         nameLabel.setText("Name");
         getContentPane().add(nameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 70, 140, -1));
+
+        hargaTotal.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        hargaTotal.setForeground(new java.awt.Color(255, 51, 51));
+        hargaTotal.setText("Rp .......");
+        getContentPane().add(hargaTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(1450, 280, 410, -1));
+
+        hargaTotalLabel.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        hargaTotalLabel.setForeground(new java.awt.Color(57, 62, 70));
+        hargaTotalLabel.setText("Harga Total");
+        getContentPane().add(hargaTotalLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 280, 230, -1));
+
+        totalTiketLabel.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        totalTiketLabel.setForeground(new java.awt.Color(57, 62, 70));
+        totalTiketLabel.setText("Total Tiket");
+        getContentPane().add(totalTiketLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 280, 230, -1));
 
         dateLabel.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         dateLabel.setForeground(new java.awt.Color(57, 62, 70));
@@ -215,6 +253,10 @@ public class bookTiketAcara extends javax.swing.JFrame {
         tipeLabel.setText("Tipe");
         getContentPane().add(tipeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 140, -1));
 
+        jSpinnerTotalTiket.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jSpinnerTotalTiket.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        getContentPane().add(jSpinnerTotalTiket, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 270, 220, 60));
+
         bagian_kanan.setBackground(new java.awt.Color(187, 187, 187));
         bagian_kanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background_main_kiri.png"))); // NOI18N
         getContentPane().add(bagian_kanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 1080));
@@ -259,19 +301,24 @@ public class bookTiketAcara extends javax.swing.JFrame {
     }//GEN-LAST:event_locationTextFocusLost
 
     private void reserveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reserveButtonActionPerformed
-//// Implementasi logika reservasi tiket di sini
-//        String ticketType = cmbTicketType.getSelectedItem().toString();
-//        int quantity = (int) spnTicketQuantity.getValue();
-//
-//        // Lakukan reservasi tiket dengan detail yang dipilih
-//        try {
-//            // Panggil metode web service untuk menyimpan data reservasi
-//            reserveTickets(eventID, ticketType, quantity);
-//            JOptionPane.showMessageDialog(this, "Reserved " + quantity + " " + ticketType + " tickets for " + eventName + ".");
-//            this.dispose();
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(this, "Error reserving tickets: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
+// Pengecekan jika available tickets sudah habis
+
+        int selectedRow = jAcaraTabel.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih tiket terlebih dahulu.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
+            return;
+        } else {
+            JOptionPane.showMessageDialog(this, "Reservasi tiket berhasil.", "Informasi Reservasi", JOptionPane.INFORMATION_MESSAGE);
+
+            MainForm windowPlane = new MainForm();
+
+            if (windowPlane == null || !windowPlane.isVisible()) {
+                windowPlane.setVisible(true);
+            }
+
+            this.dispose();
+        }
     }//GEN-LAST:event_reserveButtonActionPerformed
 
     private void availableTicketTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_availableTicketTextFocusGained
@@ -323,6 +370,9 @@ public class bookTiketAcara extends javax.swing.JFrame {
         tipeText.setText(RecordTable.getValueAt(SelectedRows, 4).toString());
         hargaText.setText(RecordTable.getValueAt(SelectedRows, 5).toString());
         availableTicketText.setText(RecordTable.getValueAt(SelectedRows, 7).toString());
+
+        jSpinnerTotalTiket.setValue(1);
+        updateTotalHarga();
     }//GEN-LAST:event_jAcaraTabelMouseClicked
 
     private void backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseClicked
@@ -358,6 +408,22 @@ public class bookTiketAcara extends javax.swing.JFrame {
             tipeText.setText("Tipe");
         }
     }//GEN-LAST:event_tipeTextFocusLost
+
+    private void updateTotalHarga() {
+        try {
+            int jumlahTiket = (int) jSpinnerTotalTiket.getValue();
+            double hargaTiket = Double.parseDouble(hargaText.getText());
+            double totalHarga = jumlahTiket * hargaTiket;
+
+            // Format total harga menggunakan NumberFormat
+            NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.GERMAN);
+            String formattedTotalHarga = numberFormat.format(totalHarga);
+
+            hargaTotal.setText("Rp " + formattedTotalHarga);
+        } catch (NumberFormatException e) {
+            hargaTotal.setText("Rp .......");
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -404,8 +470,11 @@ public class bookTiketAcara extends javax.swing.JFrame {
     private javax.swing.JTextField dateText;
     private javax.swing.JLabel hargaLabel;
     private javax.swing.JTextField hargaText;
+    private javax.swing.JLabel hargaTotal;
+    private javax.swing.JLabel hargaTotalLabel;
     private javax.swing.JTable jAcaraTabel;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSpinner jSpinnerTotalTiket;
     private javax.swing.JLabel locationLabel;
     private javax.swing.JTextField locationText;
     private javax.swing.JLabel logo;
@@ -414,6 +483,7 @@ public class bookTiketAcara extends javax.swing.JFrame {
     private javax.swing.JButton reserveButton;
     private javax.swing.JLabel tipeLabel;
     private javax.swing.JTextField tipeText;
+    private javax.swing.JLabel totalTiketLabel;
     // End of variables declaration//GEN-END:variables
 
     private static java.util.List<com.ticketing.services.Events> selectAllEventsType(java.lang.String arg0) {
