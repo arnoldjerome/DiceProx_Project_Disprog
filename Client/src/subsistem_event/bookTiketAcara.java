@@ -316,38 +316,51 @@ public class bookTiketAcara extends javax.swing.JFrame {
             return;
         } else {
 
-            LocalDateTime now = LocalDateTime.now();
-
-            int currentSecond = now.getSecond();
-            int currentMinute = now.getMinute();
-            int currentHour = now.getHour();
-            int currentDay = now.getDayOfMonth();
-            int currentMonth = now.getMonthValue();
-            int currentYear = now.getYear() - 2000; // Assuming year 2000 as the starting point
-
-            // Encode the components into a single int
-            int code = (currentYear << 26) | (currentMonth << 22) | (currentDay << 17)
-                    | (currentHour << 12) | (currentMinute << 6) | currentSecond;
-
-            int userID = UserSession.getUserId();
-            int eventID = Integer.parseInt(eventId);
-            boolean isClaimed = false;
-            String numericString = hargaTotal.getText().replace("Rp", "").replace(".", "").trim();
-            int totalHarga = Integer.parseInt(numericString);
+            int avaiTikets = Integer.parseInt(availableTicketText.getText());
             int ticketsReserved = (int) jSpinnerTotalTiket.getValue();
+            if (ticketsReserved <= avaiTikets) {
+                LocalDateTime now = LocalDateTime.now();
 
-            insertTicket(code, userID, eventID, TicketTypeID, totalHarga, isClaimed);
-            updateAvailableTickets(TicketTypeID, ticketsReserved);
+                int currentSecond = now.getSecond();
+                int currentMinute = now.getMinute();
+                int currentHour = now.getHour();
+                int currentDay = now.getDayOfMonth();
+                int currentMonth = now.getMonthValue();
+                int currentYear = now.getYear() - 2000; // Assuming year 2000 as the starting point
 
-            JOptionPane.showMessageDialog(this, "Reservasi tiket berhasil.", "Informasi Reservasi", JOptionPane.INFORMATION_MESSAGE);
+                // Encode the components into a single int
+                int code = (currentYear << 26) | (currentMonth << 22) | (currentDay << 17)
+                        | (currentHour << 12) | (currentMinute << 6) | currentSecond;
 
-            MainForm windowPlane = new MainForm();
+                int userID = UserSession.getUserId();
+                int eventID = Integer.parseInt(eventId);
+                boolean isClaimed = false;
+                String numericString = hargaTotal.getText().replace("Rp", "").replace(".", "").trim();
+                int totalHarga = Integer.parseInt(numericString);
 
-            if (windowPlane == null || !windowPlane.isVisible()) {
-                windowPlane.setVisible(true);
+                insertTicket(code, userID, eventID, TicketTypeID, totalHarga, isClaimed);
+                updateAvailableTickets(TicketTypeID, ticketsReserved);
+
+                JOptionPane.showMessageDialog(this, "Reservasi tiket berhasil.", "Informasi Reservasi", JOptionPane.INFORMATION_MESSAGE);
+
+                MainForm windowPlane = new MainForm();
+
+                if (windowPlane == null || !windowPlane.isVisible()) {
+                    windowPlane.setVisible(true);
+                }
+
+                this.dispose();
+            } else {
+
+                if (avaiTikets == 0) {
+                    JOptionPane.showMessageDialog(this, "Stok Tiket yang dipilih telah habis.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
+                    return;
+                } else {
+                    JOptionPane.showMessageDialog(this, "Terlalu banyak jumlah tiket yang ingin di reservasi.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
             }
 
-            this.dispose();
         }
     }//GEN-LAST:event_reserveButtonActionPerformed
 
