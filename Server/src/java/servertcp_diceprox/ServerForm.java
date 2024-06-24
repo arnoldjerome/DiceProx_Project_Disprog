@@ -162,7 +162,7 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 663, 360));
 
         salamLabel.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        salamLabel.setForeground(new java.awt.Color(255, 255, 255));
+        salamLabel.setForeground(new java.awt.Color(57, 62, 70));
         salamLabel.setText("SERVER");
         getContentPane().add(salamLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, -1, -1));
 

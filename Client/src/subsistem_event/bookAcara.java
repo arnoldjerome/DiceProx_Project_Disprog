@@ -5,6 +5,7 @@
 package subsistem_event;
 
 import diceprox_main.MainForm;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,6 +19,8 @@ public class bookAcara extends javax.swing.JFrame {
      */
     public bookAcara() {
         initComponents();
+
+        refreshTable();
 
         //untuk center
         this.setLocationRelativeTo(null);
@@ -80,6 +83,11 @@ public class bookAcara extends javax.swing.JFrame {
                 "ID", "Name", "Date", "Location", "Total Quota", "Available Tickets"
             }
         ));
+        jAcaraTabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jAcaraTabelMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jAcaraTabel);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 40, 850, 910));
@@ -213,13 +221,18 @@ public class bookAcara extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void reservationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationButtonActionPerformed
-        bookAcara windowPlane = new bookAcara();
+        // Pengecekan jika available tickets sudah habis
+        if (availableTicketText.getText().equals("0")) {
+            JOptionPane.showMessageDialog(this, "Tickets are no longer available for this event.", "Reservation Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            klaimTiketAcara windowPlane = new klaimTiketAcara();
 
-        if (windowPlane == null || !windowPlane.isVisible()) {
-            windowPlane.setVisible(true);
+            if (windowPlane == null || !windowPlane.isVisible()) {
+                windowPlane.setVisible(true);
+            }
+
+            this.dispose();
         }
-
-        this.dispose();
     }//GEN-LAST:event_reservationButtonActionPerformed
 
     private void backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseClicked
@@ -238,21 +251,21 @@ public class bookAcara extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_idTextFocusGained
 
-//    public void refreshTable() {
-//        DefaultTableModel model = (DefaultTableModel) jAcaraTabel.getModel();
-//        model.setRowCount(0);
-//        Object[] rowData = new Object[6]; //total kolom tampil
-//
-//        for (com.ticketing.services.Events obj : selectAllVehicle()) {
-//            rowData[0] = obj.getId();
-//            rowData[1] = obj.getNumberPlate();
-//            rowData[2] = obj.getBrand();
-//            rowData[3] = obj.getVehicleClass();
-//            rowData[4] = obj.getColor();
-//            rowData[5] = obj.getColor();
-//            model.addRow(rowData);
-//        }
-//    }
+    public void refreshTable() {
+        DefaultTableModel model = (DefaultTableModel) jAcaraTabel.getModel();
+        model.setRowCount(0);
+        Object[] rowData = new Object[6]; //total kolom tampil
+
+        for (com.ticketing.services.Events obj : selectAllEvents()) {
+            rowData[0] = obj.getEventID();
+            rowData[1] = obj.getEventName();
+            rowData[2] = obj.getEventDate();
+            rowData[3] = obj.getEventLocation();
+            rowData[4] = obj.getTotalQuota();
+            rowData[5] = obj.getAvailableTickets();
+            model.addRow(rowData);
+        }
+    }
 
     private void idTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_idTextFocusLost
         if (idText.getText().equals("")) {
@@ -320,6 +333,27 @@ public class bookAcara extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_dateTextFocusLost
 
+    private void jAcaraTabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jAcaraTabelMouseClicked
+        // TODO add your handling code here:
+
+        DefaultTableModel RecordTable = (DefaultTableModel) jAcaraTabel.getModel();
+        int SelectedRows = jAcaraTabel.getSelectedRow();
+
+        idText.setEditable(false);
+        nameText.setEditable(false);
+        dateText.setEditable(false);
+        locationText.setEditable(false);
+        totalQuotaText.setEditable(false);
+        availableTicketText.setEditable(false);
+
+        idText.setText(RecordTable.getValueAt(SelectedRows, 0).toString());
+        nameText.setText(RecordTable.getValueAt(SelectedRows, 1).toString());
+        dateText.setText(RecordTable.getValueAt(SelectedRows, 2).toString());
+        locationText.setText(RecordTable.getValueAt(SelectedRows, 3).toString());
+        totalQuotaText.setText(RecordTable.getValueAt(SelectedRows, 4).toString());
+        availableTicketText.setText(RecordTable.getValueAt(SelectedRows, 5).toString());
+    }//GEN-LAST:event_jAcaraTabelMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -375,4 +409,10 @@ public class bookAcara extends javax.swing.JFrame {
     private javax.swing.JLabel totalQuotaLabel;
     private javax.swing.JTextField totalQuotaText;
     // End of variables declaration//GEN-END:variables
+
+    private static java.util.List<com.ticketing.services.Events> selectAllEvents() {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.selectAllEvents();
+    }
 }

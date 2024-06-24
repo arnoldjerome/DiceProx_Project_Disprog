@@ -20,14 +20,18 @@ public class Events extends MyModel {
     private String EventName;
     private String EventDate;
     private String EventLocation;
+    private int TotalQuota;
+    private int AvailableTickets;
     // </editor-fold>
 
     // <editor-fold desc="Constructors">
-    public Events(int EventID, String EventName, String EventDate, String EventLocation) {
+    public Events(int EventID, String EventName, String EventDate, String EventLocation, int TotalQuota, int AvailableTickets) {
         this.EventID = EventID;
         this.EventName = EventName;
         this.EventDate = EventDate;
         this.EventLocation = EventLocation;
+        this.TotalQuota = TotalQuota;
+        this.AvailableTickets = AvailableTickets;
     }
 
     public Events() {
@@ -67,6 +71,22 @@ public class Events extends MyModel {
     public void setEventLocation(String EventLocation) {
         this.EventLocation = EventLocation;
     }
+
+    public int getTotalQuota() {
+        return TotalQuota;
+    }
+
+    public void setTotalQuota(int TotalQuota) {
+        this.TotalQuota = TotalQuota;
+    }
+
+    public int getAvailableTickets() {
+        return AvailableTickets;
+    }
+
+    public void setAvailableTickets(int AvailableTickets) {
+        this.AvailableTickets = AvailableTickets;
+    }
     // </editor-fold>
 
     // <editor-fold desc="Methods">
@@ -84,35 +104,57 @@ public class Events extends MyModel {
     public void deleteData() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-    
-    public ArrayList<Object> viewListData() {
-        ArrayList<Object> listOfVehicles = new ArrayList<>();
-        try {
-            // untuk select
-            // statement -> create statement -> resultset
-            this.statement = (Statement)MyModel.conn.createStatement();
-            this.result = this.statement.executeQuery("SELECT * FROM events");
 
-            while(this.result.next()) {
+    public ArrayList<Object> viewListData() {
+        ArrayList<Object> listOfEvents = new ArrayList<>();
+        try {
+//            // untuk select
+//            // statement -> create statement -> resultset
+//            this.statement = (Statement) MyModel.conn.createStatement();
+//            this.result = this.statement.executeQuery("SELECT * FROM events");
+//
+//            while (this.result.next()) {
+//                Events ev = new Events(
+//                        this.result.getInt("EventID"),
+//                        this.result.getString("EventName"),
+//                        this.result.getString("EventDate"),
+//                        this.result.getString("EventLocation")
+//                );
+//
+//                listOfVehicles.add(ev);
+
+            this.statement = (Statement) MyModel.conn.createStatement();
+            this.result = this.statement.executeQuery(
+                    //                    "SELECT e.EventID, e.EventName, e.EventDate, e.EventLocation, t.TotalQuota, t.AvailableTickets "
+                    //                    + "FROM events e "
+                    //                    + "JOIN typeTickets t ON e.EventID = t.EventID");
+
+                    "SELECT e.EventID, e.EventName, e.EventDate, e.EventLocation, "
+                    + "SUM(t.TotalQuota) AS TotalQuota, "
+                    + "SUM(t.AvailableTickets) AS AvailableTickets "
+                    + "FROM events e "
+                    + "JOIN typeTickets t ON e.EventID = t.EventID "
+                    + "GROUP BY e.EventID, e.EventName, e.EventDate, e.EventLocation");
+
+            while (this.result.next()) {
                 Events ev = new Events(
                         this.result.getInt("EventID"),
                         this.result.getString("EventName"),
                         this.result.getString("EventDate"),
-                        this.result.getString("EventLocation")
+                        this.result.getString("EventLocation"),
+                        this.result.getInt("TotalQuota"),
+                        this.result.getInt("AvailableTickets")
                 );
+                listOfEvents.add(ev);
 
-                listOfVehicles.add(ev);
             }
 
-        } 
-
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error di view list data: " + e);
         }
 
-        return listOfVehicles;
-    } 
+        return listOfEvents;
+    }
     // </editor-fold>
 
 }

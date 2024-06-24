@@ -14,9 +14,9 @@
 
 <xs:element name="insertAccRegist" type="tns:insertAccRegist"/>
 
-<xs:element name="viewListDataEvent" type="tns:viewListDataEvent"/>
+<xs:element name="selectAllEvents" type="tns:selectAllEvents"/>
 
-<xs:element name="viewListDataEventResponse" type="tns:viewListDataEventResponse"/>
+<xs:element name="selectAllEventsResponse" type="tns:selectAllEventsResponse"/>
 
 <xs:complexType name="insertAccRegist">
 <xs:sequence>
@@ -40,6 +40,35 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="selectAllEvents">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="selectAllEventsResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:events" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="events">
+<xs:complexContent>
+<xs:extension base="tns:myModel">
+<xs:sequence>
+<xs:element name="availableTickets" type="xs:int"/>
+<xs:element name="eventDate" type="xs:string" minOccurs="0"/>
+<xs:element name="eventID" type="xs:int"/>
+<xs:element name="eventLocation" type="xs:string" minOccurs="0"/>
+<xs:element name="eventName" type="xs:string" minOccurs="0"/>
+<xs:element name="totalQuota" type="xs:int"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="myModel" abstract="true">
+<xs:sequence/>
+</xs:complexType>
+
 <xs:complexType name="checkLogin">
 <xs:sequence>
 <xs:element name="username" type="xs:string" minOccurs="0"/>
@@ -51,16 +80,6 @@
 <xs:complexType name="checkLoginResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:boolean" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="viewListDataEvent">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="viewListDataEventResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 

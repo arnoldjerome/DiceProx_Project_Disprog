@@ -61,6 +61,19 @@ public class ticketingServices {
         a.insertData();
     }
 
+//    @WebMethod
+//    public ArrayList<Events> selectAllEvents() {
+//        System.out.println("Calling selectAllEvents...");
+//        Events even = new Events();
+//        ArrayList<Events> eventList = new ArrayList<>();
+//        for (Object obj : even.viewListData()) {
+//            if (obj instanceof Events) {
+//                eventList.add((Events) obj);
+//            }
+//        }
+//        System.out.println("Returned event list with size: " + eventList.size());
+//        return eventList;
+//    }
     @WebMethod
     public ArrayList<Events> selectAllEvents() {
         System.out.println("Calling selectAllEvents...");
@@ -75,39 +88,4 @@ public class ticketingServices {
         return eventList;
     }
 
-//    public ArrayList<Events> viewListData() {
-//        //TODO write your implementation code here:
-//        try {
-//            ev = new Events();
-//            ArrayList<Object> originalEventsList = ev.viewListData();
-//            ArrayList<Events> listOfEvents = new ArrayList<>();
-//
-//            for (Object obj : originalEventsList) {
-//                if (obj instanceof Events) {
-//                    listOfEvents.add((Events)obj);
-//                }
-//            }
-//
-//            return listOfEvents;
-//        } 
-//
-//        catch (Exception e) {
-//            System.out.println("Error di view list data: " + e);
-//        }
-//
-//        return null;
-//    }
-//    @WebMethod
-//    public ArrayList<Events> selectAllEvents() {
-//        System.out.println("Calling selectAllEvents...");
-//        Events events = new Events();
-//        ArrayList<Vehicle> vehicleList = new ArrayList<>();
-//        for (Object obj : vehicle.viewListData()) {
-//            if (obj instanceof Vehicle) {
-//                vehicleList.add((Vehicle) obj);
-//            }
-//        }
-//        System.out.println("Returned vehicle list with size: " + vehicleList.size());
-//        return vehicleList;
-//    }
 }
