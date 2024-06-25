@@ -102,9 +102,9 @@ public class ticketingServices {
     @WebMethod
     public ArrayList<Events> selectAllEvents() {
         System.out.println("Calling selectAllEvents...");
-        Events even = new Events();
+        ev = new Events();
         ArrayList<Events> eventList = new ArrayList<>();
-        for (Object obj : even.viewListData()) {
+        for (Object obj : ev.viewListData()) {
             if (obj instanceof Events) {
                 eventList.add((Events) obj);
             }
@@ -116,15 +116,29 @@ public class ticketingServices {
     @WebMethod
     public ArrayList<Events> selectAllEventsType(String eventId) {
         System.out.println("Calling selectAllEventsType...");
-        Events even = new Events();
+        ev = new Events();
         ArrayList<Events> eventList = new ArrayList<>();
-        for (Object obj : even.viewListDataType(eventId)) {
+        for (Object obj : ev.viewListDataType(eventId)) {
             if (obj instanceof Events) {
                 eventList.add((Events) obj);
             }
         }
         System.out.println("Returned event list with size: " + eventList.size());
         return eventList;
+    }
+
+    @WebMethod
+    public ArrayList<Tickets> selectAllTicketUser(String userID) {
+        System.out.println("Calling selectAllTicketUser...");
+        t = new Tickets();
+        ArrayList<Tickets> ticketList = new ArrayList<>();
+        for (Object obj : t.viewListData(userID)) {
+            if (obj instanceof Tickets) {
+                ticketList.add((Tickets) obj);
+            }
+        }
+        System.out.println("Returned ticket list with size: " + ticketList.size());
+        return ticketList;
     }
 
 }

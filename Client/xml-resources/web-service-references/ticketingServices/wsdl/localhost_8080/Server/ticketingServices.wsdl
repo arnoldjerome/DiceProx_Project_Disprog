@@ -28,6 +28,12 @@
 <message name="updateAvailableTickets">
 <part name="parameters" element="tns:updateAvailableTickets"/>
 </message>
+<message name="selectAllTicketUser">
+<part name="parameters" element="tns:selectAllTicketUser"/>
+</message>
+<message name="selectAllTicketUserResponse">
+<part name="parameters" element="tns:selectAllTicketUserResponse"/>
+</message>
 <message name="checkRegister">
 <part name="parameters" element="tns:checkRegister"/>
 </message>
@@ -64,6 +70,10 @@
 </operation>
 <operation name="updateAvailableTickets">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/updateAvailableTickets" message="tns:updateAvailableTickets"/>
+</operation>
+<operation name="selectAllTicketUser">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/selectAllTicketUserRequest" message="tns:selectAllTicketUser"/>
+<output wsam:Action="http://services.ticketing.com/ticketingServices/selectAllTicketUserResponse" message="tns:selectAllTicketUserResponse"/>
 </operation>
 <operation name="checkRegister">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/checkRegisterRequest" message="tns:checkRegister"/>
@@ -120,6 +130,15 @@
 <input>
 <soap:body use="literal"/>
 </input>
+</operation>
+<operation name="selectAllTicketUser">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
 </operation>
 <operation name="checkRegister">
 <soap:operation soapAction=""/>

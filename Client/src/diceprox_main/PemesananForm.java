@@ -4,6 +4,8 @@
  */
 package diceprox_main;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author asus
@@ -21,6 +23,8 @@ public class PemesananForm extends javax.swing.JFrame {
 
         // Maximize the frame
         setExtendedState(MainForm.MAXIMIZED_BOTH);
+
+        refreshTable();
     }
 
     /**
@@ -42,7 +46,6 @@ public class PemesananForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1920, 1080));
         setMinimumSize(new java.awt.Dimension(1920, 1080));
-        setPreferredSize(new java.awt.Dimension(1920, 1080));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pemesananLabel.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
@@ -100,6 +103,25 @@ public class PemesananForm extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_backMouseClicked
 
+    public void refreshTable() {
+        DefaultTableModel model = (DefaultTableModel) jPemesananTabel.getModel();
+        model.setRowCount(0);
+        Object[] rowData = new Object[8]; //total kolom tampil
+        String userID = String.valueOf(UserSession.getUserId());
+
+        for (com.ticketing.services.Tickets obj : selectAllTicketUser(userID)) {
+            rowData[0] = obj.getTicketID();
+            rowData[1] = obj.getUserID();
+            rowData[2] = obj.getEventID();
+            rowData[3] = obj.getTicketTypeID();
+            rowData[4] = obj.getJumlahTiket();
+            rowData[5] = obj.getHargaTotal();
+            rowData[6] = obj.getReservationDate();
+            rowData[7] = obj.isIsClaimed();
+            model.addRow(rowData);
+        }
+    }
+
     private void jPemesananTabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPemesananTabelMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jPemesananTabelMouseClicked
@@ -147,4 +169,10 @@ public class PemesananForm extends javax.swing.JFrame {
     private javax.swing.JLabel logo;
     private javax.swing.JLabel pemesananLabel;
     // End of variables declaration//GEN-END:variables
+
+    private static java.util.List<com.ticketing.services.Tickets> selectAllTicketUser(java.lang.String arg0) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.selectAllTicketUser(arg0);
+    }
 }

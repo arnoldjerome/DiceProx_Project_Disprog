@@ -6,6 +6,7 @@ package com.ticketing.model;
 
 import com.sun.xml.rpc.processor.modeler.j2ee.xml.string;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -29,6 +30,17 @@ public class Tickets extends MyModel {
         this.UserID = UserID;
         this.EventID = EventID;
         this.TicketTypeID = TicketTypeID;
+        this.HargaTotal = HargaTotal;
+        this.ReservationDate = ReservationDate;
+        this.IsClaimed = IsClaimed;
+    }
+
+    public Tickets(int TicketID, int UserID, int EventID, int TicketTypeID, int JumlahTiket, int HargaTotal, String ReservationDate, Boolean IsClaimed) {
+        this.TicketID = TicketID;
+        this.UserID = UserID;
+        this.EventID = EventID;
+        this.TicketTypeID = TicketTypeID;
+        this.JumlahTiket = JumlahTiket;
         this.HargaTotal = HargaTotal;
         this.ReservationDate = ReservationDate;
         this.IsClaimed = IsClaimed;
@@ -84,7 +96,7 @@ public class Tickets extends MyModel {
         return HargaTotal;
     }
 
-    public void set(int HargaTotal) {
+    public void setHargaTotal(int HargaTotal) {
         this.HargaTotal = HargaTotal;
     }
 
@@ -134,13 +146,13 @@ public class Tickets extends MyModel {
                 PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
                         "INSERT INTO tickets (TicketID, UserID, EventID, TypeTicketID, JumlahTiket, HargaTotal, IsClaimed) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
-                sql.setInt(1, this.TicketID);
-                sql.setInt(2, this.UserID);
-                sql.setInt(3, this.EventID);
-                sql.setInt(4, this.TicketTypeID);
-                sql.setInt(5, this.JumlahTiket);
-                sql.setInt(6, this.HargaTotal);
-                sql.setBoolean(7, this.IsClaimed);
+                sql.setInt(1, this.getTicketID());
+                sql.setInt(2, this.getUserID());
+                sql.setInt(3, this.getEventID());
+                sql.setInt(4, this.getTicketTypeID());
+                sql.setInt(5, this.getJumlahTiket());
+                sql.setInt(6, this.getHargaTotal());
+                sql.setBoolean(7, this.getIsClaimed());
 
                 sql.executeUpdate();
                 sql.close();
@@ -158,6 +170,38 @@ public class Tickets extends MyModel {
     @Override
     public void deleteData() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public ArrayList<Object> viewListData(String userID) {
+        ArrayList<Object> listOfTickets = new ArrayList<>();
+        try {
+
+            this.statement = (Statement) MyModel.conn.createStatement();
+            this.result = this.statement.executeQuery(
+                    "SELECT TicketID, UserID, EventID, TypeTicketID, JumlahTiket, HargaTotal, ReservationDate, IsClaimed "
+                    + "FROM tickets "
+                    + "WHERE UserID = " + userID);
+
+            while (this.result.next()) {
+                Tickets t = new Tickets(
+                        this.result.getInt("TicketID"),
+                        this.result.getInt("UserID"),
+                        this.result.getInt("EventID"),
+                        this.result.getInt("TypeTicketID"),
+                        this.result.getInt("JumlahTiket"),
+                        this.result.getInt("HargaTotal"),
+                        this.result.getString("ReservationDate"),
+                        this.result.getBoolean("IsClaimed")
+                );
+                listOfTickets.add(t);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error di view list data: " + e);
+        }
+
+        return listOfTickets;
     }
 
     @Override
