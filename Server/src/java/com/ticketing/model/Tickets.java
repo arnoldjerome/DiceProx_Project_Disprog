@@ -19,6 +19,7 @@ public class Tickets extends MyModel {
     private int UserID;
     private int EventID;
     private int TicketTypeID;
+    private int JumlahTiket;
     private int HargaTotal;
     private String ReservationDate;
     private Boolean IsClaimed;
@@ -33,17 +34,18 @@ public class Tickets extends MyModel {
         this.IsClaimed = IsClaimed;
     }
 
-    public Tickets(int TicketID, int UserID, int EventID, int TicketTypeID, int HargaTotal, Boolean IsClaimed) {
+    public Tickets(int TicketID, int UserID, int EventID, int TicketTypeID, int JumlahTiket, int HargaTotal, Boolean IsClaimed) {
         this.TicketID = TicketID;
         this.UserID = UserID;
         this.EventID = EventID;
         this.TicketTypeID = TicketTypeID;
+        this.JumlahTiket = JumlahTiket;
         this.HargaTotal = HargaTotal;
         this.IsClaimed = IsClaimed;
     }
-    
-    public Tickets(){
-        
+
+    public Tickets() {
+
     }
 
     public int getTicketID() {
@@ -82,8 +84,16 @@ public class Tickets extends MyModel {
         return HargaTotal;
     }
 
-    public void setHargaTotal(int HargaTotal) {
+    public void set(int HargaTotal) {
         this.HargaTotal = HargaTotal;
+    }
+
+    public int getJumlahTiket() {
+        return JumlahTiket;
+    }
+
+    public void setJumlahTiket(int JumlahTiket) {
+        this.JumlahTiket = JumlahTiket;
     }
 
     public String getReservationDate() {
@@ -122,14 +132,15 @@ public class Tickets extends MyModel {
         try {
             if (!MyModel.conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
-                        "INSERT INTO tickets (TicketID, UserID, EventID, TypeTicketID, HargaTotal, IsClaimed) VALUES (?, ?, ?, ?, ?, ?)");
+                        "INSERT INTO tickets (TicketID, UserID, EventID, TypeTicketID, JumlahTiket, HargaTotal, IsClaimed) VALUES (?, ?, ?, ?, ?, ?)");
 
                 sql.setInt(1, this.TicketID);
                 sql.setInt(2, this.UserID);
                 sql.setInt(3, this.EventID);
                 sql.setInt(4, this.TicketTypeID);
-                sql.setInt(5, this.HargaTotal);
-                sql.setBoolean(6, this.IsClaimed);
+                sql.setInt(5, this.JumlahTiket);
+                sql.setInt(6, this.HargaTotal);
+                sql.setBoolean(7, this.IsClaimed);
 
                 sql.executeUpdate();
                 sql.close();

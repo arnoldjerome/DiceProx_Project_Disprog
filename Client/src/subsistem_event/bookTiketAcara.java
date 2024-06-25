@@ -338,10 +338,11 @@ public class bookTiketAcara extends javax.swing.JFrame {
                 String numericString = hargaTotal.getText().replace("Rp", "").replace(".", "").trim();
                 int totalHarga = Integer.parseInt(numericString);
 
-                insertTicket(code, userID, eventID, TicketTypeID, totalHarga, isClaimed);
+                insertTicket(code, userID, eventID, TicketTypeID, ticketsReserved, totalHarga, isClaimed);
                 updateAvailableTickets(TicketTypeID, ticketsReserved);
 
                 JOptionPane.showMessageDialog(this, "Reservasi tiket berhasil.", "Informasi Reservasi", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Silakan Cek Kode Reservasi Pada Menu Pemesanan.", "Informasi Reservasi", JOptionPane.INFORMATION_MESSAGE);
 
                 MainForm windowPlane = new MainForm();
 
@@ -537,16 +538,16 @@ public class bookTiketAcara extends javax.swing.JFrame {
         return port.selectAllEventsType(arg0);
     }
 
-    private static void insertTicket(int ticketID, int userID, int eventID, int ticketTypeID, int hargaTotal, boolean isClaimed) {
-        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
-        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
-        port.insertTicket(ticketID, userID, eventID, ticketTypeID, hargaTotal, isClaimed);
-    }
-
     private static void updateAvailableTickets(int ticketTypeID, int ticketsReserved) {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
         port.updateAvailableTickets(ticketTypeID, ticketsReserved);
+    }
+
+    private static void insertTicket(int ticketID, int userID, int eventID, int ticketTypeID, int jumlahTiket, int hargaTotal, boolean isClaimed) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        port.insertTicket(ticketID, userID, eventID, ticketTypeID, jumlahTiket, hargaTotal, isClaimed);
     }
 
 }

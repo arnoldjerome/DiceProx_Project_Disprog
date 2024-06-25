@@ -29,21 +29,22 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
     BufferedReader in;
     DataOutputStream out;
     Thread t;
+
     /**
      * Creates new form mainForm
      */
     public MainForm() {
         try {
             initComponents();
-            
+
             //untuk center
             this.setLocationRelativeTo(null);
-            
+
             // Maximize the frame
             setExtendedState(MainForm.MAXIMIZED_BOTH);
-            
+
             namaLabel.setText(UserSession.getUsername());
-            
+
             client = new Socket("localhost", 5005);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             out = new DataOutputStream(client.getOutputStream());
@@ -52,7 +53,7 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
             System.out.println("Error di main form: " + ex);
         }
     }
-    
+
     private void start() {
         if (t == null) {
             t = new Thread(this, "MainForm");
@@ -78,6 +79,7 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
         sambutanLabel2 = new javax.swing.JLabel();
         namaLabel = new javax.swing.JLabel();
         logoutButton = new javax.swing.JButton();
+        pemesananButton = new javax.swing.JButton();
         klaimTicketButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
         logo = new javax.swing.JLabel();
@@ -146,7 +148,17 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
                 logoutButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1590, 150, 150, -1));
+        getContentPane().add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1590, 220, 150, -1));
+
+        pemesananButton.setBackground(new java.awt.Color(187, 224, 253));
+        pemesananButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        pemesananButton.setText("Pemesanan");
+        pemesananButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pemesananButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(pemesananButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1590, 150, 310, -1));
 
         klaimTicketButton.setBackground(new java.awt.Color(187, 224, 253));
         klaimTicketButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -166,7 +178,7 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
                 exitButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(exitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1750, 150, 150, -1));
+        getContentPane().add(exitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1750, 220, 150, -1));
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
         logo.setPreferredSize(new java.awt.Dimension(120, 125));
@@ -180,17 +192,17 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
     }// </editor-fold>//GEN-END:initComponents
 
     private void parkingTicketButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parkingTicketButtonActionPerformed
-        
+
         try {
-            
+
             String formattedMessage = "PARKING~" + namaLabel.getText() + "\n";
-            
+
             out.writeBytes(formattedMessage);
-            
+
             String response = in.readLine();
-            
+
             JOptionPane.showMessageDialog(this, response);
-            
+
             bookParkir windowPlane = new bookParkir();
 
             if (windowPlane == null || !windowPlane.isVisible()) {
@@ -198,39 +210,35 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
             }
 
             this.dispose();
-        } 
-        
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error di button menu parking: " + e);
         }
-        
+
     }//GEN-LAST:event_parkingTicketButtonActionPerformed
 
     private void eventTicketButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventTicketButtonActionPerformed
-        
+
         try {
-            
+
             String formattedMessage = "EVENT~" + namaLabel.getText() + "\n";
-            
+
             out.writeBytes(formattedMessage);
-            
+
             String response = in.readLine();
-            
+
             JOptionPane.showMessageDialog(this, response);
-            
+
             bookAcara windowPlane = new bookAcara();
-        
+
             if (windowPlane == null || !windowPlane.isVisible()) {
                 windowPlane.setVisible(true);
             }
 
             this.dispose();
-        } 
-        
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error di button menu event: " + e);
         }
-        
+
     }//GEN-LAST:event_eventTicketButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
@@ -267,6 +275,16 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
 
         this.dispose();
     }//GEN-LAST:event_klaimTicketButtonActionPerformed
+
+    private void pemesananButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pemesananButtonActionPerformed
+        PemesananForm windowPlane = new PemesananForm();
+
+        if (windowPlane == null || !windowPlane.isVisible()) {
+            windowPlane.setVisible(true);
+        }
+
+        this.dispose();
+    }//GEN-LAST:event_pemesananButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -319,13 +337,14 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton logoutButton;
     private javax.swing.JLabel namaLabel;
     private javax.swing.JButton parkingTicketButton;
+    private javax.swing.JButton pemesananButton;
     private javax.swing.JLabel sambutanLabel2;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void run() {
         try {
-            
+
         } catch (Exception e) {
         }
     }

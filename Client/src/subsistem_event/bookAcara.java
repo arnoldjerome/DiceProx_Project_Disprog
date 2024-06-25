@@ -64,6 +64,7 @@ public class bookAcara extends javax.swing.JFrame {
         availableTicketText = new javax.swing.JTextField();
         nameText = new javax.swing.JTextField();
         dateText = new javax.swing.JTextField();
+        eventLabel = new javax.swing.JLabel();
         bagian_kanan = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -108,7 +109,7 @@ public class bookAcara extends javax.swing.JFrame {
                 backMouseClicked(evt);
             }
         });
-        getContentPane().add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, 70, 70));
+        getContentPane().add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 70, 70));
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
         logo.setPreferredSize(new java.awt.Dimension(120, 125));
@@ -221,6 +222,11 @@ public class bookAcara extends javax.swing.JFrame {
             }
         });
         getContentPane().add(dateText, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 420, 500, 67));
+
+        eventLabel.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        eventLabel.setForeground(new java.awt.Color(57, 62, 70));
+        eventLabel.setText("EVENT TICKET");
+        getContentPane().add(eventLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 70, -1, -1));
 
         bagian_kanan.setBackground(new java.awt.Color(187, 187, 187));
         bagian_kanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background_main_kiri.png"))); // NOI18N
@@ -422,6 +428,7 @@ public class bookAcara extends javax.swing.JFrame {
     private javax.swing.JLabel bagian_kanan;
     private javax.swing.JLabel dateLabel;
     private javax.swing.JTextField dateText;
+    private javax.swing.JLabel eventLabel;
     private javax.swing.JLabel idLabel;
     private javax.swing.JTextField idText;
     private javax.swing.JTable jAcaraTabel;

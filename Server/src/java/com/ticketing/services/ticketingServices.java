@@ -84,8 +84,8 @@ public class ticketingServices {
      */
     @WebMethod(operationName = "insertTicket")
     @Oneway
-    public void insertTicket(@WebParam(name = "ticketID") int ticketID, @WebParam(name = "userID") int userID, @WebParam(name = "eventID") int eventID, @WebParam(name = "ticketTypeID") int ticketTypeID, @WebParam(name = "hargaTotal") int hargaTotal, @WebParam(name = "isClaimed") boolean isClaimed) {
-        t = new Tickets(ticketID, userID, eventID, ticketTypeID, hargaTotal, isClaimed);
+    public void insertTicket(@WebParam(name = "ticketID") int ticketID, @WebParam(name = "userID") int userID, @WebParam(name = "eventID") int eventID, @WebParam(name = "ticketTypeID") int ticketTypeID, @WebParam(name = "jumlahTiket") int jumlahTiket, @WebParam(name = "hargaTotal") int hargaTotal, @WebParam(name = "isClaimed") boolean isClaimed) {
+        t = new Tickets(ticketID, userID, eventID, ticketTypeID, jumlahTiket, hargaTotal, isClaimed);
         t.insertData();
     }
 

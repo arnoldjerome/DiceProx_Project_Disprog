@@ -4,8 +4,14 @@
 <xsd:import namespace="http://services.ticketing.com/" schemaLocation="http://localhost:8080/Server/ticketingServices?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="insertTicket">
-<part name="parameters" element="tns:insertTicket"/>
+<message name="hello">
+<part name="parameters" element="tns:hello"/>
+</message>
+<message name="helloResponse">
+<part name="parameters" element="tns:helloResponse"/>
+</message>
+<message name="insertHistoryLogin">
+<part name="parameters" element="tns:insertHistoryLogin"/>
 </message>
 <message name="checkLoginAndGetUserId">
 <part name="parameters" element="tns:checkLoginAndGetUserId"/>
@@ -13,17 +19,14 @@
 <message name="checkLoginAndGetUserIdResponse">
 <part name="parameters" element="tns:checkLoginAndGetUserIdResponse"/>
 </message>
-<message name="insertHistoryLogin">
-<part name="parameters" element="tns:insertHistoryLogin"/>
+<message name="selectAllEventsType">
+<part name="parameters" element="tns:selectAllEventsType"/>
+</message>
+<message name="selectAllEventsTypeResponse">
+<part name="parameters" element="tns:selectAllEventsTypeResponse"/>
 </message>
 <message name="updateAvailableTickets">
 <part name="parameters" element="tns:updateAvailableTickets"/>
-</message>
-<message name="hello">
-<part name="parameters" element="tns:hello"/>
-</message>
-<message name="helloResponse">
-<part name="parameters" element="tns:helloResponse"/>
 </message>
 <message name="checkRegister">
 <part name="parameters" element="tns:checkRegister"/>
@@ -31,58 +34,64 @@
 <message name="checkRegisterResponse">
 <part name="parameters" element="tns:checkRegisterResponse"/>
 </message>
-<message name="insertAccRegist">
-<part name="parameters" element="tns:insertAccRegist"/>
-</message>
 <message name="selectAllEvents">
 <part name="parameters" element="tns:selectAllEvents"/>
 </message>
 <message name="selectAllEventsResponse">
 <part name="parameters" element="tns:selectAllEventsResponse"/>
 </message>
-<message name="selectAllEventsType">
-<part name="parameters" element="tns:selectAllEventsType"/>
+<message name="insertAccRegist">
+<part name="parameters" element="tns:insertAccRegist"/>
 </message>
-<message name="selectAllEventsTypeResponse">
-<part name="parameters" element="tns:selectAllEventsTypeResponse"/>
+<message name="insertTicket">
+<part name="parameters" element="tns:insertTicket"/>
 </message>
 <portType name="ticketingServices">
-<operation name="insertTicket">
-<input wsam:Action="http://services.ticketing.com/ticketingServices/insertTicket" message="tns:insertTicket"/>
+<operation name="hello">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/helloRequest" message="tns:hello"/>
+<output wsam:Action="http://services.ticketing.com/ticketingServices/helloResponse" message="tns:helloResponse"/>
+</operation>
+<operation name="insertHistoryLogin">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/insertHistoryLogin" message="tns:insertHistoryLogin"/>
 </operation>
 <operation name="checkLoginAndGetUserId">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/checkLoginAndGetUserIdRequest" message="tns:checkLoginAndGetUserId"/>
 <output wsam:Action="http://services.ticketing.com/ticketingServices/checkLoginAndGetUserIdResponse" message="tns:checkLoginAndGetUserIdResponse"/>
 </operation>
-<operation name="insertHistoryLogin">
-<input wsam:Action="http://services.ticketing.com/ticketingServices/insertHistoryLogin" message="tns:insertHistoryLogin"/>
+<operation name="selectAllEventsType">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/selectAllEventsTypeRequest" message="tns:selectAllEventsType"/>
+<output wsam:Action="http://services.ticketing.com/ticketingServices/selectAllEventsTypeResponse" message="tns:selectAllEventsTypeResponse"/>
 </operation>
 <operation name="updateAvailableTickets">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/updateAvailableTickets" message="tns:updateAvailableTickets"/>
-</operation>
-<operation name="hello">
-<input wsam:Action="http://services.ticketing.com/ticketingServices/helloRequest" message="tns:hello"/>
-<output wsam:Action="http://services.ticketing.com/ticketingServices/helloResponse" message="tns:helloResponse"/>
 </operation>
 <operation name="checkRegister">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/checkRegisterRequest" message="tns:checkRegister"/>
 <output wsam:Action="http://services.ticketing.com/ticketingServices/checkRegisterResponse" message="tns:checkRegisterResponse"/>
 </operation>
-<operation name="insertAccRegist">
-<input wsam:Action="http://services.ticketing.com/ticketingServices/insertAccRegist" message="tns:insertAccRegist"/>
-</operation>
 <operation name="selectAllEvents">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/selectAllEventsRequest" message="tns:selectAllEvents"/>
 <output wsam:Action="http://services.ticketing.com/ticketingServices/selectAllEventsResponse" message="tns:selectAllEventsResponse"/>
 </operation>
-<operation name="selectAllEventsType">
-<input wsam:Action="http://services.ticketing.com/ticketingServices/selectAllEventsTypeRequest" message="tns:selectAllEventsType"/>
-<output wsam:Action="http://services.ticketing.com/ticketingServices/selectAllEventsTypeResponse" message="tns:selectAllEventsTypeResponse"/>
+<operation name="insertAccRegist">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/insertAccRegist" message="tns:insertAccRegist"/>
+</operation>
+<operation name="insertTicket">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/insertTicket" message="tns:insertTicket"/>
 </operation>
 </portType>
 <binding name="ticketingServicesPortBinding" type="tns:ticketingServices">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="insertTicket">
+<operation name="hello">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="insertHistoryLogin">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -97,19 +106,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="insertHistoryLogin">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-</operation>
-<operation name="updateAvailableTickets">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-</operation>
-<operation name="hello">
+<operation name="selectAllEventsType">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -118,7 +115,22 @@
 <soap:body use="literal"/>
 </output>
 </operation>
+<operation name="updateAvailableTickets">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
 <operation name="checkRegister">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="selectAllEvents">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -133,23 +145,11 @@
 <soap:body use="literal"/>
 </input>
 </operation>
-<operation name="selectAllEvents">
+<operation name="insertTicket">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
 </input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="selectAllEventsType">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
 </operation>
 </binding>
 <service name="ticketingServices">
