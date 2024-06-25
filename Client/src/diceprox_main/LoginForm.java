@@ -263,7 +263,7 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
                     passwordText.setText("");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Setujui persyaratan terlebih dahulu!");
+                JOptionPane.showMessageDialog(null, "Setujui persyaratan terlebih dahulu!", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception ex) {
             System.out.println("Error di Button Login : " + ex);

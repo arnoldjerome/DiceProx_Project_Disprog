@@ -32,12 +32,6 @@
 
 <xs:element name="updateAvailableTickets" type="tns:updateAvailableTickets"/>
 
-<xs:complexType name="insertHistoryLogin">
-<xs:sequence>
-<xs:element name="userID" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="checkLoginAndGetUserId">
 <xs:sequence>
 <xs:element name="username" type="xs:string" minOccurs="0"/>
@@ -49,6 +43,12 @@
 <xs:complexType name="checkLoginAndGetUserIdResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="insertHistoryLogin">
+<xs:sequence>
+<xs:element name="userID" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -108,13 +108,6 @@
 <xs:sequence/>
 </xs:complexType>
 
-<xs:complexType name="updateAvailableTickets">
-<xs:sequence>
-<xs:element name="ticketTypeID" type="xs:int"/>
-<xs:element name="ticketsReserved" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="selectAllTicketUser">
 <xs:sequence>
 <xs:element name="arg0" type="xs:string" minOccurs="0"/>
@@ -132,16 +125,26 @@
 <xs:extension base="tns:myModel">
 <xs:sequence>
 <xs:element name="eventID" type="xs:int"/>
+<xs:element name="eventName" type="xs:string" minOccurs="0"/>
 <xs:element name="hargaTotal" type="xs:int"/>
 <xs:element name="isClaimed" type="xs:boolean" minOccurs="0"/>
 <xs:element name="jumlahTiket" type="xs:int"/>
 <xs:element name="reservationDate" type="xs:string" minOccurs="0"/>
 <xs:element name="ticketID" type="xs:int"/>
+<xs:element name="ticketType" type="xs:string" minOccurs="0"/>
 <xs:element name="ticketTypeID" type="xs:int"/>
 <xs:element name="userID" type="xs:int"/>
+<xs:element name="username" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:extension>
 </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="updateAvailableTickets">
+<xs:sequence>
+<xs:element name="ticketTypeID" type="xs:int"/>
+<xs:element name="ticketsReserved" type="xs:int"/>
+</xs:sequence>
 </xs:complexType>
 
 <xs:complexType name="selectAllEvents">

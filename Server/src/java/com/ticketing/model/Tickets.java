@@ -24,6 +24,9 @@ public class Tickets extends MyModel {
     private int HargaTotal;
     private String ReservationDate;
     private Boolean IsClaimed;
+    private String Username;
+    private String EventName;
+    private String TicketType;
 
     public Tickets(int TicketID, int UserID, int EventID, int TicketTypeID, int HargaTotal, String ReservationDate, Boolean IsClaimed) {
         this.TicketID = TicketID;
@@ -53,6 +56,17 @@ public class Tickets extends MyModel {
         this.TicketTypeID = TicketTypeID;
         this.JumlahTiket = JumlahTiket;
         this.HargaTotal = HargaTotal;
+        this.IsClaimed = IsClaimed;
+    }
+
+    public Tickets(int TicketID, String Username, String EventName, String TicketType, int JumlahTiket, int HargaTotal, String ReservationDate, Boolean IsClaimed) {
+        this.TicketID = TicketID;
+        this.Username = Username;
+        this.EventName = EventName;
+        this.TicketType = TicketType;
+        this.JumlahTiket = JumlahTiket;
+        this.HargaTotal = HargaTotal;
+        this.ReservationDate = ReservationDate;
         this.IsClaimed = IsClaimed;
     }
 
@@ -124,6 +138,30 @@ public class Tickets extends MyModel {
         this.IsClaimed = IsClaimed;
     }
 
+    public String getUsername() {
+        return Username;
+    }
+
+    public void setUsername(String Username) {
+        this.Username = Username;
+    }
+
+    public String getEventName() {
+        return EventName;
+    }
+
+    public void setEventName(String EventName) {
+        this.EventName = EventName;
+    }
+
+    public String getTicketType() {
+        return TicketType;
+    }
+
+    public void setTicketType(String TicketType) {
+        this.TicketType = TicketType;
+    }
+
     public void updateAvailableTickets(int ticketTypeID, int ticketsReserved) {
         try {
             if (!MyModel.conn.isClosed()) {
@@ -172,29 +210,61 @@ public class Tickets extends MyModel {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+//    public ArrayList<Object> viewListData(String userID) {
+//        ArrayList<Object> listOfTickets = new ArrayList<>();
+//        try {
+//
+//            this.statement = (Statement) MyModel.conn.createStatement();
+//            this.result = this.statement.executeQuery(
+//                    "SELECT TicketID, UserID, EventID, TypeTicketID, JumlahTiket, HargaTotal, ReservationDate, IsClaimed "
+//                    + "FROM tickets "
+//                    + "WHERE UserID = " + userID);
+//
+//            while (this.result.next()) {
+//                Tickets t = new Tickets(
+//                        this.result.getInt("TicketID"),
+//                        this.result.getInt("UserID"),
+//                        this.result.getInt("EventID"),
+//                        this.result.getInt("TypeTicketID"),
+//                        this.result.getInt("JumlahTiket"),
+//                        this.result.getInt("HargaTotal"),
+//                        this.result.getString("ReservationDate"),
+//                        this.result.getBoolean("IsClaimed")
+//                );
+//                listOfTickets.add(t);
+//
+//            }
+//
+//        } catch (Exception e) {
+//            System.out.println("Error di view list data: " + e);
+//        }
+//
+//        return listOfTickets;
+//    }
     public ArrayList<Object> viewListData(String userID) {
         ArrayList<Object> listOfTickets = new ArrayList<>();
         try {
-
             this.statement = (Statement) MyModel.conn.createStatement();
             this.result = this.statement.executeQuery(
-                    "SELECT TicketID, UserID, EventID, TypeTicketID, JumlahTiket, HargaTotal, ReservationDate, IsClaimed "
-                    + "FROM tickets "
-                    + "WHERE UserID = " + userID);
+                    "SELECT t.TicketID, u.Username, e.EventName, tt.TicketType, t.JumlahTiket, t.HargaTotal, t.ReservationDate, t.IsClaimed "
+                    + "FROM tickets t "
+                    + "JOIN users u ON t.UserID = u.UserID "
+                    + "JOIN events e ON t.EventID = e.EventID "
+                    + "JOIN typeTickets tt ON t.TypeTicketID = tt.TypeTicketID "
+                    + "WHERE u.UserID = " + userID);
 
             while (this.result.next()) {
                 Tickets t = new Tickets(
                         this.result.getInt("TicketID"),
-                        this.result.getInt("UserID"),
-                        this.result.getInt("EventID"),
-                        this.result.getInt("TypeTicketID"),
+                        this.result.getString("Username"),
+                        this.result.getString("EventName"),
+                        this.result.getString("TicketType"),
                         this.result.getInt("JumlahTiket"),
                         this.result.getInt("HargaTotal"),
                         this.result.getString("ReservationDate"),
                         this.result.getBoolean("IsClaimed")
                 );
                 listOfTickets.add(t);
-
             }
 
         } catch (Exception e) {

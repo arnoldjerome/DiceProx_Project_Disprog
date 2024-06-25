@@ -111,9 +111,9 @@ public class PemesananForm extends javax.swing.JFrame {
 
         for (com.ticketing.services.Tickets obj : selectAllTicketUser(userID)) {
             rowData[0] = obj.getTicketID();
-            rowData[1] = obj.getUserID();
-            rowData[2] = obj.getEventID();
-            rowData[3] = obj.getTicketTypeID();
+            rowData[1] = obj.getUsername();
+            rowData[2] = obj.getEventName();
+            rowData[3] = obj.getTicketType();
             rowData[4] = obj.getJumlahTiket();
             rowData[5] = obj.getHargaTotal();
             rowData[6] = obj.getReservationDate();

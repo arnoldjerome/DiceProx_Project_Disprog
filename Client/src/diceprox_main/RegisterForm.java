@@ -25,36 +25,33 @@ import java.util.logging.Logger;
  */
 public class RegisterForm extends javax.swing.JFrame implements Runnable {
 
-    
     Socket client;
     BufferedReader in;
     DataOutputStream out;
     Thread t;
-    
+
     /**
      * Creates new form register
      */
     public RegisterForm() {
         try {
             initComponents();
-            
+
             //untuk center
             this.setLocationRelativeTo(null);
-            
+
             // Maximize the frame
             setExtendedState(RegisterForm.MAXIMIZED_BOTH);
-            
+
             client = new Socket("localhost", 5005);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             out = new DataOutputStream(client.getOutputStream());
             start();
-        } 
-        
-        catch (IOException ex) {
+        } catch (IOException ex) {
             System.out.println("Error di register form: " + ex);;
         }
     }
-    
+
     private void start() {
         if (t == null) {
             t = new Thread(this, "RegisterForm");
@@ -272,13 +269,11 @@ public class RegisterForm extends javax.swing.JFrame implements Runnable {
     private void daftarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_daftarButtonActionPerformed
 
         try {
-            
+
             if (!termsCheckbox.isSelected() || !privacyCheckbox.isSelected()) {
                 JOptionPane.showMessageDialog(this, "Anda harus menyetujui kebijakan privasi dan ketentuan layanan kami !!!", "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
-            } 
-            
-            else {
+            } else {
                 String username = usernameText.getText();
                 String password = String.valueOf(passwordText.getPassword());
                 String rePassword = String.valueOf(repeatPasswordText.getPassword());
@@ -287,50 +282,41 @@ public class RegisterForm extends javax.swing.JFrame implements Runnable {
                 Date dOB = jDateOfBirth.getDate();
                 SimpleDateFormat dateOfBirth = new SimpleDateFormat("yyyy-MM-dd");
                 String regisDOB = dateOfBirth.format(dOB);
-                
+
                 String formattedMessage = "REGISTER~" + fullname + "~" + username + "~" + email + "~" + password + "~" + rePassword + "~" + regisDOB + "\n";
-                
+
                 out.writeBytes(formattedMessage);
-                
+
                 boolean register = checkRegister(email);
-                
-                if (register) {    
-                    
+
+                if (register) {
+
                     if (password.equals(rePassword)) {
-                        
+
                         String response = in.readLine();
-                        
+
                         JOptionPane.showMessageDialog(this, response);
-                        
+
                         //JOptionPane.showMessageDialog(this, "Registrasi sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-                        
-                        insertAccRegist(username, password, fullname, email, regisDOB);                 
-                        
+                        insertAccRegist(username, password, fullname, email, regisDOB);
+
                         LoginForm windowPlane = new LoginForm();
-                        
+
                         if (windowPlane == null || !windowPlane.isVisible()) {
                             windowPlane.setVisible(true);
                         }
-                        
+
                         this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Password dan Repeat Password harus sama!", "Warning", JOptionPane.WARNING_MESSAGE);
                     }
-                }  
-                
-                else {
-                    
+                } else {
+
                     JOptionPane.showMessageDialog(this, "Email ini sudah digunakan, mohon gunakan email lain!", "Warning", JOptionPane.WARNING_MESSAGE);
-//                    fullnameText.setText("");
-//                    usernameText.setText("");
-//                    emailText.setText("");
-//                    passwordText.setText("");
-//                    repeatPasswordText.setText("");
-//                    jDateOfBirth.setDateFormatString("");
-                    
+
                 }
             }
-        }
-        
-        catch (Exception ex) {
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error saat menyimpan data: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
@@ -488,7 +474,7 @@ public class RegisterForm extends javax.swing.JFrame implements Runnable {
     @Override
     public void run() {
         try {
-            
+
         } catch (Exception e) {
         }
     }
