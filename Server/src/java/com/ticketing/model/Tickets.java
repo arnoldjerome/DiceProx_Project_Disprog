@@ -132,7 +132,7 @@ public class Tickets extends MyModel {
         try {
             if (!MyModel.conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
-                        "INSERT INTO tickets (TicketID, UserID, EventID, TypeTicketID, JumlahTiket, HargaTotal, IsClaimed) VALUES (?, ?, ?, ?, ?, ?)");
+                        "INSERT INTO tickets (TicketID, UserID, EventID, TypeTicketID, JumlahTiket, HargaTotal, IsClaimed) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
                 sql.setInt(1, this.TicketID);
                 sql.setInt(2, this.UserID);
