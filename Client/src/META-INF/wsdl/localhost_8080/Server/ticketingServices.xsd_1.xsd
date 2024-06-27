@@ -32,12 +32,6 @@
 
 <xs:element name="updateAvailableTickets" type="tns:updateAvailableTickets"/>
 
-<xs:complexType name="insertHistoryLogin">
-<xs:sequence>
-<xs:element name="userID" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="checkLoginAndGetUserId">
 <xs:sequence>
 <xs:element name="username" type="xs:string" minOccurs="0"/>
@@ -52,6 +46,12 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="insertHistoryLogin">
+<xs:sequence>
+<xs:element name="userID" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="insertAccRegist">
 <xs:sequence>
 <xs:element name="username" type="xs:string" minOccurs="0"/>
@@ -62,38 +62,16 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="selectAllEventsType">
+<xs:complexType name="hello">
 <xs:sequence>
-<xs:element name="arg0" type="xs:string" minOccurs="0"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="selectAllEventsTypeResponse">
+<xs:complexType name="helloResponse">
 <xs:sequence>
-<xs:element name="return" type="tns:events" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="events">
-<xs:complexContent>
-<xs:extension base="tns:myModel">
-<xs:sequence>
-<xs:element name="availableTickets" type="xs:int"/>
-<xs:element name="eventDate" type="xs:string" minOccurs="0"/>
-<xs:element name="eventID" type="xs:int"/>
-<xs:element name="eventLocation" type="xs:string" minOccurs="0"/>
-<xs:element name="eventName" type="xs:string" minOccurs="0"/>
-<xs:element name="hargaTikets" type="xs:int"/>
-<xs:element name="ticketType" type="xs:string" minOccurs="0"/>
-<xs:element name="totalQuota" type="xs:int"/>
-<xs:element name="typeTicketID" type="xs:int"/>
-</xs:sequence>
-</xs:extension>
-</xs:complexContent>
-</xs:complexType>
-
-<xs:complexType name="myModel" abstract="true">
-<xs:sequence/>
 </xs:complexType>
 
 <xs:complexType name="selectAllTicketUser">
@@ -128,6 +106,10 @@
 </xs:complexContent>
 </xs:complexType>
 
+<xs:complexType name="myModel" abstract="true">
+<xs:sequence/>
+</xs:complexType>
+
 <xs:complexType name="updateAvailableTickets">
 <xs:sequence>
 <xs:element name="ticketTypeID" type="xs:int"/>
@@ -135,16 +117,34 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="hello">
+<xs:complexType name="selectAllEventsType">
 <xs:sequence>
-<xs:element name="name" type="xs:string" minOccurs="0"/>
+<xs:element name="arg0" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="helloResponse">
+<xs:complexType name="selectAllEventsTypeResponse">
 <xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
+<xs:element name="return" type="tns:events" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="events">
+<xs:complexContent>
+<xs:extension base="tns:myModel">
+<xs:sequence>
+<xs:element name="availableTickets" type="xs:int"/>
+<xs:element name="eventDate" type="xs:string" minOccurs="0"/>
+<xs:element name="eventID" type="xs:int"/>
+<xs:element name="eventLocation" type="xs:string" minOccurs="0"/>
+<xs:element name="eventName" type="xs:string" minOccurs="0"/>
+<xs:element name="hargaTikets" type="xs:int"/>
+<xs:element name="ticketType" type="xs:string" minOccurs="0"/>
+<xs:element name="totalQuota" type="xs:int"/>
+<xs:element name="typeTicketID" type="xs:int"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
 </xs:complexType>
 
 <xs:complexType name="selectAllEvents">

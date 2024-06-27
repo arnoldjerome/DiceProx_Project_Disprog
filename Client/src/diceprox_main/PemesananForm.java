@@ -107,19 +107,19 @@ public class PemesananForm extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jPemesananTabel.getModel();
         model.setRowCount(0);
         Object[] rowData = new Object[8]; //total kolom tampil
-        //String userID = String.valueOf(UserSession.getUserId());
+        String userID = String.valueOf(UserSession.getUserId());
 
-//        for (com.ticketing.services.Tickets obj : selectAllTicketUser(userID)) {
-//            rowData[0] = obj.getTicketID();
-//            rowData[1] = obj.getUsername();
-//            rowData[2] = obj.getEventName();
-//            rowData[3] = obj.getTicketType();
-//            rowData[4] = obj.getJumlahTiket();
-//            rowData[5] = obj.getHargaTotal();
-//            rowData[6] = obj.getReservationDate();
-//            rowData[7] = obj.isIsClaimed();
-//            model.addRow(rowData);
-//        }
+        for (com.ticketing.services.Tickets obj : selectAllTicketUser(userID)) {
+            rowData[0] = obj.getTicketID();
+            rowData[1] = obj.getUsername();
+            rowData[2] = obj.getEventName();
+            rowData[3] = obj.getTicketType();
+            rowData[4] = obj.getJumlahTiket();
+            rowData[5] = obj.getHargaTotal();
+            rowData[6] = obj.getReservationDate();
+            rowData[7] = obj.isIsClaimed();
+            model.addRow(rowData);
+        }
     }
 
     private void jPemesananTabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPemesananTabelMouseClicked
