@@ -235,22 +235,22 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
                 String email = emailText.getText();
                 String password = String.valueOf(passwordText.getPassword());
 
-                String formattedMessage = "LOGIN~" + username + "~" + email + "~" + password + "\n";
-                out.writeBytes(formattedMessage);
-
                 int userId = checkLoginAndGetUserId(username, password, email);
 
                 if (userId != -1) {
+                    String formattedMessage = "LOGIN~" + userId + "~" + username + "~" + email + "~" + password + "\n";
+                    out.writeBytes(formattedMessage);
+
                     JOptionPane.showMessageDialog(this, "Login Sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-                    
+
                     String response = in.readLine();
                     JOptionPane.showMessageDialog(this, response);
 
-                    //JOptionPane.showMessageDialog(this, "Login Sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-                    UserSession.setUserId(userId);
-                    UserSession.setUsername(username);
-                    UserSession.setEmail(email);
-                    
+//                    //JOptionPane.showMessageDialog(this, "Login Sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+//                    UserSession.setUserId(userId);
+//                    UserSession.setUsername(username);
+//                    UserSession.setEmail(email);
+
                     insertHistoryLogin(userId);
 
                     MainForm windowPlane = new MainForm();
