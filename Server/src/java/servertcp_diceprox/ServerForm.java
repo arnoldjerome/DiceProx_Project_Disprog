@@ -119,12 +119,39 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             broadCast(msg);
         }
         
+        else if (msg.contains("CLAIM~")) {
+            String msgSplit[] = msg.split("CLAIM~");
+            username = msgSplit[1];
+            
+            chatTxt.append(msg + "\n");
+            chatTxt.append(username + " sukses mengakses menu klaim ticket!" + "\n");
+            broadCast(msg);
+        }
+        
+        else if (msg.contains("ORDERS~")) {
+            String msgSplit[] = msg.split("ORDERS~");
+            username = msgSplit[1];
+            
+            chatTxt.append(msg + "\n");
+            chatTxt.append(username + " sukses mengakses menu pemesanan ticket!" + "\n");
+            broadCast(msg);
+        }
+        
         else if (msg.contains("LOGOUT~")) {
             String msgSplit[] = msg.split("LOGOUT~");
             username = msgSplit[1];
             
             chatTxt.append(msg + "\n");
             chatTxt.append(username + " sukses melakukan logout!" + "\n");
+            broadCast(msg);
+        }
+        
+        else if (msg.contains("EXIT~")) {
+            String msgSplit[] = msg.split("EXIT~");
+            username = msgSplit[1];
+            
+            chatTxt.append(msg + "\n");
+            chatTxt.append(username + " sukses keluar dari aplikasi!" + "\n");
             broadCast(msg);
         }
         

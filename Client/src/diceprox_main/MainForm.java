@@ -275,33 +275,72 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
-        int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit?", "Confirm Exit", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (response == JOptionPane.YES_OPTION) {
-            // Reset user session
-            UserSession.resetSession();
+        try {
+            int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit?", "Confirm Exit", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (response == JOptionPane.YES_OPTION) {
 
-            System.exit(0);
+                String formattedMessage = "EXIT~" + namaLabel.getText() + "\n";
+
+                out.writeBytes(formattedMessage);
+                
+                JOptionPane.showMessageDialog(this, "Exit Sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                
+                // Reset user session
+                UserSession.resetSession();
+
+                System.exit(0);
+            }
+        } 
+        
+        catch (Exception e) {
+            System.out.println("Error di button exit: " + e);
         }
+        
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void klaimTicketButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_klaimTicketButtonActionPerformed
-        klaimTiketAcara windowPlane = new klaimTiketAcara();
+        try {
+            String formattedMessage = "CLAIM~" + namaLabel.getText() + "\n";
+            
+            out.writeBytes(formattedMessage);
+            
+            JOptionPane.showMessageDialog(this, "Sukses Mengakses Menu Klaim Ticket!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+            
+            klaimTiketAcara windowPlane = new klaimTiketAcara();
 
-        if (windowPlane == null || !windowPlane.isVisible()) {
-            windowPlane.setVisible(true);
+            if (windowPlane == null || !windowPlane.isVisible()) {
+                windowPlane.setVisible(true);
+            }
+
+            this.dispose();
+        } 
+        
+        catch (Exception e) {
+            System.out.println("Error di button klaim ticket: " + e);
         }
-
-        this.dispose();
+        
     }//GEN-LAST:event_klaimTicketButtonActionPerformed
 
     private void pemesananButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pemesananButtonActionPerformed
-        PemesananForm windowPlane = new PemesananForm();
+        try {
+            String formattedMessage = "ORDERS~" + namaLabel.getText() + "\n";
+            
+            out.writeBytes(formattedMessage);
+            
+            JOptionPane.showMessageDialog(this, "Sukses Mengakses Menu Pemesanan Ticket!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+            
+            PemesananForm windowPlane = new PemesananForm();
 
-        if (windowPlane == null || !windowPlane.isVisible()) {
-            windowPlane.setVisible(true);
+            if (windowPlane == null || !windowPlane.isVisible()) {
+                windowPlane.setVisible(true);
+            }
+
+            this.dispose();
+        } 
+        
+        catch (Exception e) {
+            System.out.println("Error di button pemesanan: " + e);
         }
-
-        this.dispose();
     }//GEN-LAST:event_pemesananButtonActionPerformed
 
     /**
