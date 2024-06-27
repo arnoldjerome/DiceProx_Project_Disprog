@@ -32,6 +32,12 @@
 
 <xs:element name="updateAvailableTickets" type="tns:updateAvailableTickets"/>
 
+<xs:complexType name="insertHistoryLogin">
+<xs:sequence>
+<xs:element name="userID" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="checkLoginAndGetUserId">
 <xs:sequence>
 <xs:element name="username" type="xs:string" minOccurs="0"/>
@@ -46,12 +52,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="insertHistoryLogin">
-<xs:sequence>
-<xs:element name="userID" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="insertAccRegist">
 <xs:sequence>
 <xs:element name="username" type="xs:string" minOccurs="0"/>
@@ -59,18 +59,6 @@
 <xs:element name="fullname" type="xs:string" minOccurs="0"/>
 <xs:element name="email" type="xs:string" minOccurs="0"/>
 <xs:element name="dateOfBirth" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="hello">
-<xs:sequence>
-<xs:element name="name" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="helloResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -144,6 +132,18 @@
 <xs:sequence>
 <xs:element name="ticketTypeID" type="xs:int"/>
 <xs:element name="ticketsReserved" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="hello">
+<xs:sequence>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="helloResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 

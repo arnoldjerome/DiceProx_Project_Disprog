@@ -17,26 +17,26 @@ import java.util.ArrayList;
  */
 public class ServerForm extends javax.swing.JFrame implements Runnable {
 
-    
     String chatClient, chatServer;
     Account acc;
-    String fullname, username, email, password, rePassword, regisDOB;
+    String userId, fullname, username, email, password, rePassword, regisDOB;
     Socket incoming;
     ServerSocket s;
     Thread t;
     ArrayList<HandleSocket> clients = new ArrayList<>();
-    
+
     HandleSocket confirmClient;
+
     /**
      * Creates new form FormServer
      */
     public ServerForm() {
         try {
             initComponents();
-            
+
             //untuk center
             this.setLocationRelativeTo(null);
-            
+
             s = new ServerSocket(5005);
             //getChat();
             if (t == null) {
@@ -47,7 +47,7 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             System.out.println("Error di server form: " + ex);
         }
     }
-    
+
     public void run() {
         try {
             while (true) {
@@ -55,12 +55,12 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
                 HandleSocket hs = new HandleSocket(this, incoming);
                 hs.start();
                 hs.sendChat("Welcome to DiceProx!");
-                
+
                 if (confirmClient == null) {
                     System.out.println("masuk ini");
                     confirmClient = hs;
                 }
-                
+
                 System.out.println("berhasil");
                 clients.add(hs);
             }
@@ -68,23 +68,29 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             System.out.println("Error di run: " + e);
         }
     }
-    
+
     public void showChat(String msg) {
         if (msg.contains("LOGIN~")) {
             String msgSplit[] = msg.split("~");
-            username = msgSplit[1];
-            email = msgSplit[2];
-            password = msgSplit[3];
-            
+            userId = msgSplit[1];
+            username = msgSplit[2];
+            email = msgSplit[3];
+            password = msgSplit[4];
+
             chatTxt.append(msg + "\n");
             chatTxt.append(username + " sukses melakukan login!" + "\n");
             broadCast(msg);
-            
+
+            UserSession.setUsername(username);
+            UserSession.setEmail(email);
+            UserSession.setUserId(Integer.parseInt(userId));
+
+            // Mengirim data UserSession ke client
+            confirmClient.sendChat("USERDATA~" + UserSession.getUserId() + "~" + UserSession.getUsername() + "~" + UserSession.getEmail());
+
             //confirmClient.sendChat("Login sukses!");
             //confirmClient = null;
-        }
-        
-        else if (msg.contains("REGISTER~")) {
+        } else if (msg.contains("REGISTER~")) {
             String msgSplit[] = msg.split("~");
             fullname = msgSplit[1];
             username = msgSplit[2];
@@ -92,74 +98,60 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             password = msgSplit[4];
             rePassword = msgSplit[5];
             regisDOB = msgSplit[6];
-            
+
             chatTxt.append(msg + "\n");
             chatTxt.append(username + " sukses melakukan registrasi!" + "\n");
             broadCast(msg);
-            
+
             //confirmClient.sendChat("Registrasi sukses!");          
             //confirmClient = null;
-        }
-        
-        else if (msg.contains("EVENT~")) {
+        } else if (msg.contains("EVENT~")) {
             String msgSplit[] = msg.split("EVENT~");
             username = msgSplit[1];
-            
+
             chatTxt.append(msg + "\n");
             chatTxt.append(username + " sukses mengakses menu event!" + "\n");
             broadCast(msg);
-        }
-        
-        else if (msg.contains("PARKING~")) {
+        } else if (msg.contains("PARKING~")) {
             String msgSplit[] = msg.split("PARKING~");
             username = msgSplit[1];
-            
+
             chatTxt.append(msg + "\n");
             chatTxt.append(username + " sukses mengakses menu parking!" + "\n");
             broadCast(msg);
-        }
-        
-        else if (msg.contains("CLAIM~")) {
+        } else if (msg.contains("CLAIM~")) {
             String msgSplit[] = msg.split("CLAIM~");
             username = msgSplit[1];
-            
+
             chatTxt.append(msg + "\n");
             chatTxt.append(username + " sukses mengakses menu klaim ticket!" + "\n");
             broadCast(msg);
-        }
-        
-        else if (msg.contains("ORDERS~")) {
+        } else if (msg.contains("ORDERS~")) {
             String msgSplit[] = msg.split("ORDERS~");
             username = msgSplit[1];
-            
+
             chatTxt.append(msg + "\n");
             chatTxt.append(username + " sukses mengakses menu pemesanan ticket!" + "\n");
             broadCast(msg);
-        }
-        
-        else if (msg.contains("LOGOUT~")) {
+        } else if (msg.contains("LOGOUT~")) {
             String msgSplit[] = msg.split("LOGOUT~");
             username = msgSplit[1];
-            
+
             chatTxt.append(msg + "\n");
             chatTxt.append(username + " sukses melakukan logout!" + "\n");
             broadCast(msg);
-        }
-        
-        else if (msg.contains("EXIT~")) {
+        } else if (msg.contains("EXIT~")) {
             String msgSplit[] = msg.split("EXIT~");
             username = msgSplit[1];
-            
+
             chatTxt.append(msg + "\n");
             chatTxt.append(username + " sukses keluar dari aplikasi!" + "\n");
             broadCast(msg);
-        }
-        
-        else {
+        } else {
             System.out.println("Error displaying page!");
         }
     }
-    
+
     public void broadCast(String msg) {
         for (HandleSocket client : clients) {
             client.sendChat(msg);

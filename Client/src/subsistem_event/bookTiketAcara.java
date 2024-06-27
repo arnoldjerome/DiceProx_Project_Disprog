@@ -5,7 +5,6 @@
 package subsistem_event;
 
 import diceprox_main.MainForm;
-import diceprox_main.UserSession;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -332,13 +331,13 @@ public class bookTiketAcara extends javax.swing.JFrame {
                 int code = (currentYear << 26) | (currentMonth << 22) | (currentDay << 17)
                         | (currentHour << 12) | (currentMinute << 6) | currentSecond;
 
-                int userID = UserSession.getUserId();
+                //int userID = UserSession.getUserId();
                 int eventID = Integer.parseInt(eventId);
                 boolean isClaimed = false;
                 String numericString = hargaTotal.getText().replace("Rp", "").replace(".", "").trim();
                 int totalHarga = Integer.parseInt(numericString);
 
-                insertTicket(code, userID, eventID, TicketTypeID, ticketsReserved, totalHarga, isClaimed);
+                //insertTicket(code, userID, eventID, TicketTypeID, ticketsReserved, totalHarga, isClaimed);
                 updateAvailableTickets(TicketTypeID, ticketsReserved);
 
                 JOptionPane.showMessageDialog(this, "Reservasi tiket berhasil.", "Informasi Reservasi", JOptionPane.INFORMATION_MESSAGE);
