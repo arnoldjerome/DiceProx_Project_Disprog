@@ -43,15 +43,12 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
             // Maximize the frame
             setExtendedState(MainForm.MAXIMIZED_BOTH);
 
-//            namaLabel.setText(UserSession.getUsername());
+            namaLabel.setText(UserSession.getUsername());
+
             client = new Socket("localhost", 5005);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             out = new DataOutputStream(client.getOutputStream());
             start();
-            
-            String formattedMessage = "MAINFORMUSER~" + "\n";
-
-            out.writeBytes(formattedMessage);
         } catch (IOException ex) {
             System.out.println("Error di main form: " + ex);
         }
@@ -201,11 +198,13 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
             String formattedMessage = "PARKING~" + namaLabel.getText() + "\n";
 
             out.writeBytes(formattedMessage);
-
+            
             JOptionPane.showMessageDialog(this, "Sukses Mengakses Menu Parking!", "Notification", JOptionPane.INFORMATION_MESSAGE);
 
             //String response = in.readLine();
+
             //JOptionPane.showMessageDialog(this, response);
+
             bookParkir windowPlane = new bookParkir();
 
             if (windowPlane == null || !windowPlane.isVisible()) {
@@ -226,11 +225,13 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
             String formattedMessage = "EVENT~" + namaLabel.getText() + "\n";
 
             out.writeBytes(formattedMessage);
-
+            
             JOptionPane.showMessageDialog(this, "Sukses Mengakses Menu Event!", "Notification", JOptionPane.INFORMATION_MESSAGE);
 
             //String response = in.readLine();
+
             //JOptionPane.showMessageDialog(this, response);
+
             bookAcara windowPlane = new bookAcara();
 
             if (windowPlane == null || !windowPlane.isVisible()) {
@@ -252,11 +253,12 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
                 String formattedMessage = "LOGOUT~" + namaLabel.getText() + "\n";
 
                 out.writeBytes(formattedMessage);
-
+                
                 JOptionPane.showMessageDialog(this, "Logout Sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                
+                // Reset user session
+                UserSession.resetSession();
 
-//                // Reset user session
-//                UserSession.resetSession();
                 // Buka form login
                 LoginForm loginForm = new LoginForm();
                 loginForm.setVisible(true);
@@ -264,10 +266,12 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
                 // Tutup form utama (MainForm)
                 this.dispose();
             }
-        } catch (Exception e) {
+        } 
+        
+        catch (Exception e) {
             System.out.println("Error di button logout: " + e);
         }
-
+        
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
@@ -278,27 +282,30 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
                 String formattedMessage = "EXIT~" + namaLabel.getText() + "\n";
 
                 out.writeBytes(formattedMessage);
-
+                
                 JOptionPane.showMessageDialog(this, "Exit Sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                
+                // Reset user session
+                UserSession.resetSession();
 
-//                // Reset user session
-//                UserSession.resetSession();
                 System.exit(0);
             }
-        } catch (Exception e) {
+        } 
+        
+        catch (Exception e) {
             System.out.println("Error di button exit: " + e);
         }
-
+        
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void klaimTicketButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_klaimTicketButtonActionPerformed
         try {
             String formattedMessage = "CLAIM~" + namaLabel.getText() + "\n";
-
+            
             out.writeBytes(formattedMessage);
-
+            
             JOptionPane.showMessageDialog(this, "Sukses Mengakses Menu Klaim Ticket!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-
+            
             klaimTiketAcara windowPlane = new klaimTiketAcara();
 
             if (windowPlane == null || !windowPlane.isVisible()) {
@@ -306,20 +313,22 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
             }
 
             this.dispose();
-        } catch (Exception e) {
+        } 
+        
+        catch (Exception e) {
             System.out.println("Error di button klaim ticket: " + e);
         }
-
+        
     }//GEN-LAST:event_klaimTicketButtonActionPerformed
 
     private void pemesananButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pemesananButtonActionPerformed
         try {
             String formattedMessage = "ORDERS~" + namaLabel.getText() + "\n";
-
+            
             out.writeBytes(formattedMessage);
-
+            
             JOptionPane.showMessageDialog(this, "Sukses Mengakses Menu Pemesanan Ticket!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-
+            
             PemesananForm windowPlane = new PemesananForm();
 
             if (windowPlane == null || !windowPlane.isVisible()) {
@@ -327,7 +336,9 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
             }
 
             this.dispose();
-        } catch (Exception e) {
+        } 
+        
+        catch (Exception e) {
             System.out.println("Error di button pemesanan: " + e);
         }
     }//GEN-LAST:event_pemesananButtonActionPerformed
@@ -388,33 +399,10 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
     // End of variables declaration//GEN-END:variables
 
     @Override
-//    public void run() {
-//        try {
-//
-//        } catch (Exception e) {
-//        }
-//    }
-
     public void run() {
         try {
-            String response;
-            while ((response = in.readLine()) != null) {
-                System.out.println("Received: " + response);
-                if (response.startsWith("MAINFORMUSER~")) {
-                    String[] data = response.split("~");
-                    if (data.length >= 3) {
-                        String userId = data[1];
-                        String username = data[2];
-                        String email = data[3];
-                        // Set the username to namaLabel
-                        namaLabel.setText(username);
-                    }
-                } else {
-                    // Handle other messages from server
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Error di run: " + e);
+
+        } catch (Exception e) {
         }
     }
 }

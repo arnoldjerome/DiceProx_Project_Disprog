@@ -5,6 +5,7 @@
 package subsistem_event;
 
 import diceprox_main.MainForm;
+import diceprox_main.UserSession;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -308,60 +309,60 @@ public class bookTiketAcara extends javax.swing.JFrame {
     private void reserveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reserveButtonActionPerformed
 // Pengecekan jika available tickets sudah habis
 
-//        int selectedRow = jAcaraTabel.getSelectedRow();
-//
-//        if (selectedRow == -1) {
-//            JOptionPane.showMessageDialog(this, "Pilih tiket terlebih dahulu.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
-//            return;
-//        } else {
-//
-//            int avaiTikets = Integer.parseInt(availableTicketText.getText());
-//            int ticketsReserved = (int) jSpinnerTotalTiket.getValue();
-//            if (ticketsReserved <= avaiTikets) {
-//                LocalDateTime now = LocalDateTime.now();
-//
-//                int currentSecond = now.getSecond();
-//                int currentMinute = now.getMinute();
-//                int currentHour = now.getHour();
-//                int currentDay = now.getDayOfMonth();
-//                int currentMonth = now.getMonthValue();
-//                int currentYear = now.getYear() - 2000; // Assuming year 2000 as the starting point
-//
-//                // Encode the components into a single int
-//                int code = (currentYear << 26) | (currentMonth << 22) | (currentDay << 17)
-//                        | (currentHour << 12) | (currentMinute << 6) | currentSecond;
-//
-//                int userID = UserSession.getUserId();
-//                int eventID = Integer.parseInt(eventId);
-//                boolean isClaimed = false;
-//                String numericString = hargaTotal.getText().replace("Rp", "").replace(".", "").trim();
-//                int totalHarga = Integer.parseInt(numericString);
-//
-//                insertTicket(code, userID, eventID, TicketTypeID, ticketsReserved, totalHarga, isClaimed);
-//                updateAvailableTickets(TicketTypeID, ticketsReserved);
-//
-//                JOptionPane.showMessageDialog(this, "Reservasi tiket berhasil.", "Informasi Reservasi", JOptionPane.INFORMATION_MESSAGE);
-//                JOptionPane.showMessageDialog(this, "Silakan Cek Kode Reservasi Pada Menu Pemesanan.", "Informasi Reservasi", JOptionPane.INFORMATION_MESSAGE);
-//
-//                MainForm windowPlane = new MainForm();
-//
-//                if (windowPlane == null || !windowPlane.isVisible()) {
-//                    windowPlane.setVisible(true);
-//                }
-//
-//                this.dispose();
-//            } else {
-//
-//                if (avaiTikets == 0) {
-//                    JOptionPane.showMessageDialog(this, "Stok Tiket yang dipilih telah habis.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
-//                    return;
-//                } else {
-//                    JOptionPane.showMessageDialog(this, "Terlalu banyak jumlah tiket yang ingin di reservasi.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
-//                    return;
-//                }
-//            }
-//
-//        }
+        int selectedRow = jAcaraTabel.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih tiket terlebih dahulu.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
+            return;
+        } else {
+
+            int avaiTikets = Integer.parseInt(availableTicketText.getText());
+            int ticketsReserved = (int) jSpinnerTotalTiket.getValue();
+            if (ticketsReserved <= avaiTikets) {
+                LocalDateTime now = LocalDateTime.now();
+
+                int currentSecond = now.getSecond();
+                int currentMinute = now.getMinute();
+                int currentHour = now.getHour();
+                int currentDay = now.getDayOfMonth();
+                int currentMonth = now.getMonthValue();
+                int currentYear = now.getYear() - 2000; // Assuming year 2000 as the starting point
+
+                // Encode the components into a single int
+                int code = (currentYear << 26) | (currentMonth << 22) | (currentDay << 17)
+                        | (currentHour << 12) | (currentMinute << 6) | currentSecond;
+
+                int userID = UserSession.getUserId();
+                int eventID = Integer.parseInt(eventId);
+                boolean isClaimed = false;
+                String numericString = hargaTotal.getText().replace("Rp", "").replace(".", "").trim();
+                int totalHarga = Integer.parseInt(numericString);
+
+                insertTicket(code, userID, eventID, TicketTypeID, ticketsReserved, totalHarga, isClaimed);
+                updateAvailableTickets(TicketTypeID, ticketsReserved);
+
+                JOptionPane.showMessageDialog(this, "Reservasi tiket berhasil.", "Informasi Reservasi", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Silakan Cek Kode Reservasi Pada Menu Pemesanan.", "Informasi Reservasi", JOptionPane.INFORMATION_MESSAGE);
+
+                MainForm windowPlane = new MainForm();
+
+                if (windowPlane == null || !windowPlane.isVisible()) {
+                    windowPlane.setVisible(true);
+                }
+
+                this.dispose();
+            } else {
+
+                if (avaiTikets == 0) {
+                    JOptionPane.showMessageDialog(this, "Stok Tiket yang dipilih telah habis.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
+                    return;
+                } else {
+                    JOptionPane.showMessageDialog(this, "Terlalu banyak jumlah tiket yang ingin di reservasi.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+            }
+
+        }
     }//GEN-LAST:event_reserveButtonActionPerformed
 
     private void availableTicketTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_availableTicketTextFocusGained

@@ -20,7 +20,7 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
     
     String chatClient, chatServer;
     Account acc;
-    String userId, fullname, username, email, password, rePassword, regisDOB;
+    String fullname, username, email, password, rePassword, regisDOB;
     Socket incoming;
     ServerSocket s;
     Thread t;
@@ -72,18 +72,13 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
     public void showChat(String msg) {
         if (msg.contains("LOGIN~")) {
             String msgSplit[] = msg.split("~");
-            userId = msgSplit[1];
-            username = msgSplit[2];
-            email = msgSplit[3];
-            password = msgSplit[4];
+            username = msgSplit[1];
+            email = msgSplit[2];
+            password = msgSplit[3];
             
             chatTxt.append(msg + "\n");
             chatTxt.append(username + " sukses melakukan login!" + "\n");
             broadCast(msg);
-            
-            UserSession.setEmail(email);
-            UserSession.setUserId(Integer.parseInt(userId));
-            UserSession.setUsername(username);
             
             //confirmClient.sendChat("Login sukses!");
             //confirmClient = null;
@@ -104,17 +99,6 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             
             //confirmClient.sendChat("Registrasi sukses!");          
             //confirmClient = null;
-        }
-        
-        else if (msg.contains("MAINFORMUSER~")) {
-            String msgSplit[] = msg.split("MAINFORMUSER~");
-            
-            username = UserSession.getUsername();
-            email = UserSession.getEmail();
-            userId = String.valueOf(UserSession.getUserId());
-            
-            String pesan = "MAINFORMUSER~" + userId + "~" + username + "~" + email;
-            broadCast(pesan);
         }
         
         else if (msg.contains("EVENT~")) {
