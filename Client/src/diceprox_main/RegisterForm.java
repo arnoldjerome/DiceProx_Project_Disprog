@@ -16,8 +16,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -292,9 +290,10 @@ public class RegisterForm extends javax.swing.JFrame implements Runnable {
                 if (register) {
 
                     if (password.equals(rePassword)) {
+                        
+                        JOptionPane.showMessageDialog(this, "Registrasi sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
 
                         String response = in.readLine();
-
                         JOptionPane.showMessageDialog(this, response);
 
                         //JOptionPane.showMessageDialog(this, "Registrasi sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);

@@ -241,6 +241,8 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
                 int userId = checkLoginAndGetUserId(username, password, email);
 
                 if (userId != -1) {
+                    JOptionPane.showMessageDialog(this, "Login Sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                    
                     String response = in.readLine();
                     JOptionPane.showMessageDialog(this, response);
 

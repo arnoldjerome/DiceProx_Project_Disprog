@@ -198,10 +198,12 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
             String formattedMessage = "PARKING~" + namaLabel.getText() + "\n";
 
             out.writeBytes(formattedMessage);
+            
+            JOptionPane.showMessageDialog(this, "Sukses Mengakses Menu Parking!", "Notification", JOptionPane.INFORMATION_MESSAGE);
 
-            String response = in.readLine();
+            //String response = in.readLine();
 
-            JOptionPane.showMessageDialog(this, response);
+            //JOptionPane.showMessageDialog(this, response);
 
             bookParkir windowPlane = new bookParkir();
 
@@ -223,10 +225,12 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
             String formattedMessage = "EVENT~" + namaLabel.getText() + "\n";
 
             out.writeBytes(formattedMessage);
+            
+            JOptionPane.showMessageDialog(this, "Sukses Mengakses Menu Event!", "Notification", JOptionPane.INFORMATION_MESSAGE);
 
-            String response = in.readLine();
+            //String response = in.readLine();
 
-            JOptionPane.showMessageDialog(this, response);
+            //JOptionPane.showMessageDialog(this, response);
 
             bookAcara windowPlane = new bookAcara();
 
@@ -242,18 +246,32 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_eventTicketButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-        int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (response == JOptionPane.YES_OPTION) {
-            // Reset user session
-            UserSession.resetSession();
+        try {
+            int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (response == JOptionPane.YES_OPTION) {
 
-            // Buka form login
-            LoginForm loginForm = new LoginForm();
-            loginForm.setVisible(true);
+                String formattedMessage = "LOGOUT~" + namaLabel.getText() + "\n";
 
-            // Tutup form utama (MainForm)
-            this.dispose();
+                out.writeBytes(formattedMessage);
+                
+                JOptionPane.showMessageDialog(this, "Logout Sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                
+                // Reset user session
+                UserSession.resetSession();
+
+                // Buka form login
+                LoginForm loginForm = new LoginForm();
+                loginForm.setVisible(true);
+
+                // Tutup form utama (MainForm)
+                this.dispose();
+            }
+        } 
+        
+        catch (Exception e) {
+            System.out.println("Error di button logout: " + e);
         }
+        
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed

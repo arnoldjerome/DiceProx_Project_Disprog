@@ -10,7 +10,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import com.ticketing.model.HistoryLogin;
 
 /**
  *
@@ -20,12 +19,9 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
 
     
     String chatClient, chatServer;
-    String groupName;
     Account acc;
     String fullname, username, email, password, rePassword, regisDOB;
-    Timestamp time_login;
     Socket incoming;
-    HistoryLogin history;
     ServerSocket s;
     Thread t;
     ArrayList<HandleSocket> clients = new ArrayList<>();
@@ -44,7 +40,7 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             s = new ServerSocket(5005);
             //getChat();
             if (t == null) {
-                t = new Thread(this, "RegistrationForm");
+                t = new Thread(this, "ServerForm");
                 t.start();
             }
         } catch (IOException ex) {
@@ -58,7 +54,7 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
                 incoming = s.accept();
                 HandleSocket hs = new HandleSocket(this, incoming);
                 hs.start();
-                hs.sendChat("DiceProx at your service!");
+                hs.sendChat("Welcome to DiceProx!");
                 
                 if (confirmClient == null) {
                     System.out.println("masuk ini");
@@ -79,11 +75,13 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             username = msgSplit[1];
             email = msgSplit[2];
             password = msgSplit[3];
+            
             chatTxt.append(msg + "\n");
+            chatTxt.append(username + " sukses melakukan login!" + "\n");
             broadCast(msg);
             
-            confirmClient.sendChat("Login sukses!");
-            confirmClient = null;
+            //confirmClient.sendChat("Login sukses!");
+            //confirmClient = null;
         }
         
         else if (msg.contains("REGISTER~")) {
@@ -96,11 +94,11 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             regisDOB = msgSplit[6];
             
             chatTxt.append(msg + "\n");
+            chatTxt.append(username + " sukses melakukan registrasi!" + "\n");
             broadCast(msg);
             
-            confirmClient.sendChat("Registrasi sukses!");
-            
-            confirmClient = null;
+            //confirmClient.sendChat("Registrasi sukses!");          
+            //confirmClient = null;
         }
         
         else if (msg.contains("EVENT~")) {
@@ -108,6 +106,7 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             username = msgSplit[1];
             
             chatTxt.append(msg + "\n");
+            chatTxt.append(username + " sukses mengakses menu event!" + "\n");
             broadCast(msg);
         }
         
@@ -116,6 +115,16 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             username = msgSplit[1];
             
             chatTxt.append(msg + "\n");
+            chatTxt.append(username + " sukses mengakses menu parking!" + "\n");
+            broadCast(msg);
+        }
+        
+        else if (msg.contains("LOGOUT~")) {
+            String msgSplit[] = msg.split("LOGOUT~");
+            username = msgSplit[1];
+            
+            chatTxt.append(msg + "\n");
+            chatTxt.append(username + " sukses melakukan logout!" + "\n");
             broadCast(msg);
         }
         
