@@ -47,6 +47,7 @@ public class bookAcara extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        detailButton = new javax.swing.JButton();
         reservationButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jAcaraTabel = new javax.swing.JTable();
@@ -72,6 +73,16 @@ public class bookAcara extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1920, 1080));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        detailButton.setBackground(new java.awt.Color(187, 224, 253));
+        detailButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        detailButton.setText("Detail");
+        detailButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                detailButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(detailButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 840, 360, 110));
+
         reservationButton.setBackground(new java.awt.Color(187, 224, 253));
         reservationButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         reservationButton.setText("Reservation");
@@ -80,7 +91,7 @@ public class bookAcara extends javax.swing.JFrame {
                 reservationButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(reservationButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 840, 360, 110));
+        getContentPane().add(reservationButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 840, 360, 110));
 
         jAcaraTabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -386,6 +397,27 @@ public class bookAcara extends javax.swing.JFrame {
         availableTicketText.setText(RecordTable.getValueAt(SelectedRows, 5).toString());
     }//GEN-LAST:event_jAcaraTabelMouseClicked
 
+    private void detailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailButtonActionPerformed
+        // Pengecekan jika available tickets sudah habis
+
+        int selectedRow = jAcaraTabel.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih acara terlebih dahulu.", "Kesalahan Detail", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String eventId = idText.getText();
+
+        detailAcara windowPlane = new detailAcara(eventId);
+
+        if (windowPlane == null || !windowPlane.isVisible()) {
+            windowPlane.setVisible(true);
+        }
+
+        this.dispose();
+
+    }//GEN-LAST:event_detailButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -428,6 +460,7 @@ public class bookAcara extends javax.swing.JFrame {
     private javax.swing.JLabel bagian_kanan;
     private javax.swing.JLabel dateLabel;
     private javax.swing.JTextField dateText;
+    private javax.swing.JButton detailButton;
     private javax.swing.JLabel eventLabel;
     private javax.swing.JLabel idLabel;
     private javax.swing.JTextField idText;

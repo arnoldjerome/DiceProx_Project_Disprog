@@ -8,6 +8,10 @@
 
 <xs:element name="checkRegisterResponse" type="tns:checkRegisterResponse"/>
 
+<xs:element name="getEventDetails" type="tns:getEventDetails"/>
+
+<xs:element name="getEventDetailsResponse" type="tns:getEventDetailsResponse"/>
+
 <xs:element name="hello" type="tns:hello"/>
 
 <xs:element name="helloResponse" type="tns:helloResponse"/>
@@ -32,6 +36,12 @@
 
 <xs:element name="updateAvailableTickets" type="tns:updateAvailableTickets"/>
 
+<xs:complexType name="insertHistoryLogin">
+<xs:sequence>
+<xs:element name="userID" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="checkLoginAndGetUserId">
 <xs:sequence>
 <xs:element name="username" type="xs:string" minOccurs="0"/>
@@ -43,12 +53,6 @@
 <xs:complexType name="checkLoginAndGetUserIdResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="insertHistoryLogin">
-<xs:sequence>
-<xs:element name="userID" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -71,6 +75,13 @@
 <xs:complexType name="helloResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="updateAvailableTickets">
+<xs:sequence>
+<xs:element name="ticketTypeID" type="xs:int"/>
+<xs:element name="ticketsReserved" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -110,13 +121,6 @@
 <xs:sequence/>
 </xs:complexType>
 
-<xs:complexType name="updateAvailableTickets">
-<xs:sequence>
-<xs:element name="ticketTypeID" type="xs:int"/>
-<xs:element name="ticketsReserved" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="selectAllEventsType">
 <xs:sequence>
 <xs:element name="arg0" type="xs:string" minOccurs="0"/>
@@ -135,7 +139,9 @@
 <xs:sequence>
 <xs:element name="availableTickets" type="xs:int"/>
 <xs:element name="eventDate" type="xs:string" minOccurs="0"/>
+<xs:element name="eventDetails" type="xs:string" minOccurs="0"/>
 <xs:element name="eventID" type="xs:int"/>
+<xs:element name="eventImage" type="xs:string" minOccurs="0"/>
 <xs:element name="eventLocation" type="xs:string" minOccurs="0"/>
 <xs:element name="eventName" type="xs:string" minOccurs="0"/>
 <xs:element name="hargaTikets" type="xs:int"/>
@@ -166,6 +172,18 @@
 <xs:element name="jumlahTiket" type="xs:int"/>
 <xs:element name="hargaTotal" type="xs:int"/>
 <xs:element name="isClaimed" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getEventDetails">
+<xs:sequence>
+<xs:element name="eventId" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getEventDetailsResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:events" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 

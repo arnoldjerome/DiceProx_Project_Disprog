@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.jws.Oneway;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -74,7 +75,7 @@ public class ticketingServices {
      */
     @WebMethod(operationName = "updateAvailableTickets")
     @Oneway
-    public void updateAvailableTickets(@WebParam(name = "ticketTypeID") int ticketTypeID, 
+    public void updateAvailableTickets(@WebParam(name = "ticketTypeID") int ticketTypeID,
             @WebParam(name = "ticketsReserved") int ticketsReserved) {
         t = new Tickets();
         t.updateAvailableTickets(ticketTypeID, ticketsReserved);
@@ -140,6 +141,15 @@ public class ticketingServices {
         }
         System.out.println("Returned ticket list with size: " + ticketList.size());
         return ticketList;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "getEventDetails")
+    public Events getEventDetails(@WebParam(name = "eventId") int eventId) {
+        ev = new Events();
+        return ev.getEventDetails(eventId);
     }
 
 }

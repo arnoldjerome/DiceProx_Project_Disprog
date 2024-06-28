@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -25,6 +26,8 @@ public class Events extends MyModel {
     private int AvailableTickets;
     private String TicketType;
     private int HargaTikets;
+    private String EventDetails;
+    private String EventImage;
     // </editor-fold>
 
     // <editor-fold desc="Constructors">
@@ -44,6 +47,17 @@ public class Events extends MyModel {
         this.EventName = EventName;
         this.EventDate = EventDate;
         this.EventLocation = EventLocation;
+        this.TotalQuota = TotalQuota;
+        this.AvailableTickets = AvailableTickets;
+    }
+
+    public Events(int EventID, String EventName, String EventDate, String EventLocation, String EventDetails, String EventImage, int TotalQuota, int AvailableTickets) {
+        this.EventID = EventID;
+        this.EventName = EventName;
+        this.EventDate = EventDate;
+        this.EventLocation = EventLocation;
+        this.EventDetails = EventDetails;
+        this.EventImage = EventImage;
         this.TotalQuota = TotalQuota;
         this.AvailableTickets = AvailableTickets;
     }
@@ -124,6 +138,22 @@ public class Events extends MyModel {
 
     public void setAvailableTickets(int AvailableTickets) {
         this.AvailableTickets = AvailableTickets;
+    }
+
+    public String getEventDetails() {
+        return EventDetails;
+    }
+
+    public void setEventDetails(String EventDetails) {
+        this.EventDetails = EventDetails;
+    }
+
+    public String getEventImage() {
+        return EventImage;
+    }
+
+    public void setEventImage(String EventImage) {
+        this.EventImage = EventImage;
     }
     // </editor-fold>
 
@@ -226,6 +256,37 @@ public class Events extends MyModel {
 
         return listOfEvents;
     }
-    // </editor-fold>
 
+    public Events getEventDetails(int eventId) {
+        Events eventDetails = null;
+        try {
+            this.statement = (Statement) MyModel.conn.createStatement();
+            this.result = this.statement.executeQuery(
+                    "SELECT e.EventID, e.EventName, e.EventDate, e.EventLocation, e.EventDetails, e.EventImage, "
+                    + "SUM(t.TotalQuota) AS TotalQuota, "
+                    + "SUM(t.AvailableTickets) AS AvailableTickets "
+                    + "FROM events e "
+                    + "JOIN typeTickets t ON e.EventID = t.EventID "
+                    + "WHERE e.EventID = " + eventId
+                    + " GROUP BY e.EventID, e.EventName, e.EventDate, e.EventLocation");
+
+            if (this.result.next()) {
+                eventDetails = new Events(
+                        this.result.getInt("EventID"),
+                        this.result.getString("EventName"),
+                        this.result.getString("EventDate"),
+                        this.result.getString("EventLocation"),
+                        this.result.getString("EventDetails"),
+                        this.result.getString("EventImage"),
+                        this.result.getInt("TotalQuota"),
+                        this.result.getInt("AvailableTickets")
+                );
+            }
+        } catch (Exception e) {
+            System.out.println("Error di getEventDetails: " + e);
+        }
+        return eventDetails;
+    }
+
+    // </editor-fold>
 }
