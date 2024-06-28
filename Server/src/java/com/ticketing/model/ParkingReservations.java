@@ -12,13 +12,14 @@ import java.util.ArrayList;
  * @author Rome
  */
 public class ParkingReservations extends MyModel {
-    int ReservationID;
-    int UserID;
-    int ParkingLotID;
-    private Timestamp ReservationDate;
-    int SlotNumber;
-    private Boolean IsAvailable;
 
+    private int ReservationID;
+    private int UserID;
+    private String reservationDate;
+    private String PoliceNumber;
+    private int locationID;
+    private boolean IsAvailable;
+    
     public int getReservationID() {
         return ReservationID;
     }
@@ -35,47 +36,50 @@ public class ParkingReservations extends MyModel {
         this.UserID = UserID;
     }
 
-    public int getParkingLotID() {
-        return ParkingLotID;
+    public String getReservationDate() {
+        return reservationDate;
     }
 
-    public void setParkingLotID(int ParkingLotID) {
-        this.ParkingLotID = ParkingLotID;
+    public void setReservationDate(String reservationDate) {
+        this.reservationDate = reservationDate;
     }
 
-    public Timestamp getReservationDate() {
-        return ReservationDate;
+    public String getPoliceNumber() {
+        return PoliceNumber;
     }
 
-    public void setReservationDate(Timestamp ReservationDate) {
-        this.ReservationDate = ReservationDate;
+    public void setPoliceNumber(String PoliceNumber) {
+        this.PoliceNumber = PoliceNumber;
     }
 
-    public int getSlotNumber() {
-        return SlotNumber;
+    public int getLocationID() {
+        return locationID;
     }
 
-    public void setSlotNumber(int SlotNumber) {
-        this.SlotNumber = SlotNumber;
+    public void setLocationID(int locationID) {
+        this.locationID = locationID;
     }
 
-    public Boolean getIsAvailable() {
+    public boolean isIsAvailable() {
         return IsAvailable;
     }
 
-    public void setIsAvailable(Boolean IsAvailable) {
+    public void setIsAvailable(boolean IsAvailable) {
         this.IsAvailable = IsAvailable;
     }
 
-    public ParkingReservations(int ReservationID, int UserID, int ParkingLotID, Timestamp ReservationDate, int SlotNumber, Boolean IsAvailable) {
+    public ParkingReservations(int ReservationID, int UserID, String reservationDate, String PoliceNumber, int locationID, boolean IsAvailable) {
         this.ReservationID = ReservationID;
         this.UserID = UserID;
-        this.ParkingLotID = ParkingLotID;
-        this.ReservationDate = ReservationDate;
-        this.SlotNumber = SlotNumber;
+        this.reservationDate = reservationDate;
+        this.PoliceNumber = PoliceNumber;
+        this.locationID = locationID;
         this.IsAvailable = IsAvailable;
     }
-
+    public ParkingReservations()
+    {
+    }
+    
     @Override
     public void insertData() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

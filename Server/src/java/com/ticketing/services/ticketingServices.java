@@ -74,7 +74,8 @@ public class ticketingServices {
      */
     @WebMethod(operationName = "updateAvailableTickets")
     @Oneway
-    public void updateAvailableTickets(@WebParam(name = "ticketTypeID") int ticketTypeID, @WebParam(name = "ticketsReserved") int ticketsReserved) {
+    public void updateAvailableTickets(@WebParam(name = "ticketTypeID") int ticketTypeID, 
+            @WebParam(name = "ticketsReserved") int ticketsReserved) {
         t = new Tickets();
         t.updateAvailableTickets(ticketTypeID, ticketsReserved);
     }

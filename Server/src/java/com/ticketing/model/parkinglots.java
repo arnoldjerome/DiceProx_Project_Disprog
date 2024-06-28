@@ -11,50 +11,41 @@ import java.util.ArrayList;
  * @author Rome
  */
 public class parkinglots extends MyModel {
-    int ParkingLotID;
-    private String LocationName;
-    int TotalSlots;
-    int BlockedSlots;
+    private int parkingLotsID;
+    private String locationName;
+    private int totalSlots;
 
-    public int getParkingLotID() {
-        return ParkingLotID;
+    public parkinglots(int parkingLotsID, String locationName, int totalSlots) {
+        this.parkingLotsID = parkingLotsID;
+        this.locationName = locationName;
+        this.totalSlots = totalSlots;
+    }
+    public parkinglots() {
     }
 
-    public void setParkingLotID(int ParkingLotID) {
-        this.ParkingLotID = ParkingLotID;
+    public int getParkingLotsID() {
+        return parkingLotsID;
+    }
+
+    public void setParkingLotsID(int parkingLotsID) {
+        this.parkingLotsID = parkingLotsID;
     }
 
     public String getLocationName() {
-        return LocationName;
+        return locationName;
     }
 
-    public void setLocationName(String LocationName) {
-        this.LocationName = LocationName;
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
     }
 
     public int getTotalSlots() {
-        return TotalSlots;
+        return totalSlots;
     }
 
-    public void setTotalSlots(int TotalSlots) {
-        this.TotalSlots = TotalSlots;
+    public void setTotalSlots(int totalSlots) {
+        this.totalSlots = totalSlots;
     }
-
-    public int getBlockedSlots() {
-        return BlockedSlots;
-    }
-
-    public void setBlockedSlots(int BlockedSlots) {
-        this.BlockedSlots = BlockedSlots;
-    }
-
-    public parkinglots(int ParkingLotID, String LocationName, int TotalSlots, int BlockedSlots) {
-        this.ParkingLotID = ParkingLotID;
-        this.LocationName = LocationName;
-        this.TotalSlots = TotalSlots;
-        this.BlockedSlots = BlockedSlots;
-    }
-
     @Override
     public void insertData() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
