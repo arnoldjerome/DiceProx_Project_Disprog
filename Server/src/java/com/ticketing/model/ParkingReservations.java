@@ -6,6 +6,7 @@ package com.ticketing.model;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.sql.Statement;
 
 /**
  *
@@ -17,7 +18,15 @@ public class ParkingReservations extends MyModel {
     private int UserID;
     private String reservationDate;
     private String PoliceNumber;
-    private int locationID;
+
+    public String getLocationID() {
+        return locationID;
+    }
+
+    public void setLocationID(String locationID) {
+        this.locationID = locationID;
+    }
+    private String locationID;
     private boolean IsAvailable;
     
     public int getReservationID() {
@@ -52,13 +61,7 @@ public class ParkingReservations extends MyModel {
         this.PoliceNumber = PoliceNumber;
     }
 
-    public int getLocationID() {
-        return locationID;
-    }
-
-    public void setLocationID(int locationID) {
-        this.locationID = locationID;
-    }
+    
 
     public boolean isIsAvailable() {
         return IsAvailable;
@@ -68,7 +71,7 @@ public class ParkingReservations extends MyModel {
         this.IsAvailable = IsAvailable;
     }
 
-    public ParkingReservations(int ReservationID, int UserID, String reservationDate, String PoliceNumber, int locationID, boolean IsAvailable) {
+    public ParkingReservations(int ReservationID, int UserID, String reservationDate, String PoliceNumber, String locationID, boolean IsAvailable) {
         this.ReservationID = ReservationID;
         this.UserID = UserID;
         this.reservationDate = reservationDate;
@@ -97,8 +100,30 @@ public class ParkingReservations extends MyModel {
 
     @Override
     public ArrayList<Object> viewListData() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ArrayList<Object> listOfReservations = new ArrayList<>();
+        try {
+             this.statement = (Statement) MyModel.conn.createStatement();
+                this.result = this.statement.executeQuery(
+                    "select pr.ReservationID, u.Username, pl.LocationName, "
+                    + "pr.PoliceNumber, pr.LocationID, pr.IsAvailable "
+                    + "from parkingreservations pr"
+                    + "join users u on pr.UserID = u.userid "
+                    + "join parkinglots pl on pr.ParkingLotID = pl.ParkingLotID");
+
+            while (this.result.next()) {
+                ParkingReservations pr = new ParkingReservations(
+                        this.result.getInt("ReservationID"),
+                        this.result.getInt("UserID"),
+                        this.result.getString("ReservationDate"),
+                        this.result.getString("PoliceNumber"),
+                        this.result.getString("LocationID"),
+                        this.result.getBoolean("IsAvailable")
+                );
+                listOfReservations.add(pr);
+            }
+        } catch (Exception e) {
+            System.out.println("Error di view list data: " + e);
+        }
+        return listOfReservations;
     }
-    
-    
 }

@@ -8,6 +8,8 @@ import com.ticketing.model.Account;
 import com.ticketing.model.Events;
 import com.ticketing.model.HistoryLogin;
 import com.ticketing.model.Tickets;
+import com.ticketing.model.ParkingReservations;
+import com.ticketing.model.parkinglots;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,7 +31,9 @@ public class ticketingServices {
     Events ev;
     Tickets t;
     HistoryLogin h;
-
+    ParkingReservations pr;
+    parkinglots pl;
+            
     public ticketingServices() {
     }
 
