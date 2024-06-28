@@ -33,7 +33,6 @@ public class bookParkir2 extends javax.swing.JFrame {
         comboBoxLokasi = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jAcaraTabel = new javax.swing.JTable();
-        denahParkir = new javax.swing.JLabel();
         reservationID = new javax.swing.JLabel();
         idText = new javax.swing.JTextField();
         userID = new javax.swing.JLabel();
@@ -49,6 +48,8 @@ public class bookParkir2 extends javax.swing.JFrame {
         availableTicketText1 = new javax.swing.JTextField();
         availableReservationLabel1 = new javax.swing.JLabel();
         submitButton = new javax.swing.JButton();
+        denahParkirArif = new javax.swing.JLabel();
+        denahParkirMayjen = new javax.swing.JLabel();
         bagian_kanan = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -103,9 +104,6 @@ public class bookParkir2 extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jAcaraTabel);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 550, 860, 370));
-
-        denahParkir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MayjendSungkono3x3.jpg"))); // NOI18N
-        getContentPane().add(denahParkir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 50, 500, 450));
 
         reservationID.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         reservationID.setForeground(new java.awt.Color(57, 62, 70));
@@ -243,6 +241,12 @@ public class bookParkir2 extends javax.swing.JFrame {
         });
         getContentPane().add(submitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 970, 250, 60));
 
+        denahParkirArif.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ArifRahmanHakim4x2.jpg"))); // NOI18N
+        getContentPane().add(denahParkirArif, new org.netbeans.lib.awtextra.AbsoluteConstraints(1310, 40, 500, 450));
+
+        denahParkirMayjen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MayjendSungkono3x3.jpg"))); // NOI18N
+        getContentPane().add(denahParkirMayjen, new org.netbeans.lib.awtextra.AbsoluteConstraints(1310, 40, 500, 450));
+
         bagian_kanan.setBackground(new java.awt.Color(187, 187, 187));
         bagian_kanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background_main_kiri.png"))); // NOI18N
         getContentPane().add(bagian_kanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 1080));
@@ -352,16 +356,13 @@ public class bookParkir2 extends javax.swing.JFrame {
     private void comboBoxLokasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxLokasiActionPerformed
         // TODO add your handling code here:
         String selectedItem = (String) comboBoxLokasi.getSelectedItem();
-                
-        String iconPath = "";
-        if (selectedItem.equals("Arif Rahman Hakim")) {
-            iconPath = "DiceProx_Project_Disprog\\Client\\src\\img\\ArifRahmanHakim4x2.jpg";
-        } else if (selectedItem.equals("Mayjend Sungkono")) {
-            iconPath = "DiceProx_Project_Disprog\\Client\\src\\img\\MayjendSungkono3x3.jpg";
+        if(selectedItem == "Arif Rahman Hakim")
+        {
+            denahParkirMayjen.setVisible(false);
         }
-        
-//        ImageIcon icon = new ImageIcon(getClass().getResource(iconPath));
-//        denahParkir.setIcon(icon);
+        else{
+            denahParkirArif.setVisible(false);
+        }
     }//GEN-LAST:event_comboBoxLokasiActionPerformed
 
     /**
@@ -407,7 +408,8 @@ public class bookParkir2 extends javax.swing.JFrame {
     private javax.swing.JLabel bagian_kanan;
     private javax.swing.JComboBox<String> comboBoxLokasi;
     private javax.swing.JTextField dateText;
-    private javax.swing.JLabel denahParkir;
+    private javax.swing.JLabel denahParkirArif;
+    private javax.swing.JLabel denahParkirMayjen;
     private javax.swing.JTextField idText;
     private javax.swing.JTable jAcaraTabel;
     private javax.swing.JScrollPane jScrollPane1;
