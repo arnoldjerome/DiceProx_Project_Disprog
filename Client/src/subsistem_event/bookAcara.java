@@ -5,8 +5,16 @@
 package subsistem_event;
 
 import diceprox_main.MainForm;
+import diceprox_main.UserSession;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,30 +22,49 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Yosef
  */
-public class bookAcara extends javax.swing.JFrame {
-
+public class bookAcara extends javax.swing.JFrame implements Runnable {
+    
+    Socket client;
+    BufferedReader in;
+    DataOutputStream out;
+    Thread t;
     /**
      * Creates new form bookAcara
      */
     public bookAcara() {
-        initComponents();
-
-        refreshTable();
-
-        //untuk center
-        this.setLocationRelativeTo(null);
-
-        // Maximize the frame
-        setExtendedState(bookAcara.MAXIMIZED_BOTH);
-
-        idText.setEditable(false);
-        nameText.setEditable(false);
-        dateText.setEditable(false);
-        locationText.setEditable(false);
-        totalQuotaText.setEditable(false);
-        availableTicketText.setEditable(false);
+        try {
+            initComponents();
+            
+            refreshTable();
+            
+            //untuk center
+            this.setLocationRelativeTo(null);
+            
+            // Maximize the frame
+            setExtendedState(bookAcara.MAXIMIZED_BOTH);
+            
+            client = new Socket("localhost", 5005);
+            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            out = new DataOutputStream(client.getOutputStream());
+            start();
+            
+            idText.setEditable(false);
+            nameText.setEditable(false);
+            dateText.setEditable(false);
+            locationText.setEditable(false);
+            totalQuotaText.setEditable(false);
+            availableTicketText.setEditable(false);
+        } catch (IOException ex) {
+            System.out.println("Error di book acara: " + ex);
+        }
     }
-
+    
+    private void start() {
+        if (t == null) {
+            t = new Thread("Book Acara");
+            t.start();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -248,33 +275,47 @@ public class bookAcara extends javax.swing.JFrame {
 
     private void reservationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationButtonActionPerformed
         // Pengecekan jika available tickets sudah habis
-        if (availableTicketText.getText().equals("0")) {
-            JOptionPane.showMessageDialog(this, "Tickets are no longer available for this event.", "Reservation Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            int selectedRow = jAcaraTabel.getSelectedRow();
-            if (selectedRow == -1) {
-                JOptionPane.showMessageDialog(this, "Pilih acara terlebih dahulu.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
-                return;
+        try {
+            if (availableTicketText.getText().equals("0")) {
+                JOptionPane.showMessageDialog(this, "Tickets are no longer available for this event.", "Reservation Error", JOptionPane.ERROR_MESSAGE);
+            } 
+            
+            else {
+                int selectedRow = jAcaraTabel.getSelectedRow();
+                if (selectedRow == -1) {
+                    JOptionPane.showMessageDialog(this, "Pilih acara terlebih dahulu.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                LocalDate currentDate = LocalDate.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate eventDate = LocalDate.parse(dateText.getText(), formatter);
+
+                if (currentDate.isAfter(eventDate)) {
+                    JOptionPane.showMessageDialog(this, "Acara telah selesai.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                String formattedMessage = "CHOOSE_EVNT~" + nameText.getText() + "~" + UserSession.getUsername() + "\n";
+
+                out.writeBytes(formattedMessage);
+                
+                JOptionPane.showMessageDialog(this, "Sukses Memilih Event!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                
+                String eventId = idText.getText();
+
+                bookTiketAcara windowPlane = new bookTiketAcara(eventId);
+
+                if (windowPlane == null || !windowPlane.isVisible()) {
+                    windowPlane.setVisible(true);
+                }
+
+                this.dispose();
             }
-
-            LocalDate currentDate = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate eventDate = LocalDate.parse(dateText.getText(), formatter);
-
-            if (currentDate.isAfter(eventDate)) {
-                JOptionPane.showMessageDialog(this, "Acara telah selesai.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            String eventId = idText.getText();
-
-            bookTiketAcara windowPlane = new bookTiketAcara(eventId);
-
-            if (windowPlane == null || !windowPlane.isVisible()) {
-                windowPlane.setVisible(true);
-            }
-
-            this.dispose();
+        } 
+        
+        catch (Exception e) {
+            System.out.println("Error di button choose event: " + e);
         }
     }//GEN-LAST:event_reservationButtonActionPerformed
 
@@ -399,23 +440,33 @@ public class bookAcara extends javax.swing.JFrame {
 
     private void detailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailButtonActionPerformed
         // Pengecekan jika available tickets sudah habis
+        try {
+            int selectedRow = jAcaraTabel.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Pilih acara terlebih dahulu.", "Kesalahan Detail", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
-        int selectedRow = jAcaraTabel.getSelectedRow();
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Pilih acara terlebih dahulu.", "Kesalahan Detail", JOptionPane.WARNING_MESSAGE);
-            return;
+            String formattedMessage = "DETAIL_EVNT~" + nameText.getText() + "~" + UserSession.getUsername() + "\n";
+
+            out.writeBytes(formattedMessage);
+
+            JOptionPane.showMessageDialog(this, "Sukses Membuka Detil Event!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+            
+            String eventId = idText.getText();
+
+            detailAcara windowPlane = new detailAcara(eventId);
+
+            if (windowPlane == null || !windowPlane.isVisible()) {
+                windowPlane.setVisible(true);
+            }
+
+            this.dispose();
+        } 
+        
+        catch (Exception e) {
+            System.out.println("Error di button detail: " + e);
         }
-
-        String eventId = idText.getText();
-
-        detailAcara windowPlane = new detailAcara(eventId);
-
-        if (windowPlane == null || !windowPlane.isVisible()) {
-            windowPlane.setVisible(true);
-        }
-
-        this.dispose();
-
     }//GEN-LAST:event_detailButtonActionPerformed
 
     /**
@@ -480,5 +531,13 @@ public class bookAcara extends javax.swing.JFrame {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
         return port.selectAllEvents();
+    }
+
+    @Override
+    public void run() {
+        try {
+            
+        } catch (Exception e) {
+        }
     }
 }

@@ -4,7 +4,6 @@
  */
 package com.ticketing.model;
 
-import com.sun.xml.rpc.processor.modeler.j2ee.xml.string;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;

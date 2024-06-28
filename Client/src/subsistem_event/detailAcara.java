@@ -8,6 +8,11 @@ import com.ticketing.services.Events;
 import diceprox_main.MainForm;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,24 +23,43 @@ import java.util.List;
 public class detailAcara extends javax.swing.JFrame {
 
     private String eventId;
-
+    
+    Socket client;
+    BufferedReader in;
+    DataOutputStream out;
+    Thread t;
     /**
      * Creates new form detailAcara
      */
     public detailAcara(String eventId) {
-        initComponents();
-
-        //untuk center
-        this.setLocationRelativeTo(null);
-
-        // Maximize the frame
-        setExtendedState(bookAcara.MAXIMIZED_BOTH);
-
-        System.out.println(eventId);
-
-        loadEventDetails(eventId);
+        try {
+            initComponents();
+            
+            client = new Socket("localhost", 5005);
+            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            out = new DataOutputStream(client.getOutputStream());
+            start();
+            
+            //untuk center
+            this.setLocationRelativeTo(null);
+            
+            // Maximize the frame
+            setExtendedState(bookAcara.MAXIMIZED_BOTH);
+            
+            System.out.println(eventId);
+            
+            loadEventDetails(eventId);
+        } catch (IOException ex) {
+            System.out.println("Error di detail acara: " + ex);
+        }
     }
-
+    
+    private void start() {
+        if (t == null) {
+            t = new Thread("detailAcara");
+            t.start();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,7 +83,6 @@ public class detailAcara extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1920, 1080));
         setMinimumSize(new java.awt.Dimension(1920, 1080));
-        setPreferredSize(new java.awt.Dimension(1920, 1080));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         gambarEvents.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/512.png"))); // NOI18N

@@ -21,6 +21,7 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
     String chatClient, chatServer;
     Account acc;
     String fullname, username, email, password, rePassword, regisDOB;
+    String eventName, eventDate, eventLoc, ticketType, ticketQty, ticketPrice, totalPrice;
     Socket incoming;
     ServerSocket s;
     Thread t;
@@ -107,6 +108,42 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             
             chatTxt.append(msg + "\n");
             chatTxt.append(username + " sukses mengakses menu event!" + "\n");
+            broadCast(msg);
+        }
+        
+        else if (msg.contains("DETAIL_EVNT~")) {
+            String msgSplit[] = msg.split("~");
+            eventName = msgSplit[1];
+            username = msgSplit[2];
+            
+            chatTxt.append(msg + "\n");
+            chatTxt.append(username + " sukses membuka detail event " + eventName + "\n");
+            broadCast(msg);
+        }
+        
+        else if (msg.contains("CHOOSE_EVNT~")) {
+            String msgSplit[] = msg.split("~");
+            eventName = msgSplit[1];
+            username = msgSplit[2];
+            
+            chatTxt.append(msg + "\n");
+            chatTxt.append(username + " sukses memilih event " + eventName + "\n");
+            broadCast(msg);
+        }
+        
+        else if (msg.contains("RESERVE_EVNT~")) {
+            String msgSplit[] = msg.split("~");
+            eventName = msgSplit[1];
+            eventDate = msgSplit[2];
+            eventLoc = msgSplit[3];
+            ticketType = msgSplit[4];
+            ticketQty = msgSplit[5];
+            ticketPrice = msgSplit[6];
+            totalPrice = msgSplit[7];
+            username = msgSplit[8];
+            
+            chatTxt.append(msg + "\n");
+            chatTxt.append(username + " sukses melakukan reservasi event " + eventName + "\n");
             broadCast(msg);
         }
         

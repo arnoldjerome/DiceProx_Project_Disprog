@@ -6,6 +6,11 @@ package subsistem_event;
 
 import diceprox_main.MainForm;
 import diceprox_main.UserSession;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -14,6 +19,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -21,41 +28,60 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author asus
  */
-public class bookTiketAcara extends javax.swing.JFrame {
+public class bookTiketAcara extends javax.swing.JFrame implements Runnable {
 
     private String eventId;
     private int TicketTypeID;
-
+    
+    Socket client;
+    BufferedReader in;
+    DataOutputStream out;
+    Thread t;
     /**
      * Creates new form bookTiketAcara
      */
     public bookTiketAcara(String eventId) {
-        this.eventId = eventId;
-        initComponents();
-
-        //untuk center
-        this.setLocationRelativeTo(null);
-
-        // Maximize the frame
-        setExtendedState(bookAcara.MAXIMIZED_BOTH);
-
-        nameText.setEditable(false);
-        dateText.setEditable(false);
-        locationText.setEditable(false);
-        availableTicketText.setEditable(false);
-        tipeText.setEditable(false);
-        hargaText.setEditable(false);
-
-        refreshTable();
-
-        // Tambahkan listener ke jSpinnerTotalTiket
-        jSpinnerTotalTiket.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                updateTotalHarga();
-            }
-        });
+        try {
+            this.eventId = eventId;
+            initComponents();
+            
+            //untuk center
+            this.setLocationRelativeTo(null);
+            
+            // Maximize the frame
+            setExtendedState(bookAcara.MAXIMIZED_BOTH);
+            
+            client = new Socket("localhost", 5005);
+            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            out = new DataOutputStream(client.getOutputStream());
+            start();
+            
+            nameText.setEditable(false);
+            dateText.setEditable(false);
+            locationText.setEditable(false);
+            availableTicketText.setEditable(false);
+            tipeText.setEditable(false);
+            hargaText.setEditable(false);
+            
+            refreshTable();
+            
+            // Tambahkan listener ke jSpinnerTotalTiket
+            jSpinnerTotalTiket.addChangeListener(new javax.swing.event.ChangeListener() {
+                public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                    updateTotalHarga();
+                }
+            });
+        } catch (IOException ex) {
+            System.out.println("Error di book tiket acara: " + ex);
+        }
     }
-
+    
+    private void start() {
+        if (t == null) {
+            t = new Thread("Book Tiket Acara");
+            t.start();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -307,61 +333,72 @@ public class bookTiketAcara extends javax.swing.JFrame {
     }//GEN-LAST:event_locationTextFocusLost
 
     private void reserveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reserveButtonActionPerformed
-// Pengecekan jika available tickets sudah habis
+        // Pengecekan jika available tickets sudah habis
+        try {
+            int selectedRow = jAcaraTabel.getSelectedRow();
 
-        int selectedRow = jAcaraTabel.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Pilih tiket terlebih dahulu.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
+            } 
 
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Pilih tiket terlebih dahulu.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
-            return;
-        } else {
+            else {
 
-            int avaiTikets = Integer.parseInt(availableTicketText.getText());
-            int ticketsReserved = (int) jSpinnerTotalTiket.getValue();
-            if (ticketsReserved <= avaiTikets) {
-                LocalDateTime now = LocalDateTime.now();
+                int avaiTikets = Integer.parseInt(availableTicketText.getText());
+                int ticketsReserved = (int) jSpinnerTotalTiket.getValue();
+                if (ticketsReserved <= avaiTikets) {
+                    LocalDateTime now = LocalDateTime.now();
 
-                int currentSecond = now.getSecond();
-                int currentMinute = now.getMinute();
-                int currentHour = now.getHour();
-                int currentDay = now.getDayOfMonth();
-                int currentMonth = now.getMonthValue();
-                int currentYear = now.getYear() - 2000; // Assuming year 2000 as the starting point
+                    int currentSecond = now.getSecond();
+                    int currentMinute = now.getMinute();
+                    int currentHour = now.getHour();
+                    int currentDay = now.getDayOfMonth();
+                    int currentMonth = now.getMonthValue();
+                    int currentYear = now.getYear() - 2000; // Assuming year 2000 as the starting point
 
-                // Encode the components into a single int
-                int code = (currentYear << 26) | (currentMonth << 22) | (currentDay << 17)
-                        | (currentHour << 12) | (currentMinute << 6) | currentSecond;
+                    // Encode the components into a single int
+                    int code = (currentYear << 26) | (currentMonth << 22) | (currentDay << 17)
+                            | (currentHour << 12) | (currentMinute << 6) | currentSecond;
 
-                int userID = UserSession.getUserId();
-                int eventID = Integer.parseInt(eventId);
-                boolean isClaimed = false;
-                String numericString = hargaTotal.getText().replace("Rp", "").replace(".", "").trim();
-                int totalHarga = Integer.parseInt(numericString);
+                    int userID = UserSession.getUserId();
+                    int eventID = Integer.parseInt(eventId);
+                    boolean isClaimed = false;
+                    String numericString = hargaTotal.getText().replace("Rp", "").replace(".", "").trim();
+                    int totalHarga = Integer.parseInt(numericString);
 
-                insertTicket(code, userID, eventID, TicketTypeID, ticketsReserved, totalHarga, isClaimed);
-                updateAvailableTickets(TicketTypeID, ticketsReserved);
+                    String formattedMessage = "RESERVE_EVNT~" + nameText.getText() + "~" + dateText.getText() + "~" + locationText.getText() + "~" + tipeText.getText() + "~" + jSpinnerTotalTiket.getValue() + " tiket" + "~" + "Rp. " + hargaText.getText() + "~" + "Rp. " + hargaTotal.getText() + "~" + UserSession.getUsername() + "\n";
 
-                JOptionPane.showMessageDialog(this, "Reservasi tiket berhasil.", "Informasi Reservasi", JOptionPane.INFORMATION_MESSAGE);
-                JOptionPane.showMessageDialog(this, "Silakan Cek Kode Reservasi Pada Menu Pemesanan.", "Informasi Reservasi", JOptionPane.INFORMATION_MESSAGE);
+                    out.writeBytes(formattedMessage);
 
-                MainForm windowPlane = new MainForm();
+                    insertTicket(code, userID, eventID, TicketTypeID, ticketsReserved, totalHarga, isClaimed);
+                    updateAvailableTickets(TicketTypeID, ticketsReserved);
 
-                if (windowPlane == null || !windowPlane.isVisible()) {
-                    windowPlane.setVisible(true);
-                }
+                    JOptionPane.showMessageDialog(this, "Sukses Melakukan Reservasi!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Silakan Cek Kode Reservasi Pada Menu Pemesanan!", "Notification", JOptionPane.INFORMATION_MESSAGE);
 
-                this.dispose();
-            } else {
+                    MainForm windowPlane = new MainForm();
 
-                if (avaiTikets == 0) {
-                    JOptionPane.showMessageDialog(this, "Stok Tiket yang dipilih telah habis.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
-                    return;
-                } else {
-                    JOptionPane.showMessageDialog(this, "Terlalu banyak jumlah tiket yang ingin di reservasi.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
-                    return;
+                    if (windowPlane == null || !windowPlane.isVisible()) {
+                        windowPlane.setVisible(true);
+                    }
+
+                    this.dispose();
+                } 
+
+                else {
+
+                    if (avaiTikets == 0) {
+                        JOptionPane.showMessageDialog(this, "Stok Tiket yang dipilih telah habis.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
+                    } 
+                    
+                    else {
+                        JOptionPane.showMessageDialog(this, "Terlalu banyak jumlah tiket yang ingin di reservasi.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
+                    }
                 }
             }
-
+        } 
+        
+        catch (Exception e) {
+            System.out.println("Error di button reservasi event: " + e);
         }
     }//GEN-LAST:event_reserveButtonActionPerformed
 
@@ -550,4 +587,11 @@ public class bookTiketAcara extends javax.swing.JFrame {
         port.insertTicket(ticketID, userID, eventID, ticketTypeID, jumlahTiket, hargaTotal, isClaimed);
     }
 
+    @Override
+    public void run() {
+        try {
+            
+        } catch (Exception e) {
+        }
+    }
 }
