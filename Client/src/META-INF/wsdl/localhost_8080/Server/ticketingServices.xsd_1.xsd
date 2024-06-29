@@ -8,6 +8,14 @@
 
 <xs:element name="checkRegisterResponse" type="tns:checkRegisterResponse"/>
 
+<xs:element name="fetchEventDate" type="tns:fetchEventDate"/>
+
+<xs:element name="fetchEventDateResponse" type="tns:fetchEventDateResponse"/>
+
+<xs:element name="fetchEventName" type="tns:fetchEventName"/>
+
+<xs:element name="fetchEventNameResponse" type="tns:fetchEventNameResponse"/>
+
 <xs:element name="getEventDetails" type="tns:getEventDetails"/>
 
 <xs:element name="getEventDetailsResponse" type="tns:getEventDetailsResponse"/>
@@ -36,11 +44,7 @@
 
 <xs:element name="updateAvailableTickets" type="tns:updateAvailableTickets"/>
 
-<xs:complexType name="insertHistoryLogin">
-<xs:sequence>
-<xs:element name="userID" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
+<xs:element name="updateClaimStatus" type="tns:updateClaimStatus"/>
 
 <xs:complexType name="checkLoginAndGetUserId">
 <xs:sequence>
@@ -53,28 +57,6 @@
 <xs:complexType name="checkLoginAndGetUserIdResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="insertAccRegist">
-<xs:sequence>
-<xs:element name="username" type="xs:string" minOccurs="0"/>
-<xs:element name="password" type="xs:string" minOccurs="0"/>
-<xs:element name="fullname" type="xs:string" minOccurs="0"/>
-<xs:element name="email" type="xs:string" minOccurs="0"/>
-<xs:element name="dateOfBirth" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="hello">
-<xs:sequence>
-<xs:element name="name" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="helloResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -121,13 +103,11 @@
 <xs:sequence/>
 </xs:complexType>
 
-<xs:complexType name="selectAllEventsType">
-<xs:sequence>
-<xs:element name="arg0" type="xs:string" minOccurs="0"/>
-</xs:sequence>
+<xs:complexType name="selectAllEvents">
+<xs:sequence/>
 </xs:complexType>
 
-<xs:complexType name="selectAllEventsTypeResponse">
+<xs:complexType name="selectAllEventsResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:events" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
@@ -153,13 +133,27 @@
 </xs:complexContent>
 </xs:complexType>
 
-<xs:complexType name="selectAllEvents">
-<xs:sequence/>
+<xs:complexType name="fetchEventName">
+<xs:sequence>
+<xs:element name="ticketID" type="xs:int"/>
+</xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="selectAllEventsResponse">
+<xs:complexType name="fetchEventNameResponse">
 <xs:sequence>
-<xs:element name="return" type="tns:events" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="fetchEventDate">
+<xs:sequence>
+<xs:element name="ticketID" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="fetchEventDateResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -175,18 +169,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="getEventDetails">
-<xs:sequence>
-<xs:element name="eventId" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="getEventDetailsResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:events" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="checkRegister">
 <xs:sequence>
 <xs:element name="email" type="xs:string" minOccurs="0"/>
@@ -196,6 +178,65 @@
 <xs:complexType name="checkRegisterResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:boolean" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="updateClaimStatus">
+<xs:sequence>
+<xs:element name="ticketID" type="xs:int"/>
+<xs:element name="userID" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="insertHistoryLogin">
+<xs:sequence>
+<xs:element name="userID" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="insertAccRegist">
+<xs:sequence>
+<xs:element name="username" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="fullname" type="xs:string" minOccurs="0"/>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="dateOfBirth" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="selectAllEventsType">
+<xs:sequence>
+<xs:element name="arg0" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="selectAllEventsTypeResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:events" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="hello">
+<xs:sequence>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="helloResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getEventDetails">
+<xs:sequence>
+<xs:element name="eventId" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getEventDetailsResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:events" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>

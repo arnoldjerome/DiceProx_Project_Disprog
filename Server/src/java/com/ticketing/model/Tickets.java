@@ -68,6 +68,10 @@ public class Tickets extends MyModel {
         this.ReservationDate = ReservationDate;
         this.IsClaimed = IsClaimed;
     }
+    
+    public Tickets(int TicketID) {
+        this.TicketID = TicketID;
+    }
 
     public Tickets() {
 
@@ -175,7 +179,77 @@ public class Tickets extends MyModel {
             System.out.println("Error di update available tickets: " + e);
         }
     }
-
+    
+    public void updateClaimStatus(int ticketID, int userID) {
+        try {
+            if (!MyModel.conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                        "UPDATE tickets SET IsClaimed=1 WHERE TicketID=? AND UserID=?;");
+                sql.setInt(1, ticketID);
+                sql.setInt(2, userID);
+                sql.executeUpdate();
+                sql.close();
+            }
+        } 
+        catch (Exception e) {
+            System.out.println("Error di update claim status: " + e);
+        }
+    }
+    
+    public String fetchEventName(int ticketID) {
+        try {
+            String eventName = "";
+            
+            if (!MyModel.conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                    "SELECT e.EventName"
+                    + "FROM tickets t "
+                    + "INNER JOIN events e "
+                    + "ON t.EventID = e.EventID "
+                    + "WHERE t.TicketID = ?");
+                sql.setInt(1, ticketID);
+                this.result = sql.executeQuery();
+                
+                if (this.result.next()) {
+                    return this.result.getString(eventName);
+                }
+            }
+        } 
+        
+        catch (Exception e) {
+            System.out.println("Error di fetch event name: " + e);
+        }
+        
+        return null;
+    }
+    
+    public String fetchEventDate(int ticketID) {
+        try {
+            String eventDate = "";
+            
+            if (!MyModel.conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                    "SELECT e.EventDate"
+                    + "FROM tickets t "
+                    + "INNER JOIN events e "
+                    + "ON t.EventID = e.EventID "
+                    + "WHERE t.TicketID = ?");
+                sql.setInt(1, ticketID);
+                this.result = sql.executeQuery();
+                
+                if (this.result.next()) {
+                    return this.result.getString(eventDate);
+                }
+            }
+        } 
+        
+        catch (Exception e) {
+            System.out.println("Error di fetch event date: " + e);
+        }
+        
+        return null;
+    }
+    
     @Override
     public void insertData() {
         try {

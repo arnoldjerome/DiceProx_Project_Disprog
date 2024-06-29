@@ -4,27 +4,57 @@
  */
 package subsistem_event;
 
+import com.ticketing.services.Events;
 import diceprox_main.MainForm;
+import diceprox_main.UserSession;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author asus
  */
-public class klaimTiketAcara extends javax.swing.JFrame {
-
+public class klaimTiketAcara extends javax.swing.JFrame implements Runnable {
+    
+    Socket client;
+    BufferedReader in;
+    DataOutputStream out;
+    Thread t;
     /**
      * Creates new form klaimTiketAcara
      */
-    public klaimTiketAcara() {
-        initComponents();
-
-        //untuk center
-        this.setLocationRelativeTo(null);
-
-        // Maximize the frame
-        setExtendedState(klaimTiketAcara.MAXIMIZED_BOTH);
+    public klaimTiketAcara() {        
+        try {
+            initComponents();
+            
+            client = new Socket("localhost", 5005);
+            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            out = new DataOutputStream(client.getOutputStream());
+            start();
+            
+            //untuk center
+            this.setLocationRelativeTo(null);
+            
+            // Maximize the frame
+            setExtendedState(klaimTiketAcara.MAXIMIZED_BOTH);
+        } catch (IOException ex) {
+            System.out.println("Error di klaim tiket acara: " + ex);
+        }
     }
-
+    
+    private void start() {
+        if (t == null) {
+            t = new Thread(this, "klaimTiketAcara");
+            t.start();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -100,13 +130,38 @@ public class klaimTiketAcara extends javax.swing.JFrame {
     }//GEN-LAST:event_ticketTextFocusLost
 
     private void cekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cekButtonActionPerformed
-        klaimTiketAcara windowPlane = new klaimTiketAcara();
+        try {
+            int ticketID = Integer.parseInt(ticketText.getText());
+        
+            Date today = new Date();
+            SimpleDateFormat todayDate = new SimpleDateFormat("yyyy-MM-dd");
+            String currentDate = todayDate.format(today);
+            
+            String eventName = fetchEventName(Integer.parseInt(ticketText.getText()));
+            String eventDate = fetchEventDate(Integer.parseInt(ticketText.getText()));
 
-        if (windowPlane == null || !windowPlane.isVisible()) {
-            windowPlane.setVisible(true);
+            if (currentDate.equals(eventDate)) {
+                String formattedMessage = "EVNT_CLAIM_TIX~" + ticketText.getText() + "~" + eventName + "~" + eventDate + "~" + UserSession.getUsername() + "\n";
+
+                updateClaimStatus(ticketID, UserSession.getUserId());
+
+                out.writeBytes(formattedMessage);
+
+                JOptionPane.showMessageDialog(this, "Sukses Mengklaim Ticket Event!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } 
+        
+        catch (Exception e) {
+            System.out.println("Error di button cek: " + e);
         }
-
-        this.dispose();
+        
+//        klaimTiketAcara windowPlane = new klaimTiketAcara(eventDate);
+//
+//        if (windowPlane == null || !windowPlane.isVisible()) {
+//            windowPlane.setVisible(true);
+//        }
+//
+//        this.dispose();
     }//GEN-LAST:event_cekButtonActionPerformed
 
     private void backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseClicked
@@ -161,4 +216,31 @@ public class klaimTiketAcara extends javax.swing.JFrame {
     private javax.swing.JLabel salamTiket;
     private javax.swing.JTextField ticketText;
     // End of variables declaration//GEN-END:variables
+
+    private static void updateClaimStatus(int ticketID, int userID) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        port.updateClaimStatus(ticketID, userID);
+    }
+    
+    
+    private static String fetchEventName(int ticketID) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.fetchEventName(ticketID);
+    }
+    
+    private static String fetchEventDate(int ticketID) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.fetchEventDate(ticketID);
+    }
+    
+    @Override
+    public void run() {
+        try {
+            
+        } catch (Exception e) {
+        }
+    }
 }

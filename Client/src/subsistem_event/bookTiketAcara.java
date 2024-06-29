@@ -365,7 +365,7 @@ public class bookTiketAcara extends javax.swing.JFrame implements Runnable {
                     String numericString = hargaTotal.getText().replace("Rp", "").replace(".", "").trim();
                     int totalHarga = Integer.parseInt(numericString);
 
-                    String formattedMessage = "RESERVE_EVNT~" + nameText.getText() + "~" + dateText.getText() + "~" + locationText.getText() + "~" + tipeText.getText() + "~" + jSpinnerTotalTiket.getValue() + " tiket" + "~" + "Rp. " + hargaText.getText() + "~" + "Rp. " + hargaTotal.getText() + "~" + UserSession.getUsername() + "\n";
+                    String formattedMessage = "RESERVE_EVNT~" + nameText.getText() + "~" + dateText.getText() + "~" + locationText.getText() + "~" + tipeText.getText() + "~" + jSpinnerTotalTiket.getValue() + " tiket" + "~" + "Rp. " + hargaText.getText() + "~" + hargaTotal.getText() + "~" + UserSession.getUsername() + "\n";
 
                     out.writeBytes(formattedMessage);
 

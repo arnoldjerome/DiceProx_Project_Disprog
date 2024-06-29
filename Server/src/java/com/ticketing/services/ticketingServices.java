@@ -156,4 +156,38 @@ public class ticketingServices {
         return ev.getEventDetails(eventId);
     }
 
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "updateClaimStatus")
+    @Oneway
+    public void updateClaimStatus(@WebParam(name = "ticketID") int ticketID, @WebParam(name = "userID") int userID) {
+        t = new Tickets();
+        t.updateClaimStatus(ticketID, userID);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "fetchEventDate")
+    public String fetchEventDate(@WebParam(name = "ticketID") int ticketID) {
+        //TODO write your implementation code here:
+        t = new Tickets();
+        String eventDate = t.fetchEventDate(ticketID);
+        
+        return eventDate;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "fetchEventName")
+    public String fetchEventName(@WebParam(name = "ticketID") int ticketID) {
+        //TODO write your implementation code here:
+        t = new Tickets();
+        String eventName = t.fetchEventName(ticketID);
+        
+        return eventName;
+    }
+
 }

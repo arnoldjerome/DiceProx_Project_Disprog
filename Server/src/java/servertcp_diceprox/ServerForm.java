@@ -22,6 +22,7 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
     Account acc;
     String fullname, username, email, password, rePassword, regisDOB;
     String eventName, eventDate, eventLoc, ticketType, ticketQty, ticketPrice, totalPrice;
+    String ticketId;
     Socket incoming;
     ServerSocket s;
     Thread t;
@@ -162,6 +163,18 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             
             chatTxt.append(msg + "\n");
             chatTxt.append(username + " sukses mengakses menu klaim ticket!" + "\n");
+            broadCast(msg);
+        }
+        
+        else if (msg.contains("ENVT_CLAIM_TIX~")) {
+            String msgSplit[] = msg.split("~");
+            ticketId = msgSplit[1];
+            eventName = msgSplit[2];
+            eventDate = msgSplit[3];
+            username = msgSplit[4];
+            
+            chatTxt.append(msg + "\n");
+            chatTxt.append(username + " sukses mengklaim ticket event " + eventName + "\n");
             broadCast(msg);
         }
         
