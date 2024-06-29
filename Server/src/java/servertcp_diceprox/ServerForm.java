@@ -157,8 +157,8 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             broadCast(msg);
         }
         
-        else if (msg.contains("CLAIM~")) {
-            String msgSplit[] = msg.split("CLAIM~");
+        else if (msg.contains("MENU_CLM~")) {
+            String msgSplit[] = msg.split("MENU_CLM~");
             username = msgSplit[1];
             
             chatTxt.append(msg + "\n");
@@ -166,7 +166,7 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             broadCast(msg);
         }
         
-        else if (msg.contains("ENVT_CLAIM_TIX~")) {
+        else if (msg.contains("EVNT_CLM_TIX~")) {
             String msgSplit[] = msg.split("~");
             ticketId = msgSplit[1];
             eventName = msgSplit[2];

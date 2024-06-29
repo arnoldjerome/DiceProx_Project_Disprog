@@ -300,7 +300,7 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
 
     private void klaimTicketButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_klaimTicketButtonActionPerformed
         try {
-            String formattedMessage = "CLAIM~" + namaLabel.getText() + "\n";
+            String formattedMessage = "MENU_CLM~" + namaLabel.getText() + "\n";
             
             out.writeBytes(formattedMessage);
             

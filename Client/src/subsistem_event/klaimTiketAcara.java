@@ -141,7 +141,7 @@ public class klaimTiketAcara extends javax.swing.JFrame implements Runnable {
             String eventDate = fetchEventDate(Integer.parseInt(ticketText.getText()));
 
             if (currentDate.equals(eventDate)) {
-                String formattedMessage = "EVNT_CLAIM_TIX~" + ticketText.getText() + "~" + eventName + "~" + eventDate + "~" + UserSession.getUsername() + "\n";
+                String formattedMessage = "EVNT_CLM_TIX~" + ticketText.getText() + "~" + eventName + "~" + eventDate + "~" + UserSession.getUsername() + "\n";
 
                 updateClaimStatus(ticketID, UserSession.getUserId());
 

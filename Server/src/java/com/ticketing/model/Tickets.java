@@ -205,7 +205,7 @@ public class Tickets extends MyModel {
                 PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
                     "SELECT e.EventName FROM tickets t INNER JOIN events e ON t.EventID = e.EventID WHERE t.TicketID = ?");
                 sql.setInt(1, ticketID);
-                sql.executeQuery();
+                this.result = sql.executeQuery();
                 
                 if (this.result.next()) {
                     eventName = this.result.getString("EventName");
@@ -230,7 +230,7 @@ public class Tickets extends MyModel {
                 PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
                     "SELECT e.EventDate FROM tickets t INNER JOIN events e ON t.EventID = e.EventID WHERE t.TicketID = ?");
                 sql.setInt(1, ticketID);
-                sql.executeQuery();
+                this.result = sql.executeQuery();
                 
                 if (this.result.next()) {
                     Date event_date = this.result.getDate("EventDate");
