@@ -190,6 +190,8 @@ public class Tickets extends MyModel {
                 sql.setInt(2, userID);
                 sql.executeUpdate();
                 sql.close();
+                
+                this.IsClaimed = true;
             }
         } 
         catch (Exception e) {

@@ -148,20 +148,20 @@ public class klaimTiketAcara extends javax.swing.JFrame implements Runnable {
                 out.writeBytes(formattedMessage);
 
                 JOptionPane.showMessageDialog(this, "Sukses Mengklaim Ticket Event!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                
+                MainForm windowPlane = new MainForm();
+
+                if (windowPlane == null || !windowPlane.isVisible()) {
+                    windowPlane.setVisible(true);
+                }
+
+                this.dispose();
             }
         } 
         
         catch (Exception e) {
             System.out.println("Error di button cek: " + e);
         }
-        
-//        klaimTiketAcara windowPlane = new klaimTiketAcara(eventDate);
-//
-//        if (windowPlane == null || !windowPlane.isVisible()) {
-//            windowPlane.setVisible(true);
-//        }
-//
-//        this.dispose();
     }//GEN-LAST:event_cekButtonActionPerformed
 
     private void backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseClicked

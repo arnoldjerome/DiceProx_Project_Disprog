@@ -195,7 +195,7 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
 
         try {
 
-            String formattedMessage = "PARKING~" + namaLabel.getText() + "\n";
+            String formattedMessage = "MENU_PRK~" + namaLabel.getText() + "\n";
 
             out.writeBytes(formattedMessage);
             
@@ -222,7 +222,7 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
 
         try {
 
-            String formattedMessage = "EVENT~" + namaLabel.getText() + "\n";
+            String formattedMessage = "MENU_EVNT~" + namaLabel.getText() + "\n";
 
             out.writeBytes(formattedMessage);
             
@@ -251,8 +251,6 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
             if (response == JOptionPane.YES_OPTION) {
 
                 String formattedMessage = "LOGOUT~" + namaLabel.getText() + "\n";
-
-                out.writeBytes(formattedMessage);
                 
                 JOptionPane.showMessageDialog(this, "Logout Sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
                 
@@ -265,6 +263,8 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
 
                 // Tutup form utama (MainForm)
                 this.dispose();
+                
+                out.writeBytes(formattedMessage);
             }
         } 
         
@@ -280,13 +280,13 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
             if (response == JOptionPane.YES_OPTION) {
 
                 String formattedMessage = "EXIT~" + namaLabel.getText() + "\n";
-
-                out.writeBytes(formattedMessage);
                 
                 JOptionPane.showMessageDialog(this, "Exit Sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
                 
                 // Reset user session
                 UserSession.resetSession();
+                
+                out.writeBytes(formattedMessage);
 
                 System.exit(0);
             }
@@ -323,7 +323,7 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
 
     private void pemesananButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pemesananButtonActionPerformed
         try {
-            String formattedMessage = "ORDERS~" + namaLabel.getText() + "\n";
+            String formattedMessage = "ORD_TIX~" + namaLabel.getText() + "\n";
             
             out.writeBytes(formattedMessage);
             

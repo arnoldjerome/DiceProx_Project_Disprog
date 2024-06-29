@@ -103,8 +103,8 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             //confirmClient = null;
         }
         
-        else if (msg.contains("EVENT~")) {
-            String msgSplit[] = msg.split("EVENT~");
+        else if (msg.contains("MENU_EVNT~")) {
+            String msgSplit[] = msg.split("MENU_EVNT~");
             username = msgSplit[1];
             
             chatTxt.append(msg + "\n");
@@ -148,8 +148,8 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             broadCast(msg);
         }
         
-        else if (msg.contains("PARKING~")) {
-            String msgSplit[] = msg.split("PARKING~");
+        else if (msg.contains("MENU_PRK~")) {
+            String msgSplit[] = msg.split("MENU_PRK~");
             username = msgSplit[1];
             
             chatTxt.append(msg + "\n");
@@ -178,8 +178,8 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             broadCast(msg);
         }
         
-        else if (msg.contains("ORDERS~")) {
-            String msgSplit[] = msg.split("ORDERS~");
+        else if (msg.contains("ORD_TIX~")) {
+            String msgSplit[] = msg.split("ORD_TIX~");
             username = msgSplit[1];
             
             chatTxt.append(msg + "\n");
