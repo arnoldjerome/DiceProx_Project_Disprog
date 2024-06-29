@@ -4,9 +4,10 @@
  */
 package com.ticketing.model;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
-import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -202,17 +203,15 @@ public class Tickets extends MyModel {
             
             if (!MyModel.conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
-                    "SELECT e.EventName"
-                    + "FROM tickets t "
-                    + "INNER JOIN events e "
-                    + "ON t.EventID = e.EventID "
-                    + "WHERE t.TicketID = ?");
+                    "SELECT e.EventName FROM tickets t INNER JOIN events e ON t.EventID = e.EventID WHERE t.TicketID = ?");
                 sql.setInt(1, ticketID);
-                this.result = sql.executeQuery();
+                sql.executeQuery();
                 
                 if (this.result.next()) {
-                    return this.result.getString(eventName);
+                    eventName = this.result.getString("EventName");
                 }
+                
+                return eventName;
             }
         } 
         
@@ -229,17 +228,19 @@ public class Tickets extends MyModel {
             
             if (!MyModel.conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
-                    "SELECT e.EventDate"
-                    + "FROM tickets t "
-                    + "INNER JOIN events e "
-                    + "ON t.EventID = e.EventID "
-                    + "WHERE t.TicketID = ?");
+                    "SELECT e.EventDate FROM tickets t INNER JOIN events e ON t.EventID = e.EventID WHERE t.TicketID = ?");
                 sql.setInt(1, ticketID);
-                this.result = sql.executeQuery();
+                sql.executeQuery();
                 
                 if (this.result.next()) {
-                    return this.result.getString(eventDate);
+                    Date event_date = this.result.getDate("EventDate");
+                    
+                    SimpleDateFormat event_date_format = new SimpleDateFormat("yyyy-MM-dd");
+                    
+                    eventDate = event_date_format.format(event_date);
                 }
+                
+                return eventDate;
             }
         } 
         
