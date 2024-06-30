@@ -143,10 +143,10 @@ public class klaimTiketAcara extends javax.swing.JFrame implements Runnable {
             
             for (Integer ticketCode : selectAllUserTicketID(UserSession.getUserId())) {
                 
-                if (ticketCode instanceof Integer) {
+                if (ticketCode != null && ticketCode instanceof Integer) {
                     
                     if (userIDClaimTicket == UserSession.getUserId()) {
-                
+
                         if (currentDate.equals(eventDate)) {    
 
                             if (checkClaimStatus(ticketID) == false) {
@@ -158,7 +158,7 @@ public class klaimTiketAcara extends javax.swing.JFrame implements Runnable {
                                 out.writeBytes(formattedMessage);
 
                                 JOptionPane.showMessageDialog(this, "Sukses Mengklaim Ticket Event!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-                                break;
+                                //break;
             //                    MainForm windowPlane = new MainForm();
             //
             //                    if (windowPlane == null || !windowPlane.isVisible()) {
@@ -177,7 +177,7 @@ public class klaimTiketAcara extends javax.swing.JFrame implements Runnable {
                             JOptionPane.showMessageDialog(this, "Ticket Hanya Bisa Diklaim Pada Tanggal Event Diadakan!", "Gagal Mengklaim Tiket", JOptionPane.WARNING_MESSAGE);
                         }
                     }
-            
+
                     else {
                         JOptionPane.showMessageDialog(this, "Pastikan Kode Tiket Sudah Sesuai Dengan Reservasimu!", "Kode Tiket Tidak Valid", JOptionPane.WARNING_MESSAGE);
                     }            
