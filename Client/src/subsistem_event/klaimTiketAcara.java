@@ -160,7 +160,9 @@ public class klaimTiketAcara extends javax.swing.JFrame implements Runnable {
 //                    this.dispose();
                 }
                 
-                JOptionPane.showMessageDialog(this, "Ticket Sudah Diklaim!", "Gagal Mengklaim Tiket", JOptionPane.WARNING_MESSAGE);
+                else {
+                    JOptionPane.showMessageDialog(this, "Ticket Sudah Diklaim!", "Gagal Mengklaim Tiket", JOptionPane.WARNING_MESSAGE);
+                }        
             }
             
             else {
