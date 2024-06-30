@@ -85,6 +85,12 @@
 <message name="insertAccRegist">
 <part name="parameters" element="tns:insertAccRegist"/>
 </message>
+<message name="selectAllUserTicketID">
+<part name="parameters" element="tns:selectAllUserTicketID"/>
+</message>
+<message name="selectAllUserTicketIDResponse">
+<part name="parameters" element="tns:selectAllUserTicketIDResponse"/>
+</message>
 <portType name="ticketingServices">
 <operation name="hello">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/helloRequest" message="tns:hello"/>
@@ -144,6 +150,10 @@
 </operation>
 <operation name="insertAccRegist">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/insertAccRegist" message="tns:insertAccRegist"/>
+</operation>
+<operation name="selectAllUserTicketID">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/selectAllUserTicketIDRequest" message="tns:selectAllUserTicketID"/>
+<output wsam:Action="http://services.ticketing.com/ticketingServices/selectAllUserTicketIDResponse" message="tns:selectAllUserTicketIDResponse"/>
 </operation>
 </portType>
 <binding name="ticketingServicesPortBinding" type="tns:ticketingServices">
@@ -276,6 +286,15 @@
 <input>
 <soap:body use="literal"/>
 </input>
+</operation>
+<operation name="selectAllUserTicketID">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
 </operation>
 </binding>
 <service name="ticketingServices">

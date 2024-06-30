@@ -213,4 +213,20 @@ public class ticketingServices {
         
         return userId;
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "selectAllUserTicketID")
+    public ArrayList<Integer> selectAllUserTicketID(@WebParam(name = "userID") int userID) {
+        //TODO write your implementation code here:
+        t = new Tickets();
+        ArrayList<Integer> listOfTicketIDs = new ArrayList<>();
+        for (Integer ticketID : t.selectAllUserTicketID(userID)) {
+            if (ticketID instanceof Integer) {
+                listOfTicketIDs.add(ticketID);
+            }
+        }   
+        return listOfTicketIDs;
+    }
 }

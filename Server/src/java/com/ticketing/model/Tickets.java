@@ -309,7 +309,7 @@ public class Tickets extends MyModel {
         try {
             if (!MyModel.conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
-                        "INSERT INTO tickets (TicketID, UserID, EventID, TypeTicketID, JumlahTiket, HargaTotal, IsClaimed) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                     "INSERT INTO tickets (TicketID, UserID, EventID, TypeTicketID, JumlahTiket, HargaTotal, IsClaimed) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
                 sql.setInt(1, this.getTicketID());
                 sql.setInt(2, this.getUserID());
@@ -336,38 +336,32 @@ public class Tickets extends MyModel {
     public void deleteData() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-//    public ArrayList<Object> viewListData(String userID) {
-//        ArrayList<Object> listOfTickets = new ArrayList<>();
-//        try {
-//
-//            this.statement = (Statement) MyModel.conn.createStatement();
-//            this.result = this.statement.executeQuery(
-//                    "SELECT TicketID, UserID, EventID, TypeTicketID, JumlahTiket, HargaTotal, ReservationDate, IsClaimed "
-//                    + "FROM tickets "
-//                    + "WHERE UserID = " + userID);
-//
-//            while (this.result.next()) {
-//                Tickets t = new Tickets(
-//                        this.result.getInt("TicketID"),
-//                        this.result.getInt("UserID"),
-//                        this.result.getInt("EventID"),
-//                        this.result.getInt("TypeTicketID"),
-//                        this.result.getInt("JumlahTiket"),
-//                        this.result.getInt("HargaTotal"),
-//                        this.result.getString("ReservationDate"),
-//                        this.result.getBoolean("IsClaimed")
-//                );
-//                listOfTickets.add(t);
-//
-//            }
-//
-//        } catch (Exception e) {
-//            System.out.println("Error di view list data: " + e);
-//        }
-//
-//        return listOfTickets;
-//    }
+    
+    public ArrayList<Integer> selectAllUserTicketID(int userID) {
+        ArrayList<Integer> listOfTicketIDs = new ArrayList<>();    
+        int ticketID = 0;
+        
+        try {
+            if (!MyModel.conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                     "SELECT TicketID FROM tickets WHERE UserID = ?");
+                sql.setInt(1, userID);
+                this.result = sql.executeQuery();
+                
+                while (this.result.next()) {
+                    ticketID = this.result.getInt("TicketID");
+                }
+                
+                listOfTicketIDs.add(ticketID);
+            }
+        } 
+        
+        catch (Exception e) {
+        }
+        
+        return listOfTicketIDs;
+    }
+    
     public ArrayList<Object> viewListData(String userID) {
         ArrayList<Object> listOfTickets = new ArrayList<>();
         try {
