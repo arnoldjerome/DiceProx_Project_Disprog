@@ -190,4 +190,15 @@ public class ticketingServices {
         return eventName;
     }
 
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "checkClaimStatus")
+    public boolean checkClaimStatus(@WebParam(name = "ticketID") int ticketID) {
+        //TODO write your implementation code here:
+        t = new Tickets();
+        boolean statusClaimed = t.checkClaimStatus(ticketID);
+        
+        return statusClaimed;
+    }
 }

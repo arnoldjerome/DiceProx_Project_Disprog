@@ -1,5 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.4.3 (RELEASE-2.4.3-ad3323c; 2019-01-21T17:46:06+0000) JAXWS-RI/2.3.2 JAXWS-API/2.3.2 JAXB-RI/2.3.2 JAXB-API/2.3.2 git-revision#unknown. --><xs:schema xmlns:tns="http://services.ticketing.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://services.ticketing.com/">
 
+<xs:element name="checkClaimStatus" type="tns:checkClaimStatus"/>
+
+<xs:element name="checkClaimStatusResponse" type="tns:checkClaimStatusResponse"/>
+
 <xs:element name="checkLoginAndGetUserId" type="tns:checkLoginAndGetUserId"/>
 
 <xs:element name="checkLoginAndGetUserIdResponse" type="tns:checkLoginAndGetUserIdResponse"/>
@@ -237,6 +241,18 @@
 <xs:complexType name="getEventDetailsResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:events" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="checkClaimStatus">
+<xs:sequence>
+<xs:element name="ticketID" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="checkClaimStatusResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>

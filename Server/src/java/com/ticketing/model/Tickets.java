@@ -199,6 +199,31 @@ public class Tickets extends MyModel {
         }
     }
     
+    public boolean checkClaimStatus(int ticketID) {
+        try {
+            int statusClaimed = 0;
+            
+            if (!MyModel.conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                     "SELECT isClaimed FROM tickets WHERE TicketID = ?");
+                sql.setInt(1, ticketID);
+                this.result = sql.executeQuery();
+                
+                if (this.result.next()) {
+                    statusClaimed = this.result.getInt("IsClaimed");
+                    
+                    if (statusClaimed == 1) {
+                        return true;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error di check claim status: " + e);
+        }
+        
+        return false;
+    }
+    
     public String fetchEventName(int ticketID) {
         try {
             String eventName = "";
