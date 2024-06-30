@@ -201,4 +201,16 @@ public class ticketingServices {
         
         return statusClaimed;
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "userIdForClaimTicket")
+    public int userIdForClaimTicket(@WebParam(name = "ticketID") int ticketID) {
+        //TODO write your implementation code here:
+        t = new Tickets();
+        int userId = t.userIdForClaimTicket(ticketID);
+        
+        return userId;
+    }
 }

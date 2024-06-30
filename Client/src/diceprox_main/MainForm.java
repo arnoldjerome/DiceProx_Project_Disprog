@@ -239,7 +239,9 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
             }
 
             this.dispose();
-        } catch (Exception e) {
+        } 
+        
+        catch (Exception e) {
             System.out.println("Error di button menu event: " + e);
         }
 
@@ -260,11 +262,11 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
                 // Buka form login
                 LoginForm loginForm = new LoginForm();
                 loginForm.setVisible(true);
-
-                // Tutup form utama (MainForm)
-                this.dispose();
                 
                 out.writeBytes(formattedMessage);
+                
+                // Tutup form utama (MainForm)
+                this.dispose();
             }
         } 
         

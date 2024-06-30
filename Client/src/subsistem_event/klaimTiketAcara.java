@@ -132,42 +132,51 @@ public class klaimTiketAcara extends javax.swing.JFrame implements Runnable {
     private void cekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cekButtonActionPerformed
         try {
             int ticketID = Integer.parseInt(ticketText.getText());
-        
+            int userIDClaimTicket = userIdForClaimTicket(ticketID);
+            
             Date today = new Date();
             SimpleDateFormat todayDate = new SimpleDateFormat("yyyy-MM-dd");
             String currentDate = todayDate.format(today);
             
             String eventName = fetchEventName(ticketID);
             String eventDate = fetchEventDate(ticketID);
-
-            if (currentDate.equals(eventDate)) {
+            
+            if (userIDClaimTicket == UserSession.getUserId()) {
                 
-                if (checkClaimStatus(ticketID) == false) {
-                    String formattedMessage = "EVNT_CLM_TIX~" + ticketText.getText() + "~" + eventName + "~" + eventDate + "~" + UserSession.getUsername() + "\n";
+                if (currentDate.equals(eventDate)) {    
+                    
+                    if (checkClaimStatus(ticketID) == false) {
+                        
+                        String formattedMessage = "EVNT_CLM_TIX~" + ticketText.getText() + "~" + eventName + "~" + eventDate + "~" + UserSession.getUsername() + "\n";
 
-                    updateClaimStatus(ticketID, UserSession.getUserId());
+                        updateClaimStatus(ticketID, UserSession.getUserId());
 
-                    out.writeBytes(formattedMessage);
+                        out.writeBytes(formattedMessage);
 
-                    JOptionPane.showMessageDialog(this, "Sukses Mengklaim Ticket Event!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Sukses Mengklaim Ticket Event!", "Notification", JOptionPane.INFORMATION_MESSAGE);
 
-//                    MainForm windowPlane = new MainForm();
-//
-//                    if (windowPlane == null || !windowPlane.isVisible()) {
-//                        windowPlane.setVisible(true);
-//                    }
-//
-//                    this.dispose();
+    //                    MainForm windowPlane = new MainForm();
+    //
+    //                    if (windowPlane == null || !windowPlane.isVisible()) {
+    //                        windowPlane.setVisible(true);
+    //                    }
+    //
+    //                    this.dispose();
+                    }
+
+                    else {
+                        JOptionPane.showMessageDialog(this, "Ticket Sudah Diklaim!", "Gagal Mengklaim Tiket", JOptionPane.WARNING_MESSAGE);
+                    }        
                 }
-                
+
                 else {
-                    JOptionPane.showMessageDialog(this, "Ticket Sudah Diklaim!", "Gagal Mengklaim Tiket", JOptionPane.WARNING_MESSAGE);
-                }        
+                    JOptionPane.showMessageDialog(this, "Ticket Hanya Bisa Diklaim Pada Tanggal Event Diadakan!", "Gagal Mengklaim Tiket", JOptionPane.WARNING_MESSAGE);
+                }
             }
             
             else {
-                JOptionPane.showMessageDialog(this, "Ticket Hanya Bisa Diklaim Pada Tanggal Event Diadakan!", "Gagal Mengklaim Tiket", JOptionPane.WARNING_MESSAGE);
-            }
+                JOptionPane.showMessageDialog(this, "Pastikan Kode Tiket Sudah Sesuai Dengan Reservasimu!", "Kode Tiket Tidak Valid", JOptionPane.WARNING_MESSAGE);
+            }            
             
             ticketText.setText("Ticket Code");  
             ticketText.selectAll();
@@ -235,8 +244,13 @@ public class klaimTiketAcara extends javax.swing.JFrame implements Runnable {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
         port.updateClaimStatus(ticketID, userID);
-    }
+    }   
     
+    private static int userIdForClaimTicket(int ticketID) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.userIdForClaimTicket(ticketID);
+    }
     
     private static String fetchEventName(int ticketID) {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
@@ -248,8 +262,7 @@ public class klaimTiketAcara extends javax.swing.JFrame implements Runnable {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
         return port.fetchEventDate(ticketID);
-    }
-    
+    } 
     
     private static boolean checkClaimStatus(int ticketID) {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();

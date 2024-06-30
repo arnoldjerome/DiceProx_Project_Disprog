@@ -224,6 +224,32 @@ public class Tickets extends MyModel {
         return false;
     }
     
+    public int userIdForClaimTicket(int ticketID) {
+        try {
+            int userId = 0;
+            
+            if (!MyModel.conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                     "SELECT t.UserID FROM tickets t INNER JOIN users u ON t.UserID = u.UserID WHERE t.TicketID = ?");
+                sql.setInt(1, ticketID);
+                this.result = sql.executeQuery();
+                
+                if (this.result.next()) {
+                    userId = this.result.getInt("UserID");
+                }
+                
+                return userId;
+            }
+            
+        } 
+        
+        catch (Exception e) {
+            System.out.println("Error di user claim ticket id: " + e);
+        }
+        
+        return 0;
+    }
+    
     public String fetchEventName(int ticketID) {
         try {
             String eventName = "";
