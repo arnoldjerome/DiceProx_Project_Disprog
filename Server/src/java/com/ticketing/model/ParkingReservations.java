@@ -4,6 +4,7 @@
  */
 package com.ticketing.model;
 
+import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.sql.Statement;
@@ -13,21 +14,14 @@ import java.sql.Statement;
  * @author Rome
  */
 public class ParkingReservations extends MyModel {
-
+    
     private int ReservationID;
     private int UserID;
-    private String reservationDate;
+    private int ParkingLotID;
+    private String ReservationDate;
     private String PoliceNumber;
-
-    public String getLocationID() {
-        return locationID;
-    }
-
-    public void setLocationID(String locationID) {
-        this.locationID = locationID;
-    }
-    private String locationID;
-    private boolean IsAvailable;
+    private String LocationID;
+    private Boolean IsAvailable;
     
     public int getReservationID() {
         return ReservationID;
@@ -45,12 +39,20 @@ public class ParkingReservations extends MyModel {
         this.UserID = UserID;
     }
 
-    public String getReservationDate() {
-        return reservationDate;
+    public int getParkingLotID() {
+        return ParkingLotID;
     }
 
-    public void setReservationDate(String reservationDate) {
-        this.reservationDate = reservationDate;
+    public void setParkingLotID(int ParkingLotID) {
+        this.ParkingLotID = ParkingLotID;
+    }
+
+    public String getReservationDate() {
+        return ReservationDate;
+    }
+
+    public void setReservationDate(String ReservationDate) {
+        this.ReservationDate = ReservationDate;
     }
 
     public String getPoliceNumber() {
@@ -61,26 +63,33 @@ public class ParkingReservations extends MyModel {
         this.PoliceNumber = PoliceNumber;
     }
 
-    
+    public String getLocationID() {
+        return LocationID;
+    }
 
-    public boolean isIsAvailable() {
+    public void setLocationID(String LocationID) {
+        this.LocationID = LocationID;
+    }
+
+    public Boolean getIsAvailable() {
         return IsAvailable;
     }
 
-    public void setIsAvailable(boolean IsAvailable) {
+    public void setIsAvailable(Boolean IsAvailable) {
         this.IsAvailable = IsAvailable;
     }
 
-    public ParkingReservations(int ReservationID, int UserID, String reservationDate, String PoliceNumber, String locationID, boolean IsAvailable) {
+    public ParkingReservations(int ReservationID, int UserID, int ParkingLotID, String ReservationDate, String PoliceNumber, String LocationID, Boolean IsAvailable) {
         this.ReservationID = ReservationID;
         this.UserID = UserID;
-        this.reservationDate = reservationDate;
+        this.ParkingLotID = ParkingLotID;
+        this.ReservationDate = ReservationDate;
         this.PoliceNumber = PoliceNumber;
-        this.locationID = locationID;
+        this.LocationID = LocationID;
         this.IsAvailable = IsAvailable;
     }
-    public ParkingReservations()
-    {
+
+    public ParkingReservations() {
     }
     
     @Override
@@ -90,7 +99,22 @@ public class ParkingReservations extends MyModel {
 
     @Override
     public void updateData() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            if (!MyModel.conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                     "UPDATE parkingreservations SET UserID=?, ReservationDate=?, PoliceNumber=?, IsAvailable=2 WHERE ReservationID= ?");
+                
+                sql.setInt(1, this.getUserID());
+                sql.setString(2, this.getReservationDate());
+                sql.setString(2, this.getPoliceNumber());
+                sql.setInt(4, this.getReservationID());
+               
+                sql.executeUpdate();
+                sql.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error di Update data: " + e);
+        }
     }
 
     @Override
@@ -105,7 +129,7 @@ public class ParkingReservations extends MyModel {
              this.statement = (Statement) MyModel.conn.createStatement();
                 this.result = this.statement.executeQuery(
                     "select pr.ReservationID, u.Username, pl.LocationName, "
-                    + "pr.PoliceNumber, pr.LocationID, pr.IsAvailable "
+                    + "pr.PoliceNumber, pr.LocationID as ParkingLotCode, pr.IsAvailable "
                     + "from parkingreservations pr"
                     + "join users u on pr.UserID = u.userid "
                     + "join parkinglots pl on pr.ParkingLotID = pl.ParkingLotID");
@@ -114,15 +138,45 @@ public class ParkingReservations extends MyModel {
                 ParkingReservations pr = new ParkingReservations(
                         this.result.getInt("ReservationID"),
                         this.result.getInt("UserID"),
-                        this.result.getString("ReservationDate"),
+                        this.result.getInt("ParkingLotID"),
+                        this.result.getString("reservationDate"),
                         this.result.getString("PoliceNumber"),
-                        this.result.getString("LocationID"),
+                        this.result.getString("locationID"),
                         this.result.getBoolean("IsAvailable")
                 );
                 listOfReservations.add(pr);
             }
         } catch (Exception e) {
             System.out.println("Error di view list data: " + e);
+        }
+        return listOfReservations;
+    }
+    
+    public ArrayList<Object> viewListDataType(String ParkingLotID) {
+        ArrayList<Object> listOfReservations = new ArrayList<>();
+        try {
+             this.statement = (Statement) MyModel.conn.createStatement();
+                this.result = this.statement.executeQuery("select pr.ReservationID, u.Username, pl.LocationName, "
+                    + "pr.PoliceNumber, pr.LocationID as ParkingLotCode, pr.IsAvailable "
+                    + "from parkingreservations pr"
+                    + "join users u on pr.UserID = u.userid "
+                    + "join parkinglots pl on pr.ParkingLotID = pl.ParkingLotID"
+                    + "where pl.ParkingLotID = " + ParkingLotID);
+
+            while (this.result.next()) {
+                ParkingReservations pr = new ParkingReservations(
+                        this.result.getInt("ReservationID"),
+                        this.result.getInt("UserID"),
+                        this.result.getInt("ParkingLotID"),
+                        this.result.getString("reservationDate"),
+                        this.result.getString("PoliceNumber"),
+                        this.result.getString("locationID"),
+                        this.result.getBoolean("IsAvailable")
+                );
+                listOfReservations.add(pr);
+            }
+        } catch (Exception e) {
+            System.out.println("Error di view list data tipe: " + e);
         }
         return listOfReservations;
     }
