@@ -5,6 +5,8 @@
 package subsistem_parking;
 
 import diceprox_main.MainForm;
+import diceprox_main.UserSession;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Windows
@@ -105,9 +107,21 @@ public class checkOutParkir extends javax.swing.JFrame {
 
     private void checkOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOutButtonActionPerformed
         try {
-            Integer reservationID = Integer.valueOf(ReservationText.getText());
+            int reservationID = Integer.parseInt(ReservationText.getText());
+            int userID = userIdForCheckOut(reservationID);
             
-            
+            int response = JOptionPane.showConfirmDialog(null, "Apakah benar anda ingin Check Out?", 
+                    "Konfirmasi", JOptionPane.YES_NO_OPTION);
+            if (response == JOptionPane.YES_OPTION) {
+                if (userID == UserSession.getUserId()) {
+                    updateCheckOutReservation(reservationID, UserSession.getUserId());
+                    System.out.println("User memilih Yes");
+                } else {
+                    JOptionPane.showMessageDialog(this, "User ID berbeda dengan UserID di ReservationID", "Pemberitahuan", JOptionPane.WARNING_MESSAGE);
+                }
+            } else {
+                System.out.println("User memilih belum");
+            }
                     
         } catch (Exception e) {
             System.out.println("Error di button check out: " + e);
@@ -156,4 +170,18 @@ public class checkOutParkir extends javax.swing.JFrame {
     private javax.swing.JButton checkOutButton;
     private javax.swing.JLabel salamTiket;
     // End of variables declaration//GEN-END:variables
+
+    private static void updateCheckOutReservation(int reservationID, int userID) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        port.updateCheckOutReservation(reservationID, userID);
+    }
+
+    private static int userIdForCheckOut(int reservationID) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.userIdForCheckOut(reservationID);
+    }
+
+    
 }

@@ -234,7 +234,7 @@ public class ticketingServices {
      * Web service operation
      */
     @WebMethod(operationName = "selectAllReservationsType")
-    public ArrayList<ParkingReservations> selectAllReservationsType(@WebParam(name = "ParkingLotID") String ParkingLotID) {
+    public ArrayList<ParkingReservations> selectAllReservationsType(@WebParam(name = "ParkingLotID") int ParkingLotID) {
         System.out.println("Calling selectAllReservationsType...");
         pr = new ParkingReservations();
         ArrayList<ParkingReservations> reservationsList = new ArrayList<>();
@@ -250,11 +250,23 @@ public class ticketingServices {
     /**
      * Web service operation
      */
-    @WebMethod(operationName = "updateCheckOutReservations")
+    @WebMethod(operationName = "updateCheckOutReservation")
     @Oneway
-    public void updateCheckOutReservations(@WebParam(name = "ReservationID") int ReservationID) {
-        //TODO write your implementation code here:
+    public void updateCheckOutReservation(@WebParam(name = "ReservationID") int ReservationID, @WebParam(name = "UserID") int UserID) {
         pr = new ParkingReservations();
-        pr.updateCheckOutReservations(ReservationID);
+        pr.updateCheckOutReservations(ReservationID, UserID);
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "userIdForCheckOut")
+    public int userIdForCheckOut(@WebParam(name = "ReservationID") int ReservationID) {
+        pr = new ParkingReservations();
+        int userID = pr.userIdForCheckOut(ReservationID);
+        
+        return userID;
+    }
+
+    
 }

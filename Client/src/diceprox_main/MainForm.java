@@ -79,10 +79,11 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
         sambutanLabel2 = new javax.swing.JLabel();
         namaLabel = new javax.swing.JLabel();
         logoutButton = new javax.swing.JButton();
-        pemesananButton = new javax.swing.JButton();
+        checkOutButton = new javax.swing.JButton();
         klaimTicketButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
         logo = new javax.swing.JLabel();
+        pemesananButton1 = new javax.swing.JButton();
         bagian_kanan = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -148,17 +149,17 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
                 logoutButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1590, 220, 150, -1));
+        getContentPane().add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1590, 290, 150, -1));
 
-        pemesananButton.setBackground(new java.awt.Color(187, 224, 253));
-        pemesananButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        pemesananButton.setText("Pemesanan");
-        pemesananButton.addActionListener(new java.awt.event.ActionListener() {
+        checkOutButton.setBackground(new java.awt.Color(187, 224, 253));
+        checkOutButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        checkOutButton.setText("Check Out");
+        checkOutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pemesananButtonActionPerformed(evt);
+                checkOutButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(pemesananButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1590, 150, 310, -1));
+        getContentPane().add(checkOutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1590, 150, 310, -1));
 
         klaimTicketButton.setBackground(new java.awt.Color(187, 224, 253));
         klaimTicketButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -178,11 +179,21 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
                 exitButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(exitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1750, 220, 150, -1));
+        getContentPane().add(exitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1750, 290, 150, -1));
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
         logo.setPreferredSize(new java.awt.Dimension(120, 125));
         getContentPane().add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 10, 240, 200));
+
+        pemesananButton1.setBackground(new java.awt.Color(187, 224, 253));
+        pemesananButton1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        pemesananButton1.setText("Pemesanan");
+        pemesananButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pemesananButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(pemesananButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1590, 220, 310, -1));
 
         bagian_kanan.setBackground(new java.awt.Color(187, 187, 187));
         bagian_kanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background_main_kiri.png"))); // NOI18N
@@ -323,13 +334,35 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
         
     }//GEN-LAST:event_klaimTicketButtonActionPerformed
 
-    private void pemesananButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pemesananButtonActionPerformed
+    private void checkOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOutButtonActionPerformed
+        try {
+            String formattedMessage = "CHK_OUTPRK~" + namaLabel.getText() + "\n";
+            
+            out.writeBytes(formattedMessage);
+            
+            JOptionPane.showMessageDialog(this, "Sukses Mengakses Menu Check Out!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+            
+            checkOutParkir windowPlane = new checkOutParkir();
+
+            if (windowPlane == null || !windowPlane.isVisible()) {
+                windowPlane.setVisible(true);
+            }
+
+            this.dispose();
+        } 
+        
+        catch (Exception e) {
+            System.out.println("Error di button Check Out: " + e);
+        }
+    }//GEN-LAST:event_checkOutButtonActionPerformed
+
+    private void pemesananButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pemesananButton1ActionPerformed
         try {
             String formattedMessage = "ORD_TIX~" + namaLabel.getText() + "\n";
             
             out.writeBytes(formattedMessage);
             
-            JOptionPane.showMessageDialog(this, "Sukses Mengakses Menu Pemesanan Ticket!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sukses Mengakses Menu Pemesanan Form!", "Notification", JOptionPane.INFORMATION_MESSAGE);
             
             PemesananForm windowPlane = new PemesananForm();
 
@@ -341,9 +374,9 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
         } 
         
         catch (Exception e) {
-            System.out.println("Error di button pemesanan: " + e);
+            System.out.println("Error di button pemesanan : " + e);
         }
-    }//GEN-LAST:event_pemesananButtonActionPerformed
+    }//GEN-LAST:event_pemesananButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -385,6 +418,7 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bagian_kanan;
+    private javax.swing.JButton checkOutButton;
     private javax.swing.JButton eventTicketButton;
     private javax.swing.JButton exitButton;
     private javax.swing.JLabel jLabel1;
@@ -396,7 +430,7 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton logoutButton;
     private javax.swing.JLabel namaLabel;
     private javax.swing.JButton parkingTicketButton;
-    private javax.swing.JButton pemesananButton;
+    private javax.swing.JButton pemesananButton1;
     private javax.swing.JLabel sambutanLabel2;
     // End of variables declaration//GEN-END:variables
 

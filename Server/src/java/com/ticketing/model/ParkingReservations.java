@@ -88,22 +88,59 @@ public class ParkingReservations extends MyModel {
         this.LocationID = LocationID;
         this.IsAvailable = IsAvailable;
     }
+    
+    public ParkingReservations(int ReservationID, int UserID, int ParkingLotID, String ReservationDate, String PoliceNumber, String LocationID) {
+        this.ReservationID = ReservationID;
+        this.UserID = UserID;
+        this.ParkingLotID = ParkingLotID;
+        this.ReservationDate = ReservationDate;
+        this.PoliceNumber = PoliceNumber;
+        this.LocationID = LocationID;
+    }
 
     public ParkingReservations() {
     }
     
-    public void updateCheckOutReservations(int ReservationID) {
+    public void updateCheckOutReservations(int ReservationID, int UserID) {
         try {
             if (!MyModel.conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
-                        "UPDATE parkingreservations SET UserID=null, ReservationDate=null, "
-                                + "PoliceNumber=null, IsAvailable='0' WHERE ReservationID= ?");
+                        "UPDATE parkingreservations SET UserID=null, ReservationDate=null, PoliceNumber=null, "
+                                + "IsAvailable='1' WHERE ReservationID= ? and UserID=?");
+                sql.setInt(1, ReservationID);
+                sql.setInt(2, UserID);
+                sql.executeUpdate();
+                sql.close();
             }
         } catch (Exception e) {
             System.out.println("Error di update check out reservations: " + e);
         }
     }
     
+    public int userIdForCheckOut(int ReservationID) {
+        try {
+            int userId = 0;
+            
+            if (!MyModel.conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                     "SELECT pr.UserID FROM parkingreservations pr INNER JOIN users u ON pr.UserID = u.UserID WHERE pr.ReservationID = ?");
+                sql.setInt(1, ReservationID);
+                this.result = sql.executeQuery();
+                
+                if (this.result.next()) {
+                    userId = this.result.getInt("UserID");
+                }
+                
+                return userId;
+            }
+        } 
+        
+        catch (Exception e) {
+            System.out.println("Error di user check out reservationid: " + e);
+        }
+        
+        return 0;
+    }
     @Override
     public void insertData() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -164,26 +201,27 @@ public class ParkingReservations extends MyModel {
         return listOfReservations;
     }
     
-    public ArrayList<Object> viewListDataType(String ParkingLotID) {
+    //Query dicoba di SQL bisa cuman di RefreshTable ngga muncul
+    public ArrayList<Object> viewListDataType(int ParkingLotID) {
         ArrayList<Object> listOfReservations = new ArrayList<>();
         try {
              this.statement = (Statement) MyModel.conn.createStatement();
-                this.result = this.statement.executeQuery("select pr.ReservationID, u.Username, pl.LocationName, "
-                    + "pr.PoliceNumber, pr.LocationID as ParkingLotCode, pr.IsAvailable "
+                this.result = this.statement.executeQuery("select pr.ReservationID, pr.UserID, pr.ParkingLotID, "
+                    + "pr.PoliceNumber, pr.LocationID as ParkingLotCode "
                     + "from parkingreservations pr"
                     + "left join users u on pr.UserID = u.userid "
                     + "join parkinglots pl on pr.ParkingLotID = pl.ParkingLotID"
-                    + "where pl.ParkingLotID = " + ParkingLotID);
+                    + "where pl.ParkingLotID = " + ParkingLotID + "and pr.UserID is null");
+              
 
             while (this.result.next()) {
                 ParkingReservations pr = new ParkingReservations(
                         this.result.getInt("ReservationID"),
                         this.result.getInt("UserID"),
                         this.result.getInt("ParkingLotID"),
-                        this.result.getString("reservationDate"),
+                        this.result.getString("ReservationDate"),
                         this.result.getString("PoliceNumber"),
-                        this.result.getString("locationID"),
-                        this.result.getBoolean("IsAvailable")
+                        this.result.getString("LocationID")
                 );
                 listOfReservations.add(pr);
             }
