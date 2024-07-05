@@ -246,4 +246,15 @@ public class ticketingServices {
         System.out.println("Returned reservations list with size: " + reservationsList.size());
         return reservationsList;
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "updateCheckOutReservations")
+    @Oneway
+    public void updateCheckOutReservations(@WebParam(name = "ReservationID") int ReservationID) {
+        //TODO write your implementation code here:
+        pr = new ParkingReservations();
+        pr.updateCheckOutReservations(ReservationID);
+    }
 }

@@ -92,6 +92,18 @@ public class ParkingReservations extends MyModel {
     public ParkingReservations() {
     }
     
+    public void updateCheckOutReservations(int ReservationID) {
+        try {
+            if (!MyModel.conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                        "UPDATE parkingreservations SET UserID=null, ReservationDate=null, "
+                                + "PoliceNumber=null, IsAvailable='0' WHERE ReservationID= ?");
+            }
+        } catch (Exception e) {
+            System.out.println("Error di update check out reservations: " + e);
+        }
+    }
+    
     @Override
     public void insertData() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -159,7 +171,7 @@ public class ParkingReservations extends MyModel {
                 this.result = this.statement.executeQuery("select pr.ReservationID, u.Username, pl.LocationName, "
                     + "pr.PoliceNumber, pr.LocationID as ParkingLotCode, pr.IsAvailable "
                     + "from parkingreservations pr"
-                    + "join users u on pr.UserID = u.userid "
+                    + "left join users u on pr.UserID = u.userid "
                     + "join parkinglots pl on pr.ParkingLotID = pl.ParkingLotID"
                     + "where pl.ParkingLotID = " + ParkingLotID);
 

@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class bookParkir2 extends javax.swing.JFrame {
 
+    String selectedItems;
     /**
      * Creates new form bookParkir2
      */
@@ -375,10 +376,12 @@ public class bookParkir2 extends javax.swing.JFrame {
 
     private void comboBoxLokasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxLokasiActionPerformed
         // TODO add your handling code here:
-        String selectedItem = (String) comboBoxLokasi.getSelectedItem();
-        if(selectedItem == "Arif Rahman Hakim")
+        selectedItems = (String) comboBoxLokasi.getSelectedItem();
+        if(selectedItems == "Arif Rahman Hakim")
         {
             denahParkirMayjen.setVisible(false);
+//            method(Arif Rahman Hakim)
+            
         }
         else{
             denahParkirArif.setVisible(false);
@@ -390,7 +393,7 @@ public class bookParkir2 extends javax.swing.JFrame {
 //        model.setRowCount(0);
 //        Object[] rowData = new Object[7]; //total kolom tampil
 //        
-//        for (com.ticketing.services.ParkingReservations obj : selectAllReservationsType()) {
+//        for (com.ticketing.services.ParkingReservations obj : selectAllReservationsType(selectedItems)) {
 //            rowData[0] = obj.getReservationID();
 //            rowData[1] = obj.getUserID();
 //            rowData[2] = obj.getParkingLotID();

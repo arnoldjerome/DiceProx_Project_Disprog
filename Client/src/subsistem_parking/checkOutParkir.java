@@ -28,7 +28,7 @@ public class checkOutParkir extends javax.swing.JFrame {
     private void initComponents() {
 
         back = new javax.swing.JLabel();
-        TicketText = new javax.swing.JTextField();
+        ReservationText = new javax.swing.JTextField();
         checkOutButton = new javax.swing.JButton();
         salamTiket = new javax.swing.JLabel();
         bagian_kanan = new javax.swing.JLabel();
@@ -46,18 +46,18 @@ public class checkOutParkir extends javax.swing.JFrame {
         });
         getContentPane().add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 70, 70));
 
-        TicketText.setBackground(new java.awt.Color(207, 219, 229));
-        TicketText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        TicketText.setText("Ticket Code");
-        TicketText.addFocusListener(new java.awt.event.FocusAdapter() {
+        ReservationText.setBackground(new java.awt.Color(207, 219, 229));
+        ReservationText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        ReservationText.setText("Reservation Code");
+        ReservationText.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                TicketTextFocusGained(evt);
+                ReservationTextFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                TicketTextFocusLost(evt);
+                ReservationTextFocusLost(evt);
             }
         });
-        getContentPane().add(TicketText, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 220, 1020, 67));
+        getContentPane().add(ReservationText, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 220, 1020, 67));
 
         checkOutButton.setBackground(new java.awt.Color(187, 224, 253));
         checkOutButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -71,7 +71,7 @@ public class checkOutParkir extends javax.swing.JFrame {
 
         salamTiket.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         salamTiket.setForeground(new java.awt.Color(57, 62, 70));
-        salamTiket.setText("ENTER YOUR TICKET CODE");
+        salamTiket.setText("ENTER YOUR RESERVATION CODE");
         getContentPane().add(salamTiket, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 60, -1, -1));
 
         bagian_kanan.setBackground(new java.awt.Color(187, 187, 187));
@@ -91,26 +91,27 @@ public class checkOutParkir extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_backMouseClicked
 
-    private void TicketTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TicketTextFocusGained
-        if (TicketText.getText().equals("Ticket Code")) {
-            TicketText.setText("");
+    private void ReservationTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ReservationTextFocusGained
+        if (ReservationText.getText().equals("Reservation Code")) {
+            ReservationText.setText("");
         }
-    }//GEN-LAST:event_TicketTextFocusGained
+    }//GEN-LAST:event_ReservationTextFocusGained
 
-    private void TicketTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TicketTextFocusLost
-        if (TicketText.getText().equals("")) {
-            TicketText.setText("Ticket Code");
+    private void ReservationTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ReservationTextFocusLost
+        if (ReservationText.getText().equals("")) {
+            ReservationText.setText("Reservation Code");
         }
-    }//GEN-LAST:event_TicketTextFocusLost
+    }//GEN-LAST:event_ReservationTextFocusLost
 
     private void checkOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOutButtonActionPerformed
-        checkOutParkir windowPlane = new checkOutParkir();
-
-        if (windowPlane == null || !windowPlane.isVisible()) {
-            windowPlane.setVisible(true);
+        try {
+            Integer reservationID = Integer.valueOf(ReservationText.getText());
+            
+            
+                    
+        } catch (Exception e) {
+            System.out.println("Error di button check out: " + e);
         }
-
-        this.dispose();
     }//GEN-LAST:event_checkOutButtonActionPerformed
 
     /**
@@ -149,7 +150,7 @@ public class checkOutParkir extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField TicketText;
+    private javax.swing.JTextField ReservationText;
     private javax.swing.JLabel back;
     private javax.swing.JLabel bagian_kanan;
     private javax.swing.JButton checkOutButton;
