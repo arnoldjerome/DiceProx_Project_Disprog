@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.4.0 (wsit240-7e98ff4; 2017-08-03T21:19:54+0200) JAXWS-RI/2.3.0 JAXWS-API/2.3.0 JAXB-RI/2.3.0 JAXB-API/2.3.0 svn-revision#unknown. --><xs:schema xmlns:tns="http://services.ticketing.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://services.ticketing.com/">
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.4.3 (RELEASE-2.4.3-ad3323c; 2019-01-21T17:46:06+0000) JAXWS-RI/2.3.2 JAXWS-API/2.3.2 JAXB-RI/2.3.2 JAXB-API/2.3.2 git-revision#unknown. --><xs:schema xmlns:tns="http://services.ticketing.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://services.ticketing.com/">
 
 <xs:element name="checkClaimStatus" type="tns:checkClaimStatus"/>
 
@@ -56,6 +56,8 @@
 
 <xs:element name="updateAvailableTickets" type="tns:updateAvailableTickets"/>
 
+<xs:element name="updateCheckOutReservations" type="tns:updateCheckOutReservations"/>
+
 <xs:element name="updateClaimStatus" type="tns:updateClaimStatus"/>
 
 <xs:element name="userIdForClaimTicket" type="tns:userIdForClaimTicket"/>
@@ -76,11 +78,36 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="updateAvailableTickets">
+<xs:complexType name="selectAllReservationsType">
 <xs:sequence>
-<xs:element name="ticketTypeID" type="xs:int"/>
-<xs:element name="ticketsReserved" type="xs:int"/>
+<xs:element name="ParkingLotID" type="xs:string" minOccurs="0"/>
 </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="selectAllReservationsTypeResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:parkingReservations" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="parkingReservations">
+<xs:complexContent>
+<xs:extension base="tns:myModel">
+<xs:sequence>
+<xs:element name="isAvailable" type="xs:boolean" minOccurs="0"/>
+<xs:element name="locationID" type="xs:string" minOccurs="0"/>
+<xs:element name="parkingLotID" type="xs:int"/>
+<xs:element name="policeNumber" type="xs:string" minOccurs="0"/>
+<xs:element name="reservationDate" type="xs:string" minOccurs="0"/>
+<xs:element name="reservationID" type="xs:int"/>
+<xs:element name="userID" type="xs:int"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="myModel" abstract="true">
+<xs:sequence/>
 </xs:complexType>
 
 <xs:complexType name="selectAllTicketUser">
@@ -115,36 +142,11 @@
 </xs:complexContent>
 </xs:complexType>
 
-<xs:complexType name="myModel" abstract="true">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="selectAllReservationsType">
+<xs:complexType name="updateAvailableTickets">
 <xs:sequence>
-<xs:element name="ParkingLotID" type="xs:string" minOccurs="0"/>
+<xs:element name="ticketTypeID" type="xs:int"/>
+<xs:element name="ticketsReserved" type="xs:int"/>
 </xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="selectAllReservationsTypeResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:parkingReservations" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="parkingReservations">
-<xs:complexContent>
-<xs:extension base="tns:myModel">
-<xs:sequence>
-<xs:element name="isAvailable" type="xs:boolean" minOccurs="0"/>
-<xs:element name="locationID" type="xs:string" minOccurs="0"/>
-<xs:element name="parkingLotID" type="xs:int"/>
-<xs:element name="policeNumber" type="xs:string" minOccurs="0"/>
-<xs:element name="reservationDate" type="xs:string" minOccurs="0"/>
-<xs:element name="reservationID" type="xs:int"/>
-<xs:element name="userID" type="xs:int"/>
-</xs:sequence>
-</xs:extension>
-</xs:complexContent>
 </xs:complexType>
 
 <xs:complexType name="selectAllEvents">
@@ -293,6 +295,12 @@
 <xs:complexType name="helloResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="updateCheckOutReservations">
+<xs:sequence>
+<xs:element name="ReservationID" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 
