@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class konfirmasiBookParkir extends javax.swing.JFrame {
 
-    int selectedIndex;
+//    String SelectedIn;
     /**
      * Creates new form bookParkir2
      */
@@ -54,8 +54,8 @@ public class konfirmasiBookParkir extends javax.swing.JFrame {
         policeNumberText = new javax.swing.JTextField();
         ParkingLotCode = new javax.swing.JLabel();
         parkingLotCodeText = new javax.swing.JTextField();
-        availableText = new javax.swing.JTextField();
-        availableReservationLabel1 = new javax.swing.JLabel();
+        parkingTypeText = new javax.swing.JTextField();
+        parkingTypeLabel = new javax.swing.JLabel();
         ConfirmButton = new javax.swing.JButton();
         denahParkirArif = new javax.swing.JLabel();
         denahParkirMayjen = new javax.swing.JLabel();
@@ -81,13 +81,13 @@ public class konfirmasiBookParkir extends javax.swing.JFrame {
 
         jParkingTabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ReservationID", "UserID", "ParkingLotID", "ReservationDate", "PoliceNumber", "ParkingLotCode"
+                "ReservationID", "UserID", "ParkingLotID", "ReservationDate", "PoliceNumber", "ParkingLotCode", "ParkingType"
             }
         ));
         jParkingTabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -204,24 +204,24 @@ public class konfirmasiBookParkir extends javax.swing.JFrame {
         });
         getContentPane().add(parkingLotCodeText, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 750, 500, 67));
 
-        availableText.setBackground(new java.awt.Color(207, 219, 229));
-        availableText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        availableText.setText("Available Tickets");
-        availableText.setEnabled(false);
-        availableText.addFocusListener(new java.awt.event.FocusAdapter() {
+        parkingTypeText.setBackground(new java.awt.Color(207, 219, 229));
+        parkingTypeText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        parkingTypeText.setText("Parking Type");
+        parkingTypeText.setEnabled(false);
+        parkingTypeText.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                availableTextFocusGained(evt);
+                parkingTypeTextFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                availableTextFocusLost(evt);
+                parkingTypeTextFocusLost(evt);
             }
         });
-        getContentPane().add(availableText, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 850, 500, 67));
+        getContentPane().add(parkingTypeText, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 850, 500, 67));
 
-        availableReservationLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        availableReservationLabel1.setForeground(new java.awt.Color(57, 62, 70));
-        availableReservationLabel1.setText("IsAvailable");
-        getContentPane().add(availableReservationLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 860, 280, -1));
+        parkingTypeLabel.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        parkingTypeLabel.setForeground(new java.awt.Color(57, 62, 70));
+        parkingTypeLabel.setText("Parking Type");
+        getContentPane().add(parkingTypeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 860, 280, -1));
 
         ConfirmButton.setBackground(new java.awt.Color(187, 224, 253));
         ConfirmButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -285,7 +285,7 @@ public class konfirmasiBookParkir extends javax.swing.JFrame {
         dateText.setText(RecordTable.getValueAt(SelectedRows, 2).toString());
         policeNumberText.setText(RecordTable.getValueAt(SelectedRows, 4).toString());
         parkingLotCodeText.setText(RecordTable.getValueAt(SelectedRows, 5).toString());
-        availableText.setText(RecordTable.getValueAt(SelectedRows, 6).toString());
+        parkingTypeText.setText(RecordTable.getValueAt(SelectedRows, 6).toString());
     }//GEN-LAST:event_jParkingTabelMouseClicked
 
     private void idTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_idTextFocusGained
@@ -348,13 +348,13 @@ public class konfirmasiBookParkir extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_parkingLotCodeTextFocusLost
 
-    private void availableTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_availableTextFocusGained
+    private void parkingTypeTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_parkingTypeTextFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_availableTextFocusGained
+    }//GEN-LAST:event_parkingTypeTextFocusGained
 
-    private void availableTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_availableTextFocusLost
+    private void parkingTypeTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_parkingTypeTextFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_availableTextFocusLost
+    }//GEN-LAST:event_parkingTypeTextFocusLost
 
     private void ConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmButtonActionPerformed
         
@@ -373,21 +373,21 @@ public class konfirmasiBookParkir extends javax.swing.JFrame {
     }//GEN-LAST:event_dateTextActionPerformed
 
     //RefreshTable masih belum muncul di form !!
-    public void refreshTable(int selectedIndex) {
-        DefaultTableModel model = (DefaultTableModel) jParkingTabel.getModel();
-        model.setRowCount(0);
-        Object[] rowData = new Object[6]; //total kolom tampil
-        
-        for (com.ticketing.services.ParkingReservations obj : selectAllReservationsType(selectedIndex+1)) {
-            rowData[0] = obj.getReservationID();
-            rowData[1] = obj.getUserID();
-            rowData[2] = obj.getParkingLotID();
-            rowData[3] = obj.getReservationDate();
-            rowData[4] = obj.getPoliceNumber();
-            rowData[5] = obj.getLocationID();
-            model.addRow(rowData);
-        }
-    }
+//    public void refreshTable(int selectedIndex) {
+//        DefaultTableModel model = (DefaultTableModel) jParkingTabel.getModel();
+//        model.setRowCount(0);
+//        Object[] rowData = new Object[6]; //total kolom tampil
+//        
+//        for (com.ticketing.services.ParkingReservations obj : selectAllReservationsType(selectedIndex+1)) {
+//            rowData[0] = obj.getReservationID();
+//            rowData[1] = obj.getUserID();
+//            rowData[2] = obj.getParkingLotID();
+//            rowData[3] = obj.getReservationDate();
+//            rowData[4] = obj.getPoliceNumber();
+//            rowData[5] = obj.getLocationID();
+//            model.addRow(rowData);
+//        }
+//    }
  
     /**
      * @param args the command line arguments
@@ -433,8 +433,6 @@ public class konfirmasiBookParkir extends javax.swing.JFrame {
     private javax.swing.JTextField LocationText1;
     private javax.swing.JLabel ParkingLotCode;
     private javax.swing.JLabel PoliceNumber;
-    private javax.swing.JLabel availableReservationLabel1;
-    private javax.swing.JTextField availableText;
     private javax.swing.JLabel back;
     private javax.swing.JLabel bagian_kanan;
     private javax.swing.JTextField dateText;
@@ -447,17 +445,13 @@ public class konfirmasiBookParkir extends javax.swing.JFrame {
     private javax.swing.JLabel logo;
     private javax.swing.JTextField nameText;
     private javax.swing.JTextField parkingLotCodeText;
+    private javax.swing.JLabel parkingTypeLabel;
+    private javax.swing.JTextField parkingTypeText;
     private javax.swing.JTextField policeNumberText;
     private javax.swing.JLabel reservationDate;
     private javax.swing.JLabel reservationID;
     private javax.swing.JLabel username;
     // End of variables declaration//GEN-END:variables
 
-    private static java.util.List<com.ticketing.services.ParkingReservations> selectAllReservationsType(int parkingLotID) {
-        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
-        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
-        return port.selectAllReservationsType(parkingLotID);
-    }
-
-    
+   
 }
