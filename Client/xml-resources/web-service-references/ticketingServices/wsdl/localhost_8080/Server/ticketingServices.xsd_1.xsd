@@ -42,6 +42,10 @@
 
 <xs:element name="selectAllEventsTypeResponse" type="tns:selectAllEventsTypeResponse"/>
 
+<xs:element name="selectAllReservationsConfirm" type="tns:selectAllReservationsConfirm"/>
+
+<xs:element name="selectAllReservationsConfirmResponse" type="tns:selectAllReservationsConfirmResponse"/>
+
 <xs:element name="selectAllReservationsType" type="tns:selectAllReservationsType"/>
 
 <xs:element name="selectAllReservationsTypeResponse" type="tns:selectAllReservationsTypeResponse"/>
@@ -136,11 +140,14 @@
 <xs:sequence>
 <xs:element name="isAvailable" type="xs:boolean" minOccurs="0"/>
 <xs:element name="parkingLotID" type="xs:int"/>
+<xs:element name="parkingLotName" type="xs:string" minOccurs="0"/>
 <xs:element name="parkingSlot" type="xs:string" minOccurs="0"/>
+<xs:element name="parkingType" type="xs:string" minOccurs="0"/>
 <xs:element name="policeNumber" type="xs:string" minOccurs="0"/>
 <xs:element name="reservationDate" type="xs:string" minOccurs="0"/>
 <xs:element name="reservationID" type="xs:int"/>
 <xs:element name="userID" type="xs:int"/>
+<xs:element name="username" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:extension>
 </xs:complexContent>
@@ -297,6 +304,18 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="hello">
+<xs:sequence>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="helloResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="selectAllEventsType">
 <xs:sequence>
 <xs:element name="arg0" type="xs:string" minOccurs="0"/>
@@ -309,15 +328,15 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="hello">
+<xs:complexType name="selectAllReservationsConfirm">
 <xs:sequence>
-<xs:element name="name" type="xs:string" minOccurs="0"/>
+<xs:element name="ReservationID" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="helloResponse">
+<xs:complexType name="selectAllReservationsConfirmResponse">
 <xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
+<xs:element name="return" type="tns:parkingReservations" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 

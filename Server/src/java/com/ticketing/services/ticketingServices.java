@@ -268,5 +268,21 @@ public class ticketingServices {
         return userID;
     }
 
-    
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "selectAllReservationsConfirm")
+    public ArrayList<ParkingReservations> selectAllReservationsConfirm(@WebParam(name = "ReservationID") int ReservationID) {
+        System.out.println("Calling selectAllReservationsConfirm...");
+        pr = new ParkingReservations();
+        ArrayList<ParkingReservations> reservationsList = new ArrayList<>();
+        for (Object obj : pr.viewListDataConfirm(ReservationID)) {
+            if (obj instanceof ParkingReservations) {
+                reservationsList.add((ParkingReservations) obj);
+            }
+        }
+        System.out.println("Returned reservations list with size: " + reservationsList.size());
+        return reservationsList;
+
+    }
 }

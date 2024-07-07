@@ -14,20 +14,15 @@ import javax.swing.table.DefaultTableModel;
  */
 public class konfirmasiBookParkir extends javax.swing.JFrame {
 
-//    String SelectedIn;
+    int ReservationID;
     /**
      * Creates new form bookParkir2
      */
-    public konfirmasiBookParkir() {
+    public konfirmasiBookParkir(int ReservationID) {
+        this.ReservationID = ReservationID;
         initComponents();
         
-        
-//        refreshTable();
-//        if (selectedIndex == 0) {
-//            refreshTable(selectedIndex);
-//        } else {
-//            refreshTable(selectedIndex);
-//        }
+        refreshTable(ReservationID);
     }
 
     /**
@@ -87,7 +82,7 @@ public class konfirmasiBookParkir extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ReservationID", "UserID", "ParkingLotID", "ReservationDate", "PoliceNumber", "ParkingLotCode", "ParkingType"
+                "ReservationID", "Username", "ParkingLotName", "ReservationDate", "PoliceNumber", "ParkingLotCode", "ParkingType"
             }
         ));
         jParkingTabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -373,56 +368,60 @@ public class konfirmasiBookParkir extends javax.swing.JFrame {
     }//GEN-LAST:event_dateTextActionPerformed
 
     //RefreshTable masih belum muncul di form !!
-//    public void refreshTable(int selectedIndex) {
-//        DefaultTableModel model = (DefaultTableModel) jParkingTabel.getModel();
-//        model.setRowCount(0);
-//        Object[] rowData = new Object[6]; //total kolom tampil
-//        
-//        for (com.ticketing.services.ParkingReservations obj : selectAllReservationsType(selectedIndex+1)) {
-//            rowData[0] = obj.getReservationID();
-//            rowData[1] = obj.getUserID();
-//            rowData[2] = obj.getParkingLotID();
-//            rowData[3] = obj.getReservationDate();
-//            rowData[4] = obj.getPoliceNumber();
-//            rowData[5] = obj.getLocationID();
-//            model.addRow(rowData);
-//        }
-//    }
+    public void refreshTable(int ReservationID) {
+        DefaultTableModel model = (DefaultTableModel) jParkingTabel.getModel();
+        model.setRowCount(0); // Reset table
+
+        Object[] rowData = new Object[7]; // Total kolom tampil
+
+        // Mengambil data berdasarkan selectedIndex
+        for (com.ticketing.services.ParkingReservations obj : selectAllReservationsConfirm(ReservationID)) {
+            rowData[0] = obj.getReservationID();
+            rowData[1] = obj.getUsername();
+            rowData[2] = obj.getParkingLotName();
+            rowData[3] = obj.getReservationDate();
+            rowData[4] = obj.getPoliceNumber();
+            rowData[5] = obj.getParkingSlot();
+            rowData[6] = obj.getParkingType();
+            model.addRow(rowData);
+    }
  
+  
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(konfirmasiBookParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(konfirmasiBookParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(konfirmasiBookParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(konfirmasiBookParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(konfirmasiBookParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(konfirmasiBookParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(konfirmasiBookParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(konfirmasiBookParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new konfirmasiBookParkir().setVisible(true);
+                int ReservationID = 0;
+                new konfirmasiBookParkir(ReservationID).setVisible(true);
             }
         });
     }
@@ -453,5 +452,9 @@ public class konfirmasiBookParkir extends javax.swing.JFrame {
     private javax.swing.JLabel username;
     // End of variables declaration//GEN-END:variables
 
-   
+    private static java.util.List<com.ticketing.services.ParkingReservations> selectAllReservationsConfirm(int reservationID) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.selectAllReservationsConfirm(reservationID);
+    }
 }

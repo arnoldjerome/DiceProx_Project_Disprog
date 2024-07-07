@@ -6,6 +6,7 @@ package subsistem_parking;
 
 import diceprox_main.MainForm;
 import javafx.scene.control.ComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,11 +25,6 @@ public class bookParkir extends javax.swing.JFrame {
         
         int index = comboBoxLokasi.getSelectedIndex();
         refreshTable(index);
-//        if (selectedIndex == 0) {
-//            refreshTable(selectedIndex);
-//        } else {
-//            refreshTable(selectedIndex);
-//        }
     }
 
     /**
@@ -101,7 +97,7 @@ public class bookParkir extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "ReservationID", "LocationName", "ParkingSlot"
+                "ReservationID", "ParkingLotName", "ParkingSlot"
             }
         ));
         jParkingTabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -288,15 +284,26 @@ public class bookParkir extends javax.swing.JFrame {
     }//GEN-LAST:event_parkingLotCodeTextFocusLost
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-//        String reservationId = idText.getText();
-//        
-//        konfirmasiBookParkir windowPlane = new konfirmasiBookParkir(reservationId);
-//
-//                if (windowPlane == null || !windowPlane.isVisible()) {
-//                    windowPlane.setVisible(true);
-//                }
-//
-//                this.dispose();
+        try {
+            int selectedRow = jParkingTabel.getSelectedRow();
+                if (selectedRow == -1) {
+                    JOptionPane.showMessageDialog(this, "Pilih Parking Slot terlebih dahulu.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
+                    return;
+                } else {
+                    JOptionPane.showMessageDialog(this, "Sukses Memilih Event!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                    
+                    int reservationId = Integer.parseInt(idText.getText());
+                    konfirmasiBookParkir windowPlane = new konfirmasiBookParkir(reservationId);
+
+                    if (windowPlane == null || !windowPlane.isVisible()) {
+                        windowPlane.setVisible(true);
+                    }
+
+                    this.dispose();
+                }
+        } catch (Exception e) {
+            System.out.println("Error di button book parkir: " + e);
+        }
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void comboBoxLokasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxLokasiActionPerformed
@@ -327,7 +334,7 @@ public class bookParkir extends javax.swing.JFrame {
         // Mengambil data berdasarkan selectedIndex
         for (com.ticketing.services.ParkingReservations obj : selectAllReservationsType(selectedIndex)) {
             rowData[0] = obj.getReservationID();
-            rowData[1] = obj.getParkingLotID();
+            rowData[1] = obj.getParkingLotName();
             rowData[2] = obj.getParkingSlot();
             model.addRow(rowData);
         }
