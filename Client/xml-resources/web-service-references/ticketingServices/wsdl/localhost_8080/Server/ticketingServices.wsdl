@@ -10,6 +10,9 @@
 <message name="selectAllReservationsConfirmResponse">
 <part name="parameters" element="tns:selectAllReservationsConfirmResponse"/>
 </message>
+<message name="updateBookingReservation">
+<part name="parameters" element="tns:updateBookingReservation"/>
+</message>
 <message name="hello">
 <part name="parameters" element="tns:hello"/>
 </message>
@@ -70,6 +73,9 @@
 <message name="updateCheckOutReservation">
 <part name="parameters" element="tns:updateCheckOutReservation"/>
 </message>
+<message name="updateParking">
+<part name="parameters" element="tns:updateParking"/>
+</message>
 <message name="insertAccRegist">
 <part name="parameters" element="tns:insertAccRegist"/>
 </message>
@@ -117,6 +123,9 @@
 <input wsam:Action="http://services.ticketing.com/ticketingServices/selectAllReservationsConfirmRequest" message="tns:selectAllReservationsConfirm"/>
 <output wsam:Action="http://services.ticketing.com/ticketingServices/selectAllReservationsConfirmResponse" message="tns:selectAllReservationsConfirmResponse"/>
 </operation>
+<operation name="updateBookingReservation">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/updateBookingReservation" message="tns:updateBookingReservation"/>
+</operation>
 <operation name="hello">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/helloRequest" message="tns:hello"/>
 <output wsam:Action="http://services.ticketing.com/ticketingServices/helloResponse" message="tns:helloResponse"/>
@@ -161,6 +170,9 @@
 <operation name="updateCheckOutReservation">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/updateCheckOutReservation" message="tns:updateCheckOutReservation"/>
 </operation>
+<operation name="updateParking">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/updateParking" message="tns:updateParking"/>
+</operation>
 <operation name="insertAccRegist">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/insertAccRegist" message="tns:insertAccRegist"/>
 </operation>
@@ -202,6 +214,12 @@
 <output>
 <soap:body use="literal"/>
 </output>
+</operation>
+<operation name="updateBookingReservation">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
 </operation>
 <operation name="hello">
 <soap:operation soapAction=""/>
@@ -294,6 +312,12 @@
 </input>
 </operation>
 <operation name="updateCheckOutReservation">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
+<operation name="updateParking">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

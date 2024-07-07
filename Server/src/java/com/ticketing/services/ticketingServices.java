@@ -285,4 +285,24 @@ public class ticketingServices {
         return reservationsList;
 
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "updateParking")
+    @Oneway
+    public void updateParking(@WebParam(name = "UserID") int UserID, @WebParam(name = "ReservationDate") String ReservationDate, @WebParam(name = "NumberPolice") String NumberPolice, @WebParam(name = "ReservationID") int ReservationID) {
+        pr = new ParkingReservations(UserID, ReservationDate, NumberPolice, ReservationID);
+        pr.updateData();
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "updateBookingReservation")
+    @Oneway
+    public void updateBookingReservation(@WebParam(name = "UserID") int UserID, @WebParam(name = "ReservationDate") String ReservationDate, @WebParam(name = "NumberPolice") String NumberPolice, @WebParam(name = "ReservationID") int ReservationID) {
+        pr = new ParkingReservations(UserID, ReservationDate, NumberPolice, ReservationID);
+        pr.updateData();
+    }
 }

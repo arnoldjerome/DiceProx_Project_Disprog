@@ -115,7 +115,14 @@ public class checkOutParkir extends javax.swing.JFrame {
             if (response == JOptionPane.YES_OPTION) {
                 if (userID == UserSession.getUserId()) {
                     updateCheckOutReservation(reservationID, UserSession.getUserId());
-                    System.out.println("User memilih Yes");
+                    JOptionPane.showMessageDialog(this, "Berhasil Check Out!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                    
+                    MainForm windowPlane = new MainForm();
+
+                    if (windowPlane == null || !windowPlane.isVisible()) {
+                        windowPlane.setVisible(true);
+                    }
+                    this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "User ID berbeda dengan UserID di ReservationID", "Pemberitahuan", JOptionPane.WARNING_MESSAGE);
                 }

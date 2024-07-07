@@ -60,9 +60,13 @@
 
 <xs:element name="updateAvailableTickets" type="tns:updateAvailableTickets"/>
 
+<xs:element name="updateBookingReservation" type="tns:updateBookingReservation"/>
+
 <xs:element name="updateCheckOutReservation" type="tns:updateCheckOutReservation"/>
 
 <xs:element name="updateClaimStatus" type="tns:updateClaimStatus"/>
+
+<xs:element name="updateParking" type="tns:updateParking"/>
 
 <xs:element name="userIdForCheckOut" type="tns:userIdForCheckOut"/>
 
@@ -138,6 +142,7 @@
 <xs:complexContent>
 <xs:extension base="tns:myModel">
 <xs:sequence>
+<xs:element name="hargaParking" type="xs:int"/>
 <xs:element name="isAvailable" type="xs:boolean" minOccurs="0"/>
 <xs:element name="parkingLotID" type="xs:int"/>
 <xs:element name="parkingLotName" type="xs:string" minOccurs="0"/>
@@ -226,6 +231,15 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="updateParking">
+<xs:sequence>
+<xs:element name="UserID" type="xs:int"/>
+<xs:element name="ReservationDate" type="xs:string" minOccurs="0"/>
+<xs:element name="NumberPolice" type="xs:string" minOccurs="0"/>
+<xs:element name="ReservationID" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="insertTicket">
 <xs:sequence>
 <xs:element name="ticketID" type="xs:int"/>
@@ -259,6 +273,15 @@
 <xs:complexType name="checkRegisterResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:boolean" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="updateBookingReservation">
+<xs:sequence>
+<xs:element name="UserID" type="xs:int"/>
+<xs:element name="ReservationDate" type="xs:string" minOccurs="0"/>
+<xs:element name="NumberPolice" type="xs:string" minOccurs="0"/>
+<xs:element name="ReservationID" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 

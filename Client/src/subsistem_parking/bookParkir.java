@@ -5,6 +5,8 @@
 package subsistem_parking;
 
 import diceprox_main.MainForm;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javafx.scene.control.ComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -25,6 +27,10 @@ public class bookParkir extends javax.swing.JFrame {
         
         int index = comboBoxLokasi.getSelectedIndex();
         refreshTable(index);
+        
+        idText.setEditable(false);
+        LocationText.setEditable(false);
+        parkingLotCodeText.setEditable(false);
     }
 
     /**
@@ -117,7 +123,6 @@ public class bookParkir extends javax.swing.JFrame {
         idText.setBackground(new java.awt.Color(207, 219, 229));
         idText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         idText.setText("ID");
-        idText.setEnabled(false);
         idText.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 idTextFocusGained(evt);
@@ -141,7 +146,6 @@ public class bookParkir extends javax.swing.JFrame {
         LocationText.setBackground(new java.awt.Color(207, 219, 229));
         LocationText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         LocationText.setText("Location Name");
-        LocationText.setEnabled(false);
         LocationText.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 LocationTextFocusGained(evt);
@@ -178,7 +182,6 @@ public class bookParkir extends javax.swing.JFrame {
         parkingLotCodeText.setBackground(new java.awt.Color(207, 219, 229));
         parkingLotCodeText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         parkingLotCodeText.setText("ParkingLotCode");
-        parkingLotCodeText.setEnabled(false);
         parkingLotCodeText.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 parkingLotCodeTextFocusGained(evt);
@@ -197,7 +200,7 @@ public class bookParkir extends javax.swing.JFrame {
                 submitButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(submitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 860, 250, 60));
+        getContentPane().add(submitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 840, 250, 60));
 
         denahParkirArif.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ArifRahmanHakim4x2.jpg"))); // NOI18N
         getContentPane().add(denahParkirArif, new org.netbeans.lib.awtextra.AbsoluteConstraints(1310, 40, 500, 450));
@@ -293,7 +296,11 @@ public class bookParkir extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Sukses Memilih Event!", "Notification", JOptionPane.INFORMATION_MESSAGE);
                     
                     int reservationId = Integer.parseInt(idText.getText());
-                    konfirmasiBookParkir windowPlane = new konfirmasiBookParkir(reservationId);
+                    Date reservationDateObj = dateText.getDate();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String reservationDate = dateFormat.format(reservationDateObj);
+                    String numberPolice = policeNumberText.getText();
+                    konfirmasiBookParkir windowPlane = new konfirmasiBookParkir(reservationId, reservationDate, numberPolice);
 
                     if (windowPlane == null || !windowPlane.isVisible()) {
                         windowPlane.setVisible(true);
