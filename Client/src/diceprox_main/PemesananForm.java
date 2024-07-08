@@ -27,8 +27,10 @@ public class PemesananForm extends javax.swing.JFrame {
 
         // Maximize the frame
         setExtendedState(MainForm.MAXIMIZED_BOTH);
-
-        refreshTable();
+        
+        jScrollPaneParking.setVisible(false);
+        
+        refreshTableEvent();
     }
 
     /**
@@ -43,10 +45,10 @@ public class PemesananForm extends javax.swing.JFrame {
         pemesananLabel = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
         back = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPaneParking = new javax.swing.JScrollPane();
         jPemesananParkingTabel = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jPemesananTabel = new javax.swing.JTable();
+        jScrollPaneEvent = new javax.swing.JScrollPane();
+        jPemesananEventTabel = new javax.swing.JTable();
         nameLabel = new javax.swing.JLabel();
         comboBoxLokasi = new javax.swing.JComboBox<>();
         bagian_kanan = new javax.swing.JLabel();
@@ -90,11 +92,11 @@ public class PemesananForm extends javax.swing.JFrame {
                 jPemesananParkingTabelMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jPemesananParkingTabel);
+        jScrollPaneParking.setViewportView(jPemesananParkingTabel);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 590, 1730, 340));
+        getContentPane().add(jScrollPaneParking, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 380, 1730, 570));
 
-        jPemesananTabel.setModel(new javax.swing.table.DefaultTableModel(
+        jPemesananEventTabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
@@ -105,19 +107,19 @@ public class PemesananForm extends javax.swing.JFrame {
                 "Ticket Code", "User", "Event", "Type Ticket", "Jumlah Tiket", "Harga Total", "Waktu Reservasi", "Status Claim"
             }
         ));
-        jPemesananTabel.addMouseListener(new java.awt.event.MouseAdapter() {
+        jPemesananEventTabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPemesananTabelMouseClicked(evt);
+                jPemesananEventTabelMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(jPemesananTabel);
+        jScrollPaneEvent.setViewportView(jPemesananEventTabel);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 320, 1730, 420));
+        getContentPane().add(jScrollPaneEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 380, 1730, 570));
 
         nameLabel.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         nameLabel.setForeground(new java.awt.Color(57, 62, 70));
         nameLabel.setText("Pilih Reservation");
-        getContentPane().add(nameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, 280, -1));
+        getContentPane().add(nameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 280, -1));
 
         comboBoxLokasi.setBackground(new java.awt.Color(207, 219, 229));
         comboBoxLokasi.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -148,8 +150,8 @@ public class PemesananForm extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_backMouseClicked
 
-    public void refreshTable() {
-        DefaultTableModel model = (DefaultTableModel) jPemesananTabel.getModel();
+    public void refreshTableEvent() {
+        DefaultTableModel model = (DefaultTableModel) jPemesananEventTabel.getModel();
         model.setRowCount(0);
         Object[] rowData = new Object[8]; //total kolom tampil
         String userID = String.valueOf(UserSession.getUserId());
@@ -189,25 +191,24 @@ public class PemesananForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jPemesananParkingTabelMouseClicked
 
-    private void jPemesananTabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPemesananTabelMouseClicked
+    private void jPemesananEventTabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPemesananEventTabelMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPemesananTabelMouseClicked
+    }//GEN-LAST:event_jPemesananEventTabelMouseClicked
 
     private void comboBoxLokasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxLokasiActionPerformed
         // TODO add your handling code here:
         selectedIndex = (int) comboBoxLokasi.getSelectedIndex();
         if(selectedIndex == 0) //Event
         {
-            jPemesananParkingTabel.setVisible(false);
-            jPemesananTabel.setVisible(true);
-            refreshTable();
+            jScrollPaneParking.setVisible(false);
+            jScrollPaneEvent.setVisible(true);
+            refreshTableEvent();
         }
         else { 
-            jPemesananTabel.setVisible(false);
-            jPemesananParkingTabel.setVisible(true);
+            jScrollPaneEvent.setVisible(false);
+            jScrollPaneParking.setVisible(true);
             refreshTableParking();
         }
-        
     }//GEN-LAST:event_comboBoxLokasiActionPerformed
 
     /**
@@ -249,10 +250,10 @@ public class PemesananForm extends javax.swing.JFrame {
     private javax.swing.JLabel back;
     private javax.swing.JLabel bagian_kanan;
     private javax.swing.JComboBox<String> comboBoxLokasi;
+    private javax.swing.JTable jPemesananEventTabel;
     private javax.swing.JTable jPemesananParkingTabel;
-    private javax.swing.JTable jPemesananTabel;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPaneEvent;
+    private javax.swing.JScrollPane jScrollPaneParking;
     private javax.swing.JLabel logo;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JLabel pemesananLabel;
