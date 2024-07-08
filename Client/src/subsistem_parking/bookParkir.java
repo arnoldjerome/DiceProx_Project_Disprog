@@ -293,7 +293,7 @@ public class bookParkir extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Pilih Parking Slot terlebih dahulu.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
                     return;
                 } else {
-                    JOptionPane.showMessageDialog(this, "Sukses Memilih Event!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Sukses Memilih Parking Slot!", "Notification", JOptionPane.INFORMATION_MESSAGE);
                     
                     int reservationId = Integer.parseInt(idText.getText());
                     Date reservationDateObj = dateText.getDate();

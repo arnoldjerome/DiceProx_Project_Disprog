@@ -10,8 +10,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author asus
  */
+
+
 public class PemesananForm extends javax.swing.JFrame {
 
+    int selectedIndex = 0;
+    int idUser = UserSession.getUserId();
     /**
      * Creates new form PemesananForm
      */
@@ -40,7 +44,11 @@ public class PemesananForm extends javax.swing.JFrame {
         logo = new javax.swing.JLabel();
         back = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
+        jPemesananParkingTabel = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
         jPemesananTabel = new javax.swing.JTable();
+        nameLabel = new javax.swing.JLabel();
+        comboBoxLokasi = new javax.swing.JComboBox<>();
         bagian_kanan = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -66,6 +74,26 @@ public class PemesananForm extends javax.swing.JFrame {
         });
         getContentPane().add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 70, 70));
 
+        jPemesananParkingTabel.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "ReservationID", "Username", "ParkingLotName", "ReservationDate", "PoliceNumber", "ParkingSlot", "ParkingType", "HargaParking"
+            }
+        ));
+        jPemesananParkingTabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPemesananParkingTabelMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jPemesananParkingTabel);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 590, 1730, 340));
+
         jPemesananTabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
@@ -82,13 +110,30 @@ public class PemesananForm extends javax.swing.JFrame {
                 jPemesananTabelMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jPemesananTabel);
+        jScrollPane2.setViewportView(jPemesananTabel);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 290, 1730, 620));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 320, 1730, 420));
+
+        nameLabel.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        nameLabel.setForeground(new java.awt.Color(57, 62, 70));
+        nameLabel.setText("Pilih Reservation");
+        getContentPane().add(nameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, 280, -1));
+
+        comboBoxLokasi.setBackground(new java.awt.Color(207, 219, 229));
+        comboBoxLokasi.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        comboBoxLokasi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Event", "Parking" }));
+        comboBoxLokasi.setMinimumSize(new java.awt.Dimension(72, 20));
+        comboBoxLokasi.setPreferredSize(new java.awt.Dimension(72, 20));
+        comboBoxLokasi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxLokasiActionPerformed(evt);
+            }
+        });
+        getContentPane().add(comboBoxLokasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 180, 320, 70));
 
         bagian_kanan.setBackground(new java.awt.Color(187, 187, 187));
         bagian_kanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background_main_kiri.png"))); // NOI18N
-        getContentPane().add(bagian_kanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 1080));
+        getContentPane().add(bagian_kanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -5, 1920, 1090));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -121,10 +166,49 @@ public class PemesananForm extends javax.swing.JFrame {
             model.addRow(rowData);
         }
     }
+    
+    public void refreshTableParking() {
+        DefaultTableModel model = (DefaultTableModel) jPemesananParkingTabel.getModel();
+        model.setRowCount(0);
+        Object[] rowData = new Object[8]; //total kolom tampil
+
+        for (com.ticketing.services.ParkingReservations obj : selectAllReservationPemesanan(idUser)) {
+            rowData[0] = obj.getReservationID();
+            rowData[1] = obj.getUsername();
+            rowData[2] = obj.getParkingLotName();
+            rowData[3] = obj.getReservationDate();
+            rowData[4] = obj.getPoliceNumber();
+            rowData[5] = obj.getParkingSlot();
+            rowData[6] = obj.getParkingType();
+            rowData[7] = obj.getHargaParking();
+            model.addRow(rowData);
+        }
+    }
+
+    private void jPemesananParkingTabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPemesananParkingTabelMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPemesananParkingTabelMouseClicked
 
     private void jPemesananTabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPemesananTabelMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jPemesananTabelMouseClicked
+
+    private void comboBoxLokasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxLokasiActionPerformed
+        // TODO add your handling code here:
+        selectedIndex = (int) comboBoxLokasi.getSelectedIndex();
+        if(selectedIndex == 0) //Event
+        {
+            jPemesananParkingTabel.setVisible(false);
+            jPemesananTabel.setVisible(true);
+            refreshTable();
+        }
+        else { 
+            jPemesananTabel.setVisible(false);
+            jPemesananParkingTabel.setVisible(true);
+            refreshTableParking();
+        }
+        
+    }//GEN-LAST:event_comboBoxLokasiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,9 +248,13 @@ public class PemesananForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel back;
     private javax.swing.JLabel bagian_kanan;
+    private javax.swing.JComboBox<String> comboBoxLokasi;
+    private javax.swing.JTable jPemesananParkingTabel;
     private javax.swing.JTable jPemesananTabel;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel logo;
+    private javax.swing.JLabel nameLabel;
     private javax.swing.JLabel pemesananLabel;
     // End of variables declaration//GEN-END:variables
 
@@ -174,5 +262,11 @@ public class PemesananForm extends javax.swing.JFrame {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
         return port.selectAllTicketUser(arg0);
+    }
+
+    private static java.util.List<com.ticketing.services.ParkingReservations> selectAllReservationPemesanan(int userID) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.selectAllReservationPemesanan(userID);
     }
 }

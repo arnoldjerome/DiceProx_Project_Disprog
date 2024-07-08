@@ -26,7 +26,7 @@ public class ParkingReservations extends MyModel {
     private String Username;
     private String ParkingType;
     private int HargaParking;
-    
+
     public int getReservationID() {
         return ReservationID;
     }
@@ -163,6 +163,18 @@ public class ParkingReservations extends MyModel {
         this.PoliceNumber = PoliceNumber;
         this.ReservationID = ReservationID;
     }
+    
+    //formPemesanan
+    public ParkingReservations(int ReservationID, String Username, String ParkingLotName, String ReservationDate, String PoliceNumber, String ParkingSlot, String ParkingType, int HargaParking) {
+        this.ReservationID = ReservationID;
+        this.Username = Username;
+        this.ParkingLotName = ParkingLotName;
+        this.ReservationDate = ReservationDate;
+        this.PoliceNumber = PoliceNumber;
+        this.ParkingSlot = ParkingSlot;
+        this.ParkingType = ParkingType;
+        this.HargaParking = HargaParking;
+    }
 
     public ParkingReservations() {
     }
@@ -234,22 +246,6 @@ public class ParkingReservations extends MyModel {
 
     @Override
     public void updateData() {
-//        try {
-//            if (!MyModel.conn.isClosed()) {
-//                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
-//                     "UPDATE parkingreservations SET UserID=?, ReservationDate=?, PoliceNumber=?, IsAvailable=0 WHERE ReservationID= ?");
-//                
-//                sql.setInt(1, this.getUserID());
-//                sql.setString(2, this.getReservationDate());
-//                sql.setString(2, this.getPoliceNumber());
-//                sql.setInt(4, this.getReservationID());
-//               
-//                sql.executeUpdate();
-//                sql.close();
-//            }
-//        } catch (Exception e) {
-//            System.out.println("Error di Update data: " + e);
-//        }
         try {
             if (!MyModel.conn.isClosed()) {
                 PreparedStatement sql = MyModel.conn.prepareStatement(
@@ -307,12 +303,6 @@ public class ParkingReservations extends MyModel {
         ArrayList<Object> listOfReservations = new ArrayList<>();
         try {
              this.statement = (Statement) MyModel.conn.createStatement();
-//                this.result = this.statement.executeQuery("select pr.ReservationID, pr.UserID, pr.ParkingLotID, "
-//                    + "pr.PoliceNumber, pr.LocationID as ParkingLotCode "
-//                    + "from parkingreservations pr"
-//                    + "left join users u on pr.UserID = u.userid "
-//                    + "join parkinglots pl on pr.ParkingLotID = pl.ParkingLotID"
-//                    + "where pl.ParkingLotID = " + ParkingLotID + "and pr.UserID is null");
                 this.result = this.statement.executeQuery("SELECT pr.ReservationID, pl.ParkingLotName, tp.ParkingSlot FROM parkinglots pl LEFT JOIN typeparkings tp ON pl.ParkingLotID = tp.ParkingLotID LEFT JOIN parkingreservations pr ON tp.TypeParkingID = pr.TypeParkingID WHERE pl.ParkingLotID = " + (ParkingLotID+1) + " AND pr.UserID IS NULL GROUP BY pr.ReservationID, pl.ParkingLotName, tp.ParkingSlot, pl.TotalSlots;");
               
 
@@ -349,6 +339,32 @@ public class ParkingReservations extends MyModel {
             }
         } catch (Exception e) {
             System.out.println("Error di view list data konfirm: " + e);
+        }
+        return listOfReservations;
+    }
+    
+    public ArrayList<Object> viewListDataPemesanan(int UserID) {
+        ArrayList<Object> listOfReservations = new ArrayList<>();
+        try {
+             this.statement = (Statement) MyModel.conn.createStatement();
+                this.result = this.statement.executeQuery("select pr.ReservationID, u.Username, pl.ParkingLotName, pr.ReservationDate, pr.PoliceNumber, tp.ParkingSlot, tp.ParkingType, tp.HargaParking from parkingreservations pr left join users u on pr.UserID = u.UserID left join parkinglots pl on pr.ParkingLotID = pl.ParkingLotID left join typeparkings tp on pr.TypeParkingID = tp.TypeParkingID where u.UserID = " + (UserID));
+              
+            while (this.result.next()) {
+                ParkingReservations pr = new ParkingReservations(
+                        this.result.getInt("ReservationID"),
+                        this.result.getString("Username"),
+                        this.result.getString("ParkingLotName"),
+                        this.result.getString("ReservationDate"),
+                        this.result.getString("PoliceNumber"),
+                        this.result.getString("ParkingSlot"),
+                        this.result.getString("ParkingType"),
+                        this.result.getInt("HargaParking")
+                        
+                );
+                listOfReservations.add(pr);
+            }
+        } catch (Exception e) {
+            System.out.println("Error di view list data pemesanan: " + e);
         }
         return listOfReservations;
     }

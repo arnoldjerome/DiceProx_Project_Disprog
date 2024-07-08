@@ -42,6 +42,10 @@
 
 <xs:element name="selectAllEventsTypeResponse" type="tns:selectAllEventsTypeResponse"/>
 
+<xs:element name="selectAllReservationPemesanan" type="tns:selectAllReservationPemesanan"/>
+
+<xs:element name="selectAllReservationPemesananResponse" type="tns:selectAllReservationPemesananResponse"/>
+
 <xs:element name="selectAllReservationsConfirm" type="tns:selectAllReservationsConfirm"/>
 
 <xs:element name="selectAllReservationsConfirmResponse" type="tns:selectAllReservationsConfirmResponse"/>
@@ -87,6 +91,13 @@
 <xs:complexType name="checkLoginAndGetUserIdResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="updateAvailableTickets">
+<xs:sequence>
+<xs:element name="ticketTypeID" type="xs:int"/>
+<xs:element name="ticketsReserved" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -156,13 +167,6 @@
 </xs:sequence>
 </xs:extension>
 </xs:complexContent>
-</xs:complexType>
-
-<xs:complexType name="updateAvailableTickets">
-<xs:sequence>
-<xs:element name="ticketTypeID" type="xs:int"/>
-<xs:element name="ticketsReserved" type="xs:int"/>
-</xs:sequence>
 </xs:complexType>
 
 <xs:complexType name="selectAllEvents">
@@ -348,6 +352,18 @@
 <xs:complexType name="selectAllEventsTypeResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:events" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="selectAllReservationPemesanan">
+<xs:sequence>
+<xs:element name="UserID" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="selectAllReservationPemesananResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:parkingReservations" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 

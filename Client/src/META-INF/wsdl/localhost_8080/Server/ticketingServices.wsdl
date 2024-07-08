@@ -4,14 +4,11 @@
 <xsd:import namespace="http://services.ticketing.com/" schemaLocation="http://localhost:8080/Server/ticketingServices?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="selectAllReservationsConfirm">
-<part name="parameters" element="tns:selectAllReservationsConfirm"/>
+<message name="selectAllReservationPemesanan">
+<part name="parameters" element="tns:selectAllReservationPemesanan"/>
 </message>
-<message name="selectAllReservationsConfirmResponse">
-<part name="parameters" element="tns:selectAllReservationsConfirmResponse"/>
-</message>
-<message name="updateBookingReservation">
-<part name="parameters" element="tns:updateBookingReservation"/>
+<message name="selectAllReservationPemesananResponse">
+<part name="parameters" element="tns:selectAllReservationPemesananResponse"/>
 </message>
 <message name="hello">
 <part name="parameters" element="tns:hello"/>
@@ -19,17 +16,11 @@
 <message name="helloResponse">
 <part name="parameters" element="tns:helloResponse"/>
 </message>
-<message name="userIdForClaimTicket">
-<part name="parameters" element="tns:userIdForClaimTicket"/>
+<message name="checkLoginAndGetUserId">
+<part name="parameters" element="tns:checkLoginAndGetUserId"/>
 </message>
-<message name="userIdForClaimTicketResponse">
-<part name="parameters" element="tns:userIdForClaimTicketResponse"/>
-</message>
-<message name="selectAllUserTicketID">
-<part name="parameters" element="tns:selectAllUserTicketID"/>
-</message>
-<message name="selectAllUserTicketIDResponse">
-<part name="parameters" element="tns:selectAllUserTicketIDResponse"/>
+<message name="checkLoginAndGetUserIdResponse">
+<part name="parameters" element="tns:checkLoginAndGetUserIdResponse"/>
 </message>
 <message name="userIdForCheckOut">
 <part name="parameters" element="tns:userIdForCheckOut"/>
@@ -37,14 +28,23 @@
 <message name="userIdForCheckOutResponse">
 <part name="parameters" element="tns:userIdForCheckOutResponse"/>
 </message>
-<message name="checkLoginAndGetUserId">
-<part name="parameters" element="tns:checkLoginAndGetUserId"/>
+<message name="updateAvailableTickets">
+<part name="parameters" element="tns:updateAvailableTickets"/>
 </message>
-<message name="checkLoginAndGetUserIdResponse">
-<part name="parameters" element="tns:checkLoginAndGetUserIdResponse"/>
+<message name="selectAllEventsType">
+<part name="parameters" element="tns:selectAllEventsType"/>
+</message>
+<message name="selectAllEventsTypeResponse">
+<part name="parameters" element="tns:selectAllEventsTypeResponse"/>
 </message>
 <message name="insertHistoryLogin">
 <part name="parameters" element="tns:insertHistoryLogin"/>
+</message>
+<message name="userIdForClaimTicket">
+<part name="parameters" element="tns:userIdForClaimTicket"/>
+</message>
+<message name="userIdForClaimTicketResponse">
+<part name="parameters" element="tns:userIdForClaimTicketResponse"/>
 </message>
 <message name="selectAllTicketUser">
 <part name="parameters" element="tns:selectAllTicketUser"/>
@@ -58,32 +58,26 @@
 <message name="selectAllReservationsTypeResponse">
 <part name="parameters" element="tns:selectAllReservationsTypeResponse"/>
 </message>
-<message name="selectAllEventsType">
-<part name="parameters" element="tns:selectAllEventsType"/>
+<message name="updateCheckOutReservation">
+<part name="parameters" element="tns:updateCheckOutReservation"/>
 </message>
-<message name="selectAllEventsTypeResponse">
-<part name="parameters" element="tns:selectAllEventsTypeResponse"/>
+<message name="selectAllReservationsConfirm">
+<part name="parameters" element="tns:selectAllReservationsConfirm"/>
+</message>
+<message name="selectAllReservationsConfirmResponse">
+<part name="parameters" element="tns:selectAllReservationsConfirmResponse"/>
+</message>
+<message name="updateBookingReservation">
+<part name="parameters" element="tns:updateBookingReservation"/>
 </message>
 <message name="updateClaimStatus">
 <part name="parameters" element="tns:updateClaimStatus"/>
 </message>
-<message name="updateAvailableTickets">
-<part name="parameters" element="tns:updateAvailableTickets"/>
+<message name="selectAllUserTicketID">
+<part name="parameters" element="tns:selectAllUserTicketID"/>
 </message>
-<message name="updateCheckOutReservation">
-<part name="parameters" element="tns:updateCheckOutReservation"/>
-</message>
-<message name="updateParking">
-<part name="parameters" element="tns:updateParking"/>
-</message>
-<message name="insertAccRegist">
-<part name="parameters" element="tns:insertAccRegist"/>
-</message>
-<message name="checkClaimStatus">
-<part name="parameters" element="tns:checkClaimStatus"/>
-</message>
-<message name="checkClaimStatusResponse">
-<part name="parameters" element="tns:checkClaimStatusResponse"/>
+<message name="selectAllUserTicketIDResponse">
+<part name="parameters" element="tns:selectAllUserTicketIDResponse"/>
 </message>
 <message name="insertTicket">
 <part name="parameters" element="tns:insertTicket"/>
@@ -112,6 +106,18 @@
 <message name="getEventDetailsResponse">
 <part name="parameters" element="tns:getEventDetailsResponse"/>
 </message>
+<message name="checkClaimStatus">
+<part name="parameters" element="tns:checkClaimStatus"/>
+</message>
+<message name="checkClaimStatusResponse">
+<part name="parameters" element="tns:checkClaimStatusResponse"/>
+</message>
+<message name="insertAccRegist">
+<part name="parameters" element="tns:insertAccRegist"/>
+</message>
+<message name="updateParking">
+<part name="parameters" element="tns:updateParking"/>
+</message>
 <message name="selectAllEvents">
 <part name="parameters" element="tns:selectAllEvents"/>
 </message>
@@ -119,35 +125,35 @@
 <part name="parameters" element="tns:selectAllEventsResponse"/>
 </message>
 <portType name="ticketingServices">
-<operation name="selectAllReservationsConfirm">
-<input wsam:Action="http://services.ticketing.com/ticketingServices/selectAllReservationsConfirmRequest" message="tns:selectAllReservationsConfirm"/>
-<output wsam:Action="http://services.ticketing.com/ticketingServices/selectAllReservationsConfirmResponse" message="tns:selectAllReservationsConfirmResponse"/>
-</operation>
-<operation name="updateBookingReservation">
-<input wsam:Action="http://services.ticketing.com/ticketingServices/updateBookingReservation" message="tns:updateBookingReservation"/>
+<operation name="selectAllReservationPemesanan">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/selectAllReservationPemesananRequest" message="tns:selectAllReservationPemesanan"/>
+<output wsam:Action="http://services.ticketing.com/ticketingServices/selectAllReservationPemesananResponse" message="tns:selectAllReservationPemesananResponse"/>
 </operation>
 <operation name="hello">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/helloRequest" message="tns:hello"/>
 <output wsam:Action="http://services.ticketing.com/ticketingServices/helloResponse" message="tns:helloResponse"/>
 </operation>
-<operation name="userIdForClaimTicket">
-<input wsam:Action="http://services.ticketing.com/ticketingServices/userIdForClaimTicketRequest" message="tns:userIdForClaimTicket"/>
-<output wsam:Action="http://services.ticketing.com/ticketingServices/userIdForClaimTicketResponse" message="tns:userIdForClaimTicketResponse"/>
-</operation>
-<operation name="selectAllUserTicketID">
-<input wsam:Action="http://services.ticketing.com/ticketingServices/selectAllUserTicketIDRequest" message="tns:selectAllUserTicketID"/>
-<output wsam:Action="http://services.ticketing.com/ticketingServices/selectAllUserTicketIDResponse" message="tns:selectAllUserTicketIDResponse"/>
+<operation name="checkLoginAndGetUserId">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/checkLoginAndGetUserIdRequest" message="tns:checkLoginAndGetUserId"/>
+<output wsam:Action="http://services.ticketing.com/ticketingServices/checkLoginAndGetUserIdResponse" message="tns:checkLoginAndGetUserIdResponse"/>
 </operation>
 <operation name="userIdForCheckOut">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/userIdForCheckOutRequest" message="tns:userIdForCheckOut"/>
 <output wsam:Action="http://services.ticketing.com/ticketingServices/userIdForCheckOutResponse" message="tns:userIdForCheckOutResponse"/>
 </operation>
-<operation name="checkLoginAndGetUserId">
-<input wsam:Action="http://services.ticketing.com/ticketingServices/checkLoginAndGetUserIdRequest" message="tns:checkLoginAndGetUserId"/>
-<output wsam:Action="http://services.ticketing.com/ticketingServices/checkLoginAndGetUserIdResponse" message="tns:checkLoginAndGetUserIdResponse"/>
+<operation name="updateAvailableTickets">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/updateAvailableTickets" message="tns:updateAvailableTickets"/>
+</operation>
+<operation name="selectAllEventsType">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/selectAllEventsTypeRequest" message="tns:selectAllEventsType"/>
+<output wsam:Action="http://services.ticketing.com/ticketingServices/selectAllEventsTypeResponse" message="tns:selectAllEventsTypeResponse"/>
 </operation>
 <operation name="insertHistoryLogin">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/insertHistoryLogin" message="tns:insertHistoryLogin"/>
+</operation>
+<operation name="userIdForClaimTicket">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/userIdForClaimTicketRequest" message="tns:userIdForClaimTicket"/>
+<output wsam:Action="http://services.ticketing.com/ticketingServices/userIdForClaimTicketResponse" message="tns:userIdForClaimTicketResponse"/>
 </operation>
 <operation name="selectAllTicketUser">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/selectAllTicketUserRequest" message="tns:selectAllTicketUser"/>
@@ -157,28 +163,22 @@
 <input wsam:Action="http://services.ticketing.com/ticketingServices/selectAllReservationsTypeRequest" message="tns:selectAllReservationsType"/>
 <output wsam:Action="http://services.ticketing.com/ticketingServices/selectAllReservationsTypeResponse" message="tns:selectAllReservationsTypeResponse"/>
 </operation>
-<operation name="selectAllEventsType">
-<input wsam:Action="http://services.ticketing.com/ticketingServices/selectAllEventsTypeRequest" message="tns:selectAllEventsType"/>
-<output wsam:Action="http://services.ticketing.com/ticketingServices/selectAllEventsTypeResponse" message="tns:selectAllEventsTypeResponse"/>
+<operation name="updateCheckOutReservation">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/updateCheckOutReservation" message="tns:updateCheckOutReservation"/>
+</operation>
+<operation name="selectAllReservationsConfirm">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/selectAllReservationsConfirmRequest" message="tns:selectAllReservationsConfirm"/>
+<output wsam:Action="http://services.ticketing.com/ticketingServices/selectAllReservationsConfirmResponse" message="tns:selectAllReservationsConfirmResponse"/>
+</operation>
+<operation name="updateBookingReservation">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/updateBookingReservation" message="tns:updateBookingReservation"/>
 </operation>
 <operation name="updateClaimStatus">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/updateClaimStatus" message="tns:updateClaimStatus"/>
 </operation>
-<operation name="updateAvailableTickets">
-<input wsam:Action="http://services.ticketing.com/ticketingServices/updateAvailableTickets" message="tns:updateAvailableTickets"/>
-</operation>
-<operation name="updateCheckOutReservation">
-<input wsam:Action="http://services.ticketing.com/ticketingServices/updateCheckOutReservation" message="tns:updateCheckOutReservation"/>
-</operation>
-<operation name="updateParking">
-<input wsam:Action="http://services.ticketing.com/ticketingServices/updateParking" message="tns:updateParking"/>
-</operation>
-<operation name="insertAccRegist">
-<input wsam:Action="http://services.ticketing.com/ticketingServices/insertAccRegist" message="tns:insertAccRegist"/>
-</operation>
-<operation name="checkClaimStatus">
-<input wsam:Action="http://services.ticketing.com/ticketingServices/checkClaimStatusRequest" message="tns:checkClaimStatus"/>
-<output wsam:Action="http://services.ticketing.com/ticketingServices/checkClaimStatusResponse" message="tns:checkClaimStatusResponse"/>
+<operation name="selectAllUserTicketID">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/selectAllUserTicketIDRequest" message="tns:selectAllUserTicketID"/>
+<output wsam:Action="http://services.ticketing.com/ticketingServices/selectAllUserTicketIDResponse" message="tns:selectAllUserTicketIDResponse"/>
 </operation>
 <operation name="insertTicket">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/insertTicket" message="tns:insertTicket"/>
@@ -199,6 +199,16 @@
 <input wsam:Action="http://services.ticketing.com/ticketingServices/getEventDetailsRequest" message="tns:getEventDetails"/>
 <output wsam:Action="http://services.ticketing.com/ticketingServices/getEventDetailsResponse" message="tns:getEventDetailsResponse"/>
 </operation>
+<operation name="checkClaimStatus">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/checkClaimStatusRequest" message="tns:checkClaimStatus"/>
+<output wsam:Action="http://services.ticketing.com/ticketingServices/checkClaimStatusResponse" message="tns:checkClaimStatusResponse"/>
+</operation>
+<operation name="insertAccRegist">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/insertAccRegist" message="tns:insertAccRegist"/>
+</operation>
+<operation name="updateParking">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/updateParking" message="tns:updateParking"/>
+</operation>
 <operation name="selectAllEvents">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/selectAllEventsRequest" message="tns:selectAllEvents"/>
 <output wsam:Action="http://services.ticketing.com/ticketingServices/selectAllEventsResponse" message="tns:selectAllEventsResponse"/>
@@ -206,7 +216,7 @@
 </portType>
 <binding name="ticketingServicesPortBinding" type="tns:ticketingServices">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="selectAllReservationsConfirm">
+<operation name="selectAllReservationPemesanan">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -214,41 +224,8 @@
 <output>
 <soap:body use="literal"/>
 </output>
-</operation>
-<operation name="updateBookingReservation">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
 </operation>
 <operation name="hello">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="userIdForClaimTicket">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="selectAllUserTicketID">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="userIdForCheckOut">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -266,11 +243,44 @@
 <soap:body use="literal"/>
 </output>
 </operation>
+<operation name="userIdForCheckOut">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="updateAvailableTickets">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
+<operation name="selectAllEventsType">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
 <operation name="insertHistoryLogin">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
 </input>
+</operation>
+<operation name="userIdForClaimTicket">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
 </operation>
 <operation name="selectAllTicketUser">
 <soap:operation soapAction=""/>
@@ -290,7 +300,13 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="selectAllEventsType">
+<operation name="updateCheckOutReservation">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
+<operation name="selectAllReservationsConfirm">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -299,37 +315,19 @@
 <soap:body use="literal"/>
 </output>
 </operation>
+<operation name="updateBookingReservation">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
 <operation name="updateClaimStatus">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
 </input>
 </operation>
-<operation name="updateAvailableTickets">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-</operation>
-<operation name="updateCheckOutReservation">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-</operation>
-<operation name="updateParking">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-</operation>
-<operation name="insertAccRegist">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-</operation>
-<operation name="checkClaimStatus">
+<operation name="selectAllUserTicketID">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -379,6 +377,27 @@
 <output>
 <soap:body use="literal"/>
 </output>
+</operation>
+<operation name="checkClaimStatus">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="insertAccRegist">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
+<operation name="updateParking">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
 </operation>
 <operation name="selectAllEvents">
 <soap:operation soapAction=""/>

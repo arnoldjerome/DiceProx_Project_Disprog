@@ -305,4 +305,22 @@ public class ticketingServices {
         pr = new ParkingReservations(UserID, ReservationDate, NumberPolice, ReservationID);
         pr.updateData();
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "selectAllReservationPemesanan")
+    public ArrayList<ParkingReservations> selectAllReservationPemesanan(@WebParam(name = "UserID") int UserID) {
+        System.out.println("Calling selectAllReservationPemesanan...");
+        pr = new ParkingReservations();
+        ArrayList<ParkingReservations> reservationsList = new ArrayList<>();
+        for (Object obj : pr.viewListDataPemesanan(UserID)) {
+            if (obj instanceof ParkingReservations) {
+                reservationsList.add((ParkingReservations) obj);
+            }
+        }
+        System.out.println("Returned reservations list with size: " + reservationsList.size());
+        return reservationsList;
+    }
+    
 }
