@@ -12,12 +12,12 @@ import java.util.ArrayList;
  */
 public class ParkingLots extends MyModel {
     private int parkingLotsID;
-    private String locationName;
+    private String parkingLotsName;
     private int totalSlots;
 
-    public ParkingLots(int parkingLotsID, String locationName, int totalSlots) {
+    public ParkingLots(int parkingLotsID, String parkingLotsName, int totalSlots) {
         this.parkingLotsID = parkingLotsID;
-        this.locationName = locationName;
+        this.parkingLotsName = parkingLotsName;
         this.totalSlots = totalSlots;
     }
     public ParkingLots() {
@@ -31,12 +31,12 @@ public class ParkingLots extends MyModel {
         this.parkingLotsID = parkingLotsID;
     }
 
-    public String getLocationName() {
-        return locationName;
+    public String getParkingLotsName() {
+        return parkingLotsName;
     }
 
-    public void setLocationName(String locationName) {
-        this.locationName = locationName;
+    public void setParkingLotsName(String parkingLotsName) {
+        this.parkingLotsName = parkingLotsName;
     }
 
     public int getTotalSlots() {
