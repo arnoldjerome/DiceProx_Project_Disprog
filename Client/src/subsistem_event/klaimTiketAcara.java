@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -141,51 +142,49 @@ public class klaimTiketAcara extends javax.swing.JFrame implements Runnable {
             String eventName = fetchEventName(ticketID);
             String eventDate = fetchEventDate(ticketID);
             
-            for (Integer ticketCode : selectAllUserTicketID(UserSession.getUserId())) {
+            ArrayList<Integer> listOfUserTicketID = new ArrayList<>();
+            
+            listOfUserTicketID = (ArrayList<Integer>) selectAllUserTicketID(UserSession.getUserId());
+            
+            for (Integer ticketCode : listOfUserTicketID) {
                 
-                if (ticketCode != null && ticketCode instanceof Integer) {
+                if (ticketCode instanceof Integer) {
                     
-                    if (userIDClaimTicket == UserSession.getUserId()) {
+                    if (ticketCode != null) {
+                        
+                        if (userIDClaimTicket == UserSession.getUserId()) {
 
-                        if (currentDate.equals(eventDate)) {    
+                            if (currentDate.equals(eventDate)) {    
 
-                            if (checkClaimStatus(ticketID) == false) {
+                                if (checkClaimStatus(ticketID) == false) {
 
-                                String formattedMessage = "EVNT_CLM_TIX~" + ticketText.getText() + "~" + eventName + "~" + eventDate + "~" + UserSession.getUsername() + "\n";
+                                    String formattedMessage = "EVNT_CLM_TIX~" + ticketText.getText() + "~" + eventName + "~" + eventDate + "~" + UserSession.getUsername() + "\n";
 
-                                updateClaimStatus(ticketID, UserSession.getUserId());
+                                    updateClaimStatus(ticketID, UserSession.getUserId());
 
-                                out.writeBytes(formattedMessage);
+                                    out.writeBytes(formattedMessage);
 
-                                JOptionPane.showMessageDialog(this, "Sukses Mengklaim Ticket Event!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-                                //break;
-            //                    MainForm windowPlane = new MainForm();
-            //
-            //                    if (windowPlane == null || !windowPlane.isVisible()) {
-            //                        windowPlane.setVisible(true);
-            //                    }
-            //
-            //                    this.dispose();
+                                    JOptionPane.showMessageDialog(this, "Sukses Mengklaim Ticket Event!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                                }
+
+                                else {
+                                    JOptionPane.showMessageDialog(this, "Ticket Sudah Diklaim!", "Gagal Mengklaim Tiket", JOptionPane.WARNING_MESSAGE);
+                                }        
                             }
 
                             else {
-                                JOptionPane.showMessageDialog(this, "Ticket Sudah Diklaim!", "Gagal Mengklaim Tiket", JOptionPane.WARNING_MESSAGE);
-                            }        
+                                JOptionPane.showMessageDialog(this, "Ticket Hanya Bisa Diklaim Pada Tanggal Event Diadakan!", "Gagal Mengklaim Tiket", JOptionPane.WARNING_MESSAGE);
+                            }
                         }
-
+                              
                         else {
-                            JOptionPane.showMessageDialog(this, "Ticket Hanya Bisa Diklaim Pada Tanggal Event Diadakan!", "Gagal Mengklaim Tiket", JOptionPane.WARNING_MESSAGE);
-                        }
-                    }
-
+                            JOptionPane.showMessageDialog(this, "Pastikan Kode Tiket Sudah Sesuai Dengan Reservasimu!", "Kode Tiket Tidak Valid", JOptionPane.WARNING_MESSAGE);
+                        }   
+                    } 
+                                    
                     else {
-                        JOptionPane.showMessageDialog(this, "Pastikan Kode Tiket Sudah Sesuai Dengan Reservasimu!", "Kode Tiket Tidak Valid", JOptionPane.WARNING_MESSAGE);
-                    }            
-                }
-                
-                else {
-                    JOptionPane.showMessageDialog(this, "Pastikan Kode Tiket Sudah Sesuai Dengan Reservasimu!", "Kode Tiket Tidak Valid!", JOptionPane.WARNING_MESSAGE);
-                    //break;
+                        JOptionPane.showMessageDialog(this, "Pastikan Kode Tiket Sudah Sesuai dan Terisi!", "Kode Tiket Tidak Valid", JOptionPane.WARNING_MESSAGE);
+                    }
                 }
             }
             
@@ -194,7 +193,7 @@ public class klaimTiketAcara extends javax.swing.JFrame implements Runnable {
         } 
         
         catch (Exception e) {
-            System.out.println("Error di button cek: " + e);
+            JOptionPane.showMessageDialog(this, "Pastikan Inputan Digit Kode Tiket Sudah Sesuai!", "Kode Tiket Tidak Valid", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_cekButtonActionPerformed
 
