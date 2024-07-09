@@ -274,9 +274,10 @@ public class bookParkir extends javax.swing.JFrame {
                     if (chkReservationDate == null) {
                         JOptionPane.showMessageDialog(this, "Sukses Memilih Parking Slot!", "Notification", JOptionPane.INFORMATION_MESSAGE);
                         
+                        
                         //PoliceNumber
                         String numberPolice = policeNumberText.getText();
-                        konfirmasiBookParkir windowPlane = new konfirmasiBookParkir(reservationDate, numberPolice);
+                        konfirmasiBookParkir windowPlane = new konfirmasiBookParkir(selectedIndex, parkingSlot, reservationDate, numberPolice);
 
                         if (windowPlane == null || !windowPlane.isVisible()) {
                             windowPlane.setVisible(true);

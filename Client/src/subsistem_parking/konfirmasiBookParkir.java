@@ -6,6 +6,8 @@ package subsistem_parking;
 
 import diceprox_main.MainForm;
 import diceprox_main.UserSession;
+import java.text.NumberFormat;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -16,23 +18,26 @@ import javax.swing.table.DefaultTableModel;
  */
 public class konfirmasiBookParkir extends javax.swing.JFrame {
 
-    int ReservationID;
-    String ReservationDate;
-    String NumberPolice;
+    private int ParkingLotID;
+    private String ParkingSlot;
+    private String ReservationDate;
+    private String NumberPolice;
     int idUser = UserSession.getUserId();
     
     /**
      * Creates new form bookParkir2
      */
-    public konfirmasiBookParkir(String ReservationDate, String NumberPolice) {
-        this.ReservationID = ReservationID;
+    public konfirmasiBookParkir(int ParkingLotID, String ParkingSlot, String ReservationDate, String NumberPolice) {
+        this.ParkingLotID = ParkingLotID;
+        this.ParkingSlot = ParkingSlot;
         this.ReservationDate = ReservationDate;
         this.NumberPolice = NumberPolice;
         initComponents();
         
-        refreshTable(ReservationID);
+        refreshTable();
         dateText.setText(ReservationDate);
         policeNumberText.setText(NumberPolice);
+        parkingSlotText.setText(ParkingSlot);
         
         parkingLotNameText.setEditable(false);
         dateText.setEditable(false);
@@ -96,7 +101,7 @@ public class konfirmasiBookParkir extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "ReservationID", "ParkingLotName", "ParkingLotCode", "ParkingType", "HargaParking"
+                "ParkingLotID", "ParkingLotName", "ParkingLotCode", "HargaParking", "ParkingType"
             }
         ));
         jParkingTabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -258,8 +263,10 @@ public class konfirmasiBookParkir extends javax.swing.JFrame {
         
         parkingLotNameText.setText(RecordTable.getValueAt(SelectedRows, 1).toString());
         parkingSlotText.setText(RecordTable.getValueAt(SelectedRows, 2).toString());
-        parkingTypeText.setText(RecordTable.getValueAt(SelectedRows, 3).toString());
-        harga.setText(RecordTable.getValueAt(SelectedRows, 4).toString());
+        harga.setText(RecordTable.getValueAt(SelectedRows, 3).toString());
+        parkingTypeText.setText(RecordTable.getValueAt(SelectedRows, 4).toString());
+        
+        updateTotalHarga();
     }//GEN-LAST:event_jParkingTabelMouseClicked
 
     private void dateTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dateTextFocusGained
@@ -315,10 +322,6 @@ public class konfirmasiBookParkir extends javax.swing.JFrame {
             } else {
                 String nopol = policeNumberText.getText();
                
-                //Update masih belum jalan, isi parameter sudah sesuai cuman masih blum bisa updateBookingReservation
-                updateBookingReservation(idUser, ReservationDate, nopol, ReservationID);
-               
-                System.out.println("Hasil idUser = " + idUser + " date = " + ReservationDate + " nopol = " + nopol + " idReservasi = " + ReservationID);
                 JOptionPane.showMessageDialog(this, "Sukses Melakukan Reservasi!", "Notification", JOptionPane.INFORMATION_MESSAGE);
                 JOptionPane.showMessageDialog(this, "Jangan lupa Check Out saat sudah keluar dari Parkiran!", "Notification", JOptionPane.INFORMATION_MESSAGE);
                
@@ -346,21 +349,34 @@ public class konfirmasiBookParkir extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_dateTextActionPerformed
 
-    //RefreshTable masih belum muncul di form !!
-    public void refreshTable(int ReservationID) {
+    public void refreshTable() {
         DefaultTableModel model = (DefaultTableModel) jParkingTabel.getModel();
         model.setRowCount(0); // Reset table
 
         Object[] rowData = new Object[5]; // Total kolom tampil
 
         // Mengambil data berdasarkan selectedIndex
-        for (com.ticketing.services.ParkingReservations obj : selectAllReservationsConfirm(ReservationID)) {
-            rowData[0] = obj.getReservationID();
+        for (com.ticketing.services.ParkingReservations obj : selectAllReservationsConfirm(ReservationDate, ParkingLotID, ParkingSlot)) {
+            rowData[0] = obj.getParkingLotID();
             rowData[1] = obj.getParkingLotName();
             rowData[2] = obj.getParkingSlot();
-            rowData[3] = obj.getParkingType();
-            rowData[4] = obj.getHargaParking();
+            rowData[3] = obj.getHargaParking();
+            rowData[4] = obj.getParkingType();
             model.addRow(rowData);
+        }
+    }
+    
+    private void updateTotalHarga() {
+        try {
+            double hargaParkir = Double.parseDouble(harga.getText());
+
+            // Format total harga menggunakan NumberFormat
+            NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.GERMAN);
+            String formattedTotalHarga = numberFormat.format(hargaParkir);
+
+            harga.setText("Rp " + formattedTotalHarga);
+        } catch (NumberFormatException e) {
+            harga.setText("Rp .......");
         }
     }
   
@@ -398,8 +414,10 @@ public class konfirmasiBookParkir extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 String ReservationDate = "";
+                String ParkingSlot = "";
                 String NumberPolice = "";
-                new konfirmasiBookParkir(ReservationDate, NumberPolice).setVisible(true);
+                int ParkingLotID = 0;
+                new konfirmasiBookParkir(ParkingLotID, ParkingSlot, ReservationDate, NumberPolice).setVisible(true);
             }
         });
     }
@@ -428,15 +446,16 @@ public class konfirmasiBookParkir extends javax.swing.JFrame {
     private javax.swing.JLabel reservationDate;
     // End of variables declaration//GEN-END:variables
 
-    private static java.util.List<com.ticketing.services.ParkingReservations> selectAllReservationsConfirm(int reservationID) {
-        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
-        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
-        return port.selectAllReservationsConfirm(reservationID);
-    }
 
     private static void updateBookingReservation(int userID, java.lang.String reservationDate, java.lang.String numberPolice, int reservationID) {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
         port.updateBookingReservation(userID, reservationDate, numberPolice, reservationID);
+    }
+
+    private static java.util.List<com.ticketing.services.ParkingReservations> selectAllReservationsConfirm(java.lang.String reservationDate, int parkingLotID, java.lang.String parkingSlot) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.selectAllReservationsConfirm(reservationDate, parkingLotID, parkingSlot);
     }
 }

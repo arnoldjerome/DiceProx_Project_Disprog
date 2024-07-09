@@ -146,15 +146,6 @@ public class ParkingReservations extends MyModel {
         this.ParkingSlot = ParkingSlot;
     }
     
-    //formKonfirmasiParking
-    public ParkingReservations(int ReservationID, String ParkingLotName, String ParkingSlot, String ParkingType, int HargaParking) {
-        this.ReservationID = ReservationID;
-        this.ParkingLotName = ParkingLotName;
-        this.ParkingSlot = ParkingSlot;
-        this.ParkingType = ParkingType;
-        this.HargaParking = HargaParking;
-    }
-    
     //buatUpdate
     public ParkingReservations(int UserID, String ReservationDate, String PoliceNumber, int ReservationID) {
         this.UserID = UserID;
@@ -182,6 +173,15 @@ public class ParkingReservations extends MyModel {
         this.ReservationDate = ReservationDate;
     }
 
+    //formKonfirmasiBook (method viewListDataKonfirmasi)
+    public ParkingReservations(int ParkingLotID, String ParkingLotName, String ParkingSlot, int HargaParking, String ParkingType) {
+        this.ParkingLotID = ParkingLotID;
+        this.ParkingLotName = ParkingLotName;
+        this.ParkingSlot = ParkingSlot;
+        this.HargaParking = HargaParking;
+        this.ParkingType = ParkingType;
+    }
+    
     public ParkingReservations() {
     }
     
@@ -326,20 +326,19 @@ public class ParkingReservations extends MyModel {
     }
     
     //formKonfirmasiBookParkir
-    public ArrayList<Object> viewListDataConfirm(int ReservationID) {
+    public ArrayList<Object> viewListDataConfirm(String ReservationDate, int ParkingLotID, String ParkingSlot) {
         ArrayList<Object> listOfReservations = new ArrayList<>();
         try {
              this.statement = (Statement) MyModel.conn.createStatement();
-                this.result = this.statement.executeQuery("select pr.ReservationID, pl.ParkingLotName, tp.ParkingSlot, tp.ParkingType, tp.HargaParking from parkingreservations pr left join parkinglots pl on pr.ParkingLotID = pl.ParkingLotID left join typeparkings tp on pr.TypeParkingID = tp.TypeParkingID where pr.ReservationID = " + (ReservationID));
+                this.result = this.statement.executeQuery("select pl.ParkingLotID, pl.ParkingLotName, tp.ParkingSlot, tp.HargaParking, tp.ParkingType FROM parkinglots pl LEFT JOIN typeparkings tp ON pl.ParkingLotID = tp.ParkingLotID LEFT JOIN parkingreservations pr ON tp.TypeParkingID = pr.TypeParkingID AND pr.ReservationDate = " + (ReservationDate) + " WHERE pl.ParkingLotID = " + (ParkingLotID+1) + " AND tp.ParkingSlot = '" + ParkingSlot + "' GROUP BY pl.ParkingLotName, tp.ParkingSlot;");
               
             while (this.result.next()) {
                 ParkingReservations pr = new ParkingReservations(
-                        this.result.getInt("ReservationID"),
+                        this.result.getInt("ParkingLotID"),
                         this.result.getString("ParkingLotName"),
                         this.result.getString("ParkingSlot"),
-                        this.result.getString("ParkingType"),
-                        this.result.getInt("HargaParking")
-                        
+                        this.result.getInt("HargaParking"),
+                        this.result.getString("ParkingType") 
                 );
                 listOfReservations.add(pr);
             }
