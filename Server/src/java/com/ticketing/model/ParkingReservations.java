@@ -141,8 +141,7 @@ public class ParkingReservations extends MyModel {
     }
     
     //formBookParking
-    public ParkingReservations(int ReservationID, String ParkingLotName, String ParkingSlot) {
-        this.ReservationID = ReservationID;
+    public ParkingReservations(String ParkingLotName, String ParkingSlot) {
         this.ParkingLotName = ParkingLotName;
         this.ParkingSlot = ParkingSlot;
     }
@@ -298,17 +297,16 @@ public class ParkingReservations extends MyModel {
         return listOfReservations;
     }
     
-    //Sudah aman
-    public ArrayList<Object> viewListDataType(int ParkingLotID) {
+    //formBookParkir
+    public ArrayList<Object> viewListDataType(int ParkingLotID, String ReservationDate) {
         ArrayList<Object> listOfReservations = new ArrayList<>();
         try {
              this.statement = (Statement) MyModel.conn.createStatement();
-                this.result = this.statement.executeQuery("SELECT pr.ReservationID, pl.ParkingLotName, tp.ParkingSlot FROM parkinglots pl LEFT JOIN typeparkings tp ON pl.ParkingLotID = tp.ParkingLotID LEFT JOIN parkingreservations pr ON tp.TypeParkingID = pr.TypeParkingID WHERE pl.ParkingLotID = " + (ParkingLotID+1) + " AND pr.UserID IS NULL GROUP BY pr.ReservationID, pl.ParkingLotName, tp.ParkingSlot, pl.TotalSlots;");
+                this.result = this.statement.executeQuery("SELECT pl.ParkingLotID, pl.ParkingLotName, tp.ParkingSlot FROM parkinglots pl LEFT JOIN typeparkings tp ON pl.ParkingLotID = tp.ParkingLotID LEFT JOIN parkingreservations pr ON tp.TypeParkingID = pr.TypeParkingID AND pr.ReservationDate = " + (ReservationDate) + " WHERE pl.ParkingLotID = " + (ParkingLotID+1) + " AND pr.ReservationID IS NULL GROUP BY pl.ParkingLotID, pl.ParkingLotName, tp.ParkingSlot;");
               
 
             while (this.result.next()) {
                 ParkingReservations pr = new ParkingReservations(
-                        this.result.getInt("ReservationID"),
                         this.result.getString("ParkingLotName"),
                         this.result.getString("ParkingSlot")
                 );
@@ -320,6 +318,7 @@ public class ParkingReservations extends MyModel {
         return listOfReservations;
     }
     
+    //formKonfirmasiBookParkir
     public ArrayList<Object> viewListDataConfirm(int ReservationID) {
         ArrayList<Object> listOfReservations = new ArrayList<>();
         try {

@@ -234,11 +234,11 @@ public class ticketingServices {
      * Web service operation
      */
     @WebMethod(operationName = "selectAllReservationsType")
-    public ArrayList<ParkingReservations> selectAllReservationsType(@WebParam(name = "ParkingLotID") int ParkingLotID) {
+    public ArrayList<ParkingReservations> selectAllReservationsType(@WebParam(name = "ParkingLotID") int ParkingLotID, @WebParam(name = "ReservationDate") String ReservationDate) {
         System.out.println("Calling selectAllReservationsType...");
         pr = new ParkingReservations();
         ArrayList<ParkingReservations> reservationsList = new ArrayList<>();
-        for (Object obj : pr.viewListDataType(ParkingLotID)) {
+        for (Object obj : pr.viewListDataType(ParkingLotID, ReservationDate)) {
             if (obj instanceof ParkingReservations) {
                 reservationsList.add((ParkingReservations) obj);
             }

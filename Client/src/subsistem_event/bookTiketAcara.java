@@ -178,7 +178,7 @@ public class bookTiketAcara extends javax.swing.JFrame implements Runnable {
         getContentPane().add(nameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 70, 140, -1));
 
         hargaTotal.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        hargaTotal.setForeground(new java.awt.Color(255, 51, 51));
+        hargaTotal.setForeground(new java.awt.Color(240, 51, 51));
         hargaTotal.setText("Rp .......");
         getContentPane().add(hargaTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(1450, 280, 410, -1));
 
