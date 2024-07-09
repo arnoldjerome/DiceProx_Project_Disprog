@@ -174,6 +174,13 @@ public class ParkingReservations extends MyModel {
         this.ParkingType = ParkingType;
         this.HargaParking = HargaParking;
     }
+    
+    //formBookParkir (cons method pengecekan ReservationDate, ParkingSlot)
+    public ParkingReservations(int ParkingLotID, String ParkingSlot, String ReservationDate) {
+        this.ParkingLotID = ParkingLotID;
+        this.ParkingSlot = ParkingSlot;
+        this.ReservationDate = ReservationDate;
+    }
 
     public ParkingReservations() {
     }
@@ -366,5 +373,30 @@ public class ParkingReservations extends MyModel {
             System.out.println("Error di view list data pemesanan: " + e);
         }
         return listOfReservations;
+    }
+    
+    public String fetchReservationDate(String ReservationDate, int ParkingLotID, String ParkingSlot) {
+        try {
+            String reservationDate = "";
+            
+            if (!MyModel.conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                    "SELECT pl.ParkingLotName, tp.ParkingSlot, pr.ReservationDate FROM parkinglots pl LEFT JOIN typeparkings tp ON pl.ParkingLotID = tp.ParkingLotID LEFT JOIN parkingreservations pr ON tp.TypeParkingID = pr.TypeParkingID AND pr.ReservationDate = ? WHERE pl.ParkingLotID = ? AND tp.ParkingSlot = ? GROUP BY pl.ParkingLotName, tp.ParkingSlot;");
+                sql.setString(1, ReservationDate);
+                sql.setInt(2, ParkingLotID+1);
+                sql.setString(3, ParkingSlot);
+                
+                this.result = sql.executeQuery();
+                
+                if (this.result.next()) {
+                    reservationDate = this.result.getString("ReservationDate");
+                }
+                return reservationDate;
+            }
+        } 
+        catch (Exception e) {
+            System.out.println("Error di fetch parking lot name: " + e);
+        }
+        return null;
     }
 }

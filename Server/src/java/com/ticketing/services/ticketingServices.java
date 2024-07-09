@@ -322,5 +322,16 @@ public class ticketingServices {
         System.out.println("Returned reservations list with size: " + reservationsList.size());
         return reservationsList;
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "fetchReservationDate")
+    public String fetchReservationDate(@WebParam(name = "ReservationDate") String ReservationDate, @WebParam(name = "ParkingLotID") int ParkingLotID, @WebParam(name = "ParkingSlot") String ParkingSlot) {
+        pr = new ParkingReservations();
+        String reservationDate = pr.fetchReservationDate(ReservationDate, ParkingLotID, ParkingSlot);
+        
+        return reservationDate;
+    }
     
 }
