@@ -336,7 +336,7 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
 
     private void checkOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOutButtonActionPerformed
         try {
-            String formattedMessage = "CHK_OUTPRK~" + namaLabel.getText() + "\n";
+            String formattedMessage = "MENU_CHKOUT~" + namaLabel.getText() + "\n";
             
             out.writeBytes(formattedMessage);
             

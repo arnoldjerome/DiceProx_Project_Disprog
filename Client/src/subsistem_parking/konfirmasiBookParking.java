@@ -356,7 +356,7 @@ public class konfirmasiBookParking extends javax.swing.JFrame implements Runnabl
             if (selectedRow == -1) {
                 JOptionPane.showMessageDialog(this, "Pilih Reservation Parking terlebih dahulu.", "Kesalahan Reservasi", JOptionPane.WARNING_MESSAGE);
             } else {
-                String formattedMessage = "RSVP_PRK~" + parkingLotNameText.getText() + "~" + reservationDate + "~" + plateNumber + "~" + parkingSlot + "~" + parkingTypeText.getText() + "~" + parkingPriceText.getText() + "\n";
+                String formattedMessage = "RESERVE_PRK~" + parkingLotNameText.getText() + "~" + reservationDate + "~" + plateNumber + "~" + parkingSlot + "~" + parkingTypeText.getText() + "~" + parkingPriceText.getText() + "~" + UserSession.getUsername() + "\n";
                
                 JOptionPane.showMessageDialog(this, "Sukses Melakukan Reservasi!", "Notification", JOptionPane.INFORMATION_MESSAGE);
                 JOptionPane.showMessageDialog(this, "Jangan lupa Check Out saat sudah keluar dari Parkiran!", "Notification", JOptionPane.INFORMATION_MESSAGE);

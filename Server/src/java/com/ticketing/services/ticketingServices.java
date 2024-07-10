@@ -357,5 +357,17 @@ public class ticketingServices {
         
         return policeNumber;
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "fetchParkingLotName")
+    public String fetchParkingLotName(@WebParam(name = "reservationID") int reservationID) {
+        //TODO write your implementation code here:
+        pr = new ParkingReservations();
+        String parkingLotName = pr.fetchParkingLotName(reservationID);
+        
+        return parkingLotName;
+    }
     
 }

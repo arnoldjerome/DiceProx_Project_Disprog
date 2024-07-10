@@ -173,7 +173,7 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             broadCast(msg);
         }
         
-        else if (msg.contains("RSVP_PRK")) {
+        else if (msg.contains("RESERVE_PRK")) {
             String msgSplit[] = msg.split("~");
             parkingLotName = msgSplit[1];
             reservationDate = msgSplit[2];
@@ -184,7 +184,7 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             username = msgSplit[7];
             
             chatTxt.append(msg + "\n");
-            chatTxt.append(username + " sukses melakukan reservasi parking slot " + parkingSlot + " untuk tanggal " + reservationDate + "\n");
+            chatTxt.append(username + " sukses melakukan reservasi parking slot " + parkingSlot + " untuk tanggal " + reservationDate + " di " + parkingLotName + "\n");
             broadCast(msg);
         }
         
@@ -193,7 +193,7 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             username = msgSplit[1];
             
             chatTxt.append(msg + "\n");
-            chatTxt.append(username + " sukses mengakses menu klaim ticket!" + "\n");
+            chatTxt.append(username + " sukses mengakses menu klaim event ticket!" + "\n");
             broadCast(msg);
         }
         
@@ -209,15 +209,24 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             broadCast(msg);
         }
         
+        else if (msg.contains("MENU_CHKOUT")) {
+            String msgSplit[] = msg.split("MENU_CHKOUT~");
+            username = msgSplit[1];
+            
+            chatTxt.append(msg + "\n");
+            chatTxt.append(username + " sukses mengakses menu checkout parking ticket!" + "\n");
+        }
+        
         else if (msg.contains("PRK_CHKOUT_TIX~")) {
             String msgSplit[] = msg.split("~");
             parkingId = msgSplit[1];
             parkingSlot = msgSplit[2];
             policeNumber = msgSplit[3];
-            username = msgSplit[4];
+            parkingLotName = msgSplit[4];
+            username = msgSplit[5];
             
             chatTxt.append(msg + "\n");
-            chatTxt.append(username + " sukses checkout ticket parking slot " + parkingSlot + "\n");
+            chatTxt.append(username + " sukses checkout ticket parking slot " + parkingSlot + " untuk plat nomor " + policeNumber + " di " + parkingLotName +"\n");
             broadCast(msg);
         }
         

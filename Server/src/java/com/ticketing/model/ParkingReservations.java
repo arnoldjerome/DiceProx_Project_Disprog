@@ -422,6 +422,30 @@ public class ParkingReservations extends MyModel {
         return null;
     }
     
+    public String fetchParkingLotName(int reservationID) {
+        try {
+            String parkingLotName = "";
+            
+            if (!MyModel.conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                    "SELECT pl.ParkingLotName FROM parkinglots pl INNER JOIN parkingreservations pr ON pl.ParkingLotID = pr.ParkingLotID WHERE pr.ReservationID = ?");
+                sql.setInt(1, reservationID);
+                
+                this.result = sql.executeQuery();
+                
+                if (this.result.next()) {
+                    parkingLotName = this.result.getString("ParkingLotName");
+                }
+                
+                return parkingLotName;
+            }
+        } catch (Exception e) {
+            System.out.println("Error di fetch parking lot name: " + e);
+        }
+        
+        return null;
+    }
+    
     public String fetchReservationDate(String ReservationDate, int ParkingLotID, String ParkingSlot) {
         try {
             String reservationDate = "";

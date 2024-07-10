@@ -142,6 +142,12 @@
 <message name="fetchReservationDateResponse">
 <part name="parameters" element="tns:fetchReservationDateResponse"/>
 </message>
+<message name="fetchParkingLotName">
+<part name="parameters" element="tns:fetchParkingLotName"/>
+</message>
+<message name="fetchParkingLotNameResponse">
+<part name="parameters" element="tns:fetchParkingLotNameResponse"/>
+</message>
 <portType name="ticketingServices">
 <operation name="hello">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/helloRequest" message="tns:hello"/>
@@ -242,6 +248,10 @@
 <operation name="fetchReservationDate">
 <input wsam:Action="http://services.ticketing.com/ticketingServices/fetchReservationDateRequest" message="tns:fetchReservationDate"/>
 <output wsam:Action="http://services.ticketing.com/ticketingServices/fetchReservationDateResponse" message="tns:fetchReservationDateResponse"/>
+</operation>
+<operation name="fetchParkingLotName">
+<input wsam:Action="http://services.ticketing.com/ticketingServices/fetchParkingLotNameRequest" message="tns:fetchParkingLotName"/>
+<output wsam:Action="http://services.ticketing.com/ticketingServices/fetchParkingLotNameResponse" message="tns:fetchParkingLotNameResponse"/>
 </operation>
 </portType>
 <binding name="ticketingServicesPortBinding" type="tns:ticketingServices">
@@ -457,6 +467,15 @@
 </output>
 </operation>
 <operation name="fetchReservationDate">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="fetchParkingLotName">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

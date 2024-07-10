@@ -20,6 +20,10 @@
 
 <xs:element name="fetchEventNameResponse" type="tns:fetchEventNameResponse"/>
 
+<xs:element name="fetchParkingLotName" type="tns:fetchParkingLotName"/>
+
+<xs:element name="fetchParkingLotNameResponse" type="tns:fetchParkingLotNameResponse"/>
+
 <xs:element name="fetchParkingSlot" type="tns:fetchParkingSlot"/>
 
 <xs:element name="fetchParkingSlotResponse" type="tns:fetchParkingSlotResponse"/>
@@ -290,6 +294,18 @@
 <xs:complexType name="userIdForCheckOutResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="fetchParkingLotName">
+<xs:sequence>
+<xs:element name="reservationID" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="fetchParkingLotNameResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 

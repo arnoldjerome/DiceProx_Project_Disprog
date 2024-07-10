@@ -145,11 +145,12 @@ public class checkOutParking extends javax.swing.JFrame implements Runnable {
             int userID = userIdForCheckOut(reservationID);           
             String parkingSlot = fetchParkingSlot(reservationID);
             String policeNumber = fetchPoliceNumber(reservationID);
+            String parkingLotName = fetchParkingLotName(reservationID);
             
             int response = JOptionPane.showConfirmDialog(null, "Apakah benar anda ingin Check Out?", 
                     "Confirmation", JOptionPane.YES_NO_OPTION);
             
-            String formattedMessage = "PRK_CHKOUT_TIX~" + reservationID + "~" + parkingSlot + "~" + policeNumber + "~" + UserSession.getUsername() + "\n";
+            String formattedMessage = "PRK_CHKOUT_TIX~" + reservationID + "~" + parkingSlot + "~" + policeNumber + "~" + parkingLotName + "~" + UserSession.getUsername() + "\n";
             
             if (response == JOptionPane.YES_OPTION) {
                 if (userID == UserSession.getUserId()) {
@@ -246,7 +247,12 @@ public class checkOutParking extends javax.swing.JFrame implements Runnable {
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
         return port.fetchPoliceNumber(reservationID);
     }
-    
+     
+    private static String fetchParkingLotName(int reservationID) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.fetchParkingLotName(reservationID);
+    }
     @Override
     public void run() {
         try {
