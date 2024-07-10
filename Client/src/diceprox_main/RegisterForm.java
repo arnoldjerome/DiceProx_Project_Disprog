@@ -27,6 +27,7 @@ public class RegisterForm extends javax.swing.JFrame implements Runnable {
     BufferedReader in;
     DataOutputStream out;
     Thread t;
+    private boolean isPasswordVisible = false;
 
     /**
      * Creates new form register
@@ -102,10 +103,20 @@ public class RegisterForm extends javax.swing.JFrame implements Runnable {
 
         logoRepeatPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon_password.png"))); // NOI18N
         logoRepeatPassword.setText("jLabel4");
+        logoRepeatPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoRepeatPasswordMouseClicked(evt);
+            }
+        });
         getContentPane().add(logoRepeatPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 670, 50, 50));
 
         logoPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon_password.png"))); // NOI18N
         logoPassword.setText("jLabel4");
+        logoPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoPasswordMouseClicked(evt);
+            }
+        });
         getContentPane().add(logoPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 560, 50, 50));
 
         logoUsername1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon_fullname.png"))); // NOI18N
@@ -290,7 +301,7 @@ public class RegisterForm extends javax.swing.JFrame implements Runnable {
                 if (register) {
 
                     if (password.equals(rePassword)) {
-                        
+
                         JOptionPane.showMessageDialog(this, "Registrasi sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
 
                         String response = in.readLine();
@@ -395,6 +406,26 @@ public class RegisterForm extends javax.swing.JFrame implements Runnable {
 
         this.dispose();
     }//GEN-LAST:event_kembaliButtonActionPerformed
+
+    private void logoPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoPasswordMouseClicked
+        // TODO add your handling code here:
+        if (isPasswordVisible) {
+            passwordText.setEchoChar('*'); // Menyembunyikan password
+        } else {
+            passwordText.setEchoChar((char) 0); // Menampilkan password
+        }
+        isPasswordVisible = !isPasswordVisible;
+    }//GEN-LAST:event_logoPasswordMouseClicked
+
+    private void logoRepeatPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoRepeatPasswordMouseClicked
+        // TODO add your handling code here:
+        if (isPasswordVisible) {
+            repeatPasswordText.setEchoChar('*'); // Menyembunyikan password
+        } else {
+            repeatPasswordText.setEchoChar((char) 0); // Menampilkan password
+        }
+        isPasswordVisible = !isPasswordVisible;
+    }//GEN-LAST:event_logoRepeatPasswordMouseClicked
 
     /**
      * @param args the command line arguments

@@ -10,6 +10,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -262,11 +263,36 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
         }
     }
     
+//    public void broadCast(String msg) {
+//        for (HandleSocket client : clients) {
+//            client.sendChat(msg);
+//        }
+//    }
+    
+//    public void broadCast(String msg) {
+//    ArrayList<HandleSocket> disconnectedClients = new ArrayList<>();
+//    for (HandleSocket client : clients) {
+//        if (!client.isAlive()) {
+//            disconnectedClients.add(client);
+//        } else {
+//            client.sendChat(msg);
+//        }
+//    }
+//    clients.removeAll(disconnectedClients);
+    
     public void broadCast(String msg) {
-        for (HandleSocket client : clients) {
+    Iterator<HandleSocket> iterator = clients.iterator();
+    while (iterator.hasNext()) {
+        HandleSocket client = iterator.next();
+        if (!client.isAlive()) {
+            iterator.remove();
+        } else {
             client.sendChat(msg);
         }
     }
+
+
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
