@@ -381,11 +381,13 @@ public class konfirmasiBookParking extends javax.swing.JFrame implements Runnabl
                 String date = dateText.getText();
                 //PoliceNumber
                 String nopol = policeNumberText.getText().trim().replace("-", " ").replace("_", " ");
-                
-                insertDataReservation(reservationID, idUser, parkingLotIDInsert, typeParkingID, date, nopol);
                 //Harga
                 String numericString = parkingPriceText.getText().replace("Rp", "").replace(".", "").trim();
+                //IsCheckOutStatus
+                boolean statusCheckOut = false;
                 
+                insertDataReservation(reservationID, idUser, parkingLotIDInsert, typeParkingID, date, nopol, false);
+                   
                 JOptionPane.showMessageDialog(this, "Sukses Melakukan Reservasi!", "Notification", JOptionPane.INFORMATION_MESSAGE);
                 JOptionPane.showMessageDialog(this, "Jangan lupa Check Out saat sudah keluar dari Parkiran!", "Notification", JOptionPane.INFORMATION_MESSAGE);
                 
@@ -524,27 +526,12 @@ public class konfirmasiBookParking extends javax.swing.JFrame implements Runnabl
     private javax.swing.JLabel reservationDateLabel;
     // End of variables declaration//GEN-END:variables
 
-
-    private static void updateBookingReservation(int userID, java.lang.String reservationDate, java.lang.String numberPolice, int reservationID) {
-        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
-        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
-        port.updateBookingReservation(userID, reservationDate, numberPolice, reservationID);
-    }
-
     private static java.util.List<com.ticketing.services.ParkingReservations> selectAllReservationsConfirm(java.lang.String reservationDate, int parkingLotID, java.lang.String parkingSlot) {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
         return port.selectAllReservationsConfirm(reservationDate, parkingLotID, parkingSlot);
     }
-
-    @Override
-    public void run() {
-        try {
-            
-        } catch (Exception e) {
-        }
-    }
-
+       
     private static int fetchParkingLotID(java.lang.String reservationDate, int parkingLotID, java.lang.String parkingSlot) {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
@@ -556,10 +543,18 @@ public class konfirmasiBookParking extends javax.swing.JFrame implements Runnabl
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
         return port.fetchTypeParkingID(reservationDate, parkingLotID, parkingSlot);
     }
-
-    private static void insertDataReservation(int reservationID, int userID, int parkingLotID, java.lang.String typeParkingID, java.lang.String reservationDate, java.lang.String policeNumber) {
+    
+    private static void insertDataReservation(int reservationID, int userID, int parkingLotID, java.lang.String typeParkingID, java.lang.String reservationDate, java.lang.String policeNumber, boolean isCheckedOut) {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
-        port.insertDataReservation(reservationID, userID, parkingLotID, typeParkingID, reservationDate, policeNumber);
+        port.insertDataReservation(reservationID, userID, parkingLotID, typeParkingID, reservationDate, policeNumber, isCheckedOut);
+    }
+
+    @Override
+    public void run() {
+        try {
+            
+        } catch (Exception e) {
+        }
     }
 }

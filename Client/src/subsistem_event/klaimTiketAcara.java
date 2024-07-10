@@ -4,7 +4,6 @@
  */
 package subsistem_event;
 
-import com.ticketing.services.Events;
 import diceprox_main.MainForm;
 import diceprox_main.UserSession;
 import java.io.BufferedReader;
@@ -13,7 +12,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;

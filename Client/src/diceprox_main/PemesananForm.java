@@ -78,13 +78,14 @@ public class PemesananForm extends javax.swing.JFrame {
 
         jPemesananParkingTabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ReservationID", "Username", "ParkingLotName", "ReservationDate", "PoliceNumber", "ParkingSlot", "ParkingType", "HargaParking"
+                "ReservationID", "Username", "ParkingLotName", "ReservationDate", "PoliceNumber", "ParkingSlot", "ParkingType", "HargaParking", "StatusCheckOut"
             }
         ));
         jPemesananParkingTabel.addMouseListener(new java.awt.event.MouseAdapter() {

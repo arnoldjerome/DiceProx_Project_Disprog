@@ -138,7 +138,7 @@ public class ticketingServices {
         System.out.println("Calling selectAllTicketUser...");
         t = new Tickets();
         ArrayList<Tickets> ticketList = new ArrayList<>();
-        for (Object obj : t.viewListData(userID)) {
+        for (Object obj : t.viewListDataPemesananEvent(userID)) {
             if (obj instanceof Tickets) {
                 ticketList.add((Tickets) obj);
             }
@@ -227,7 +227,26 @@ public class ticketingServices {
                 listOfTicketIDs.add(ticketID);
             }
         }   
+        
         return listOfTicketIDs;
+    }
+    
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "selectAllUserRSVParking")
+    public ArrayList<Integer> selectAllUserRSVID(@WebParam(name = "userId") int userId) {
+        //TODO write your implementation code here:
+        pr = new ParkingReservations();
+        ArrayList<Integer> listOfRSVIDs = new ArrayList<>();
+        
+        for (Integer rsvID : pr.selectAllUserRSVID(userId)) {
+            if (rsvID instanceof Integer) {
+                listOfRSVIDs.add(rsvID);
+            }
+        }
+        
+        return listOfRSVIDs;
     }
     
     /**
@@ -245,6 +264,18 @@ public class ticketingServices {
         }
         System.out.println("Returned reservations list with size: " + reservationsList.size());
         return reservationsList;
+    }
+     
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "checkStatusCheckOut")
+    public boolean checkStatusCheckOut(@WebParam(name = "reservationID") int reservationID) {
+        //TODO write your implementation code here:
+        pr = new ParkingReservations();
+        boolean statusCheckOut = pr.checkStatusCheckOut(reservationID);
+        
+        return statusCheckOut;
     }
 
     /**
@@ -289,32 +320,12 @@ public class ticketingServices {
     /**
      * Web service operation
      */
-    @WebMethod(operationName = "updateParking")
-    @Oneway
-    public void updateParking(@WebParam(name = "UserID") int UserID, @WebParam(name = "ReservationDate") String ReservationDate, @WebParam(name = "NumberPolice") String NumberPolice, @WebParam(name = "ReservationID") int ReservationID) {
-        pr = new ParkingReservations(UserID, ReservationDate, NumberPolice, ReservationID);
-        pr.updateData();
-    }
-
-    /**
-     * Web service operation
-     */
-    @WebMethod(operationName = "updateBookingReservation")
-    @Oneway
-    public void updateBookingReservation(@WebParam(name = "UserID") int UserID, @WebParam(name = "ReservationDate") String ReservationDate, @WebParam(name = "NumberPolice") String NumberPolice, @WebParam(name = "ReservationID") int ReservationID) {
-        pr = new ParkingReservations(UserID, ReservationDate, NumberPolice, ReservationID);
-        pr.updateData();
-    }
-
-    /**
-     * Web service operation
-     */
     @WebMethod(operationName = "selectAllReservationPemesanan")
     public ArrayList<ParkingReservations> selectAllReservationPemesanan(@WebParam(name = "UserID") int UserID) {
         System.out.println("Calling selectAllReservationPemesanan...");
         pr = new ParkingReservations();
         ArrayList<ParkingReservations> reservationsList = new ArrayList<>();
-        for (Object obj : pr.viewListDataPemesanan(UserID)) {
+        for (Object obj : pr.viewListDataPemesananParking(UserID)) {
             if (obj instanceof ParkingReservations) {
                 reservationsList.add((ParkingReservations) obj);
             }
@@ -386,9 +397,8 @@ public class ticketingServices {
      */
     @WebMethod(operationName = "insertDataReservation")
     @Oneway
-    public void insertDataReservation(@WebParam(name = "ReservationID") int ReservationID, @WebParam(name = "UserID") int UserID, @WebParam(name = "ParkingLotID") int ParkingLotID, @WebParam(name = "TypeParkingID") String TypeParkingID, @WebParam(name = "ReservationDate") String ReservationDate, @WebParam(name = "PoliceNumber") String PoliceNumber) {
-        pr = new ParkingReservations(ReservationID, UserID, ParkingLotID, TypeParkingID, ReservationDate, PoliceNumber);
-        
+    public void insertDataReservation(@WebParam(name = "ReservationID") int ReservationID, @WebParam(name = "UserID") int UserID, @WebParam(name = "ParkingLotID") int ParkingLotID, @WebParam(name = "TypeParkingID") String TypeParkingID, @WebParam(name = "ReservationDate") String ReservationDate, @WebParam(name = "PoliceNumber") String PoliceNumber, @WebParam(name = "IsCheckedOut") boolean IsCheckedOut) {
+        pr = new ParkingReservations(ReservationID, UserID, ParkingLotID, TypeParkingID, ReservationDate, PoliceNumber, IsCheckedOut);
         pr.insertDataReservation();
     }
 
@@ -402,15 +412,17 @@ public class ticketingServices {
         
         return parkingLotID;
     }
-
+    
     /**
      * Web service operation
      */
-    @WebMethod(operationName = "deleteReservations")
-    @Oneway
-    public void deleteReservations(@WebParam(name = "ReservationID") int ReservationID, @WebParam(name = "UserID") int UserID) {
+    @WebMethod(operationName = "fetchReservationDateForCheckOut")
+    public String fetchReservationDateForCheckOut(@WebParam(name = "reservationID") int reservationID) {
+        //TODO write your implementation code here:
         pr = new ParkingReservations();
-        pr.deleteReservations(ReservationID, UserID);
+        String reservationDate = pr.fetchReservationDateCheckOut(reservationID);
+        
+        return reservationDate;
     }
 
     /**
@@ -438,4 +450,5 @@ public class ticketingServices {
         }   
         return listOfUserIDs;
     }
+
 }

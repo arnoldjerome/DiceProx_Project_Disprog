@@ -11,8 +11,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 /**
  *
@@ -146,34 +147,68 @@ public class checkOutParking extends javax.swing.JFrame implements Runnable {
             String parkingSlot = fetchParkingSlot(reservationID);
             String policeNumber = fetchPoliceNumber(reservationID);
             String parkingLotName = fetchParkingLotName(reservationID);
+            String reservationDate = fetchReservationDateForCheckOut(reservationID);
+            
+            Date currentDate = new Date();
+            SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+            String today = formatDate.format(currentDate);
+            
+            ArrayList<Integer> listOfUserRSVID = new ArrayList<>();
+            listOfUserRSVID = (ArrayList<Integer>) selectAllUserRSVParking(userID); 
+            
+            String formattedMessage = "PRK_CHKOUT_TIX~" + reservationID + "~" + parkingSlot + "~" + policeNumber + "~" + parkingLotName + "~" + UserSession.getUsername() + "\n";
             
             int response = JOptionPane.showConfirmDialog(null, "Apakah benar anda ingin Check Out?", 
                     "Confirmation", JOptionPane.YES_NO_OPTION);
             
-            String formattedMessage = "PRK_CHKOUT_TIX~" + reservationID + "~" + parkingSlot + "~" + policeNumber + "~" + parkingLotName + "~" + UserSession.getUsername() + "\n";
-            
             if (response == JOptionPane.YES_OPTION) {
-                if (userID == UserSession.getUserId()) {
-                    deleteReservations(reservationID, UserSession.getUserId());
+                
+                for (Integer reservationId : listOfUserRSVID) {
                     
-                    out.writeBytes(formattedMessage);
-                    
-                    JOptionPane.showMessageDialog(this, "Sukses Melakukan Check Out Parkir!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-                    
-                    MainForm windowPlane = new MainForm();
+                    if (reservationId instanceof Integer) {
+                        
+                        if (reservationId != null) {
+                            
+                            if (userID == UserSession.getUserId()) {
+                                
+                                if (today.equals(reservationDate)) {
+                                    
+                                    if (checkStatusCheckOut(reservationID)) {
+                                        
+                                        updateCheckOutReservation(reservationID, UserSession.getUserId());
+                                        
+                                        out.writeBytes(formattedMessage);
 
-                    if (windowPlane == null || !windowPlane.isVisible()) {
-                        windowPlane.setVisible(true);
+                                        JOptionPane.showMessageDialog(this, "Sukses Melakukan Check Out Parkir!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                                    }
+                                    
+                                    else {
+                                        JOptionPane.showMessageDialog(this, "CheckOut Sudah Dilakukan!", "Gagal Melakukan CheckOut", JOptionPane.WARNING_MESSAGE);
+                                    }
+                                }
+                                
+                                else {
+                                    JOptionPane.showMessageDialog(this, "Check Out Hanya Bisa Dilakukan Sesuai Tanggal Reservasi!", "Gagal Melakukan CheckOut", JOptionPane.WARNING_MESSAGE);
+                                }
+                            }
+
+                            else {
+                                JOptionPane.showMessageDialog(this, "Pastikan Kode Reservasi Sudah Sesuai!", "Kode Reservasi Tidak Valid", JOptionPane.WARNING_MESSAGE);
+                            }
+                        }
+                        
+                        else {
+                            JOptionPane.showMessageDialog(this, "Pastikan Kode Reservasi Sudah Sesuai dan Terisi", "Kode Reservasi Tidak Valid", JOptionPane.WARNING_MESSAGE);
+                        }
                     }
-                    this.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(this, "User ID berbeda dengan UserID di ReservationID", "Notification", JOptionPane.WARNING_MESSAGE);
-                }
-            } else {
-                System.out.println("User memilih belum");
+                }         
             }
-                    
-        } catch (Exception e) {
+            
+            parkingRSVCodeText.setText("Reservation Code");
+            parkingRSVCodeText.selectAll();
+        } 
+        
+        catch (Exception e) {
             System.out.println("Error di button check out: " + e);
         }
     }//GEN-LAST:event_checkOutButtonActionPerformed
@@ -255,9 +290,27 @@ public class checkOutParking extends javax.swing.JFrame implements Runnable {
         }
     }
 
-    private static void deleteReservations(int reservationID, int userID) {
+    private static java.util.List<java.lang.Integer> selectAllUserRSVParking(int userId) {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
-        port.deleteReservations(reservationID, userID);
+        return port.selectAllUserRSVParking(userId);
+    }
+
+    private static String fetchReservationDateForCheckOut(int reservationID) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.fetchReservationDateForCheckOut(reservationID);
+    }
+
+    private static boolean checkStatusCheckOut(int reservationID) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.checkStatusCheckOut(reservationID);
+    }
+
+    private static void updateCheckOutReservation(int reservationID, int userID) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        port.updateCheckOutReservation(reservationID, userID);
     }
 }

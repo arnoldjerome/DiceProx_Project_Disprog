@@ -362,7 +362,7 @@ public class Tickets extends MyModel {
         return listOfTicketIDs;
     }
     
-    public ArrayList<Object> viewListData(String userID) {
+    public ArrayList<Object> viewListDataPemesananEvent(String userID) {
         ArrayList<Object> listOfTickets = new ArrayList<>();
         try {
             this.statement = (Statement) MyModel.conn.createStatement();

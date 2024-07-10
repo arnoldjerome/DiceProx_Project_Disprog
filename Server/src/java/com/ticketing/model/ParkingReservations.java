@@ -4,23 +4,26 @@
  */
 package com.ticketing.model;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 
 /**
  *
  * @author Rome
  */
 public class ParkingReservations extends MyModel {
-    
+
     private int ReservationID;
     private int UserID;
     private int ParkingLotID;
     private String TypeParkingID;
     private String ReservationDate;
     private String PoliceNumber;
+    private Boolean IsCheckedOut;
     private String ParkingSlot;
     private String ParkingLotName;
     private String Username;
@@ -74,6 +77,14 @@ public class ParkingReservations extends MyModel {
     public void setPoliceNumber(String PoliceNumber) {
         this.PoliceNumber = PoliceNumber;
     }
+    
+    public Boolean getIsCheckedOut() {
+        return IsCheckedOut;
+    }
+
+    public void setIsCheckedOut(Boolean IsCheckedOut) {
+        this.IsCheckedOut = IsCheckedOut;
+    } 
 
     public String getParkingSlot() {
         return ParkingSlot;
@@ -82,17 +93,11 @@ public class ParkingReservations extends MyModel {
     public void setParkingSlot(String ParkingSlot) {
         this.ParkingSlot = ParkingSlot;
     }
-    
-    /**
-     * @return the ParkingLotName
-     */
+
     public String getParkingLotName() {
         return ParkingLotName;
     }
 
-    /**
-     * @param ParkingLotName the ParkingLotName to set
-     */
     public void setParkingLotName(String ParkingLotName) {
         this.ParkingLotName = ParkingLotName;
     }
@@ -122,13 +127,14 @@ public class ParkingReservations extends MyModel {
     }
     
     //buatInsert
-    public ParkingReservations(int ReservationID, int UserID, int ParkingLotID, String TypeParkingID, String ReservationDate, String PoliceNumber) {
+    public ParkingReservations(int ReservationID, int UserID, int ParkingLotID, String TypeParkingID, String ReservationDate, String PoliceNumber, Boolean IsCheckedOut) {
         this.ReservationID = ReservationID;
         this.UserID = UserID;
         this.ParkingLotID = ParkingLotID;
         this.TypeParkingID = TypeParkingID;
         this.ReservationDate = ReservationDate;
         this.PoliceNumber = PoliceNumber;
+        this.IsCheckedOut = IsCheckedOut;
     }
     
     //formBookParking
@@ -137,15 +143,19 @@ public class ParkingReservations extends MyModel {
         this.ParkingSlot = ParkingSlot;
     }
     
-    //buatUpdate
-    public ParkingReservations(int UserID, String ReservationDate, String PoliceNumber, int ReservationID) {
-        this.UserID = UserID;
+    //formPemesanan
+    public ParkingReservations(int ReservationID, String Username, String ParkingLotName, String ReservationDate, String PoliceNumber, String ParkingSlot, String ParkingType, int HargaParking, Boolean IsCheckedOut) {
+        this.ReservationID = ReservationID;
+        this.Username = Username;
+        this.ParkingLotName = ParkingLotName;
         this.ReservationDate = ReservationDate;
         this.PoliceNumber = PoliceNumber;
-        this.ReservationID = ReservationID;
+        this.ParkingSlot = ParkingSlot;
+        this.ParkingType = ParkingType;
+        this.HargaParking = HargaParking;
+        this.IsCheckedOut = IsCheckedOut;
     }
     
-    //formPemesanan
     public ParkingReservations(int ReservationID, String Username, String ParkingLotName, String ReservationDate, String PoliceNumber, String ParkingSlot, String ParkingType, int HargaParking) {
         this.ReservationID = ReservationID;
         this.Username = Username;
@@ -176,31 +186,44 @@ public class ParkingReservations extends MyModel {
     public ParkingReservations() {
     }
     
-    //diganti delete buat di CheckOut
+    public boolean checkStatusCheckOut(int ReservationID) {
+        try {
+            int statusCheckOut = 0;
+            
+            if (!MyModel.conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                    "SELECT IsCheckedOut FROM parkingReservations WHERE ReservationID=?");
+                sql.setInt(1, ReservationID); 
+                this.result = sql.executeQuery();
+                
+                if (this.result.next()) {
+                    statusCheckOut = this.result.getInt("IsCheckedOut");
+                    
+                    if (statusCheckOut == 1) {
+                        return true;
+                    }
+                }
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Error di check status checkout: " + e);
+        }
+        
+        return false;
+    }
+   
+    //jadi update status IsCheckedOut
     public void updateCheckOutReservations(int ReservationID, int UserID) {
         try {
             if (!MyModel.conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
-                        "UPDATE parkingreservations SET UserID=null, ReservationDate=null, PoliceNumber=null, "
-                                + "WHERE ReservationID= ? and UserID=?");
+                     "UPDATE parkingreservations SET IsCheckedOut=1 WHERE ReservationID=? and UserID=?");
                 sql.setInt(1, ReservationID);
                 sql.setInt(2, UserID);
                 sql.executeUpdate();
                 sql.close();
-            }
-        } catch (Exception e) {
-            System.out.println("Error di update check out reservations: " + e);
-        }
-    }
-    
-    public void deleteReservations (int ReservationID, int UserID) {
-        try {
-            if (!MyModel.conn.isClosed()) {
-                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement("DELETE FROM parkingreservations WHERE ReservationID = ? AND UserID = ?");
-                sql.setInt(1, ReservationID);
-                sql.setInt(2, UserID);
-                sql.executeUpdate();
-                sql.close();
+                
+                this.IsCheckedOut = true;
             }
         } catch (Exception e) {
             System.out.println("Error di update check out reservations: " + e);
@@ -236,7 +259,7 @@ public class ParkingReservations extends MyModel {
         try {
             if (!MyModel.conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
-                     "INSERT INTO parkingreservations (ReservationID, UserID, ParkingLotID, TypeParkingID, ReservationDate, PoliceNumber) VALUES (?, ?, ?, ?, ?, ?);");
+                     "INSERT INTO parkingreservations (ReservationID, UserID, ParkingLotID, TypeParkingID, ReservationDate, PoliceNumber, IsCheckedOut) VALUES (?, ?, ?, ?, ?, ?, ?);");
 
                 sql.setInt(1, this.getReservationID());
                 sql.setInt(2, this.getUserID());
@@ -244,6 +267,7 @@ public class ParkingReservations extends MyModel {
                 sql.setString(4, this.getTypeParkingID());
                 sql.setString(5, this.getReservationDate());
                 sql.setString(6, this.getPoliceNumber());
+                sql.setBoolean(7, this.getIsCheckedOut());
 
                 sql.executeUpdate();
                 sql.close();
@@ -260,21 +284,7 @@ public class ParkingReservations extends MyModel {
 
     @Override
     public void updateData() {
-        try {
-            if (!MyModel.conn.isClosed()) {
-                PreparedStatement sql = MyModel.conn.prepareStatement(
-                    "UPDATE parkingreservations SET UserID = ?, ReservationDate = ?, PoliceNumber = ? " +
-                    "WHERE ReservationID = ?");
-                sql.setInt(1, this.UserID);
-                sql.setString(2, this.ReservationDate);
-                sql.setString(3, this.PoliceNumber);
-                sql.setInt(4, this.ReservationID);
-                sql.executeUpdate();
-                sql.close();
-            }
-        } catch (Exception e) {
-            System.out.println("Error di updateData: " + e);
-        }
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -331,30 +341,59 @@ public class ParkingReservations extends MyModel {
         return listOfReservations;
     }
     
-    public ArrayList<Object> viewListDataPemesanan(int UserID) {
+    public ArrayList<Object> viewListDataPemesananParking(int UserID) {
         ArrayList<Object> listOfReservations = new ArrayList<>();
         try {
              this.statement = (Statement) MyModel.conn.createStatement();
-                this.result = this.statement.executeQuery("select pr.ReservationID, u.Username, pl.ParkingLotName, pr.ReservationDate, pr.PoliceNumber, tp.ParkingSlot, tp.ParkingType, tp.HargaParking from parkingreservations pr left join users u on pr.UserID = u.UserID left join parkinglots pl on pr.ParkingLotID = pl.ParkingLotID left join typeparkings tp on pr.TypeParkingID = tp.TypeParkingID where u.UserID = " + (UserID));
+                this.result = this.statement.executeQuery("SELECT pr.ReservationID, u.Username, pl.ParkingLotName, pr.ReservationDate, pr.PoliceNumber, tp.ParkingSlot, tp.ParkingType, tp.HargaParking, pr.IsCheckedOut FROM parkingreservations pr LEFT JOIN users u ON pr.UserID = u.UserID LEFT JOIN parkinglots pl ON pr.ParkingLotID = pl.ParkingLotID LEFT JOIN typeparkings tp ON pr.TypeParkingID = tp.TypeParkingID WHERE u.UserID = " + (UserID));
               
             while (this.result.next()) {
                 ParkingReservations pr = new ParkingReservations(
-                        this.result.getInt("ReservationID"),
-                        this.result.getString("Username"),
-                        this.result.getString("ParkingLotName"),
-                        this.result.getString("ReservationDate"),
-                        this.result.getString("PoliceNumber"),
-                        this.result.getString("ParkingSlot"),
-                        this.result.getString("ParkingType"),
-                        this.result.getInt("HargaParking")
-                        
+                    this.result.getInt("ReservationID"),
+                    this.result.getString("Username"),
+                    this.result.getString("ParkingLotName"),
+                    this.result.getString("ReservationDate"),
+                    this.result.getString("PoliceNumber"),
+                    this.result.getString("ParkingSlot"),
+                    this.result.getString("ParkingType"),
+                    this.result.getInt("HargaParking"),
+                    this.result.getBoolean("IsCheckedOut")
                 );
+                
                 listOfReservations.add(pr);
             }
-        } catch (Exception e) {
+        } 
+        
+        catch (Exception e) {
             System.out.println("Error di view list data pemesanan: " + e);
         }
         return listOfReservations;
+    }
+    
+    public ArrayList<Integer> selectAllUserRSVID(int UserID) {
+        ArrayList<Integer> listOfRSVID = new ArrayList<>();
+        int rsvID = 0;
+        
+        try {
+            if (!MyModel.conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                   "SELECT ReservationID FROM parkingreservations WHERE UserID=?");
+                sql.setInt(1, UserID);
+                this.result = sql.executeQuery();
+                
+                while (this.result.next()) {
+                    rsvID = this.result.getInt("ReservationID");
+                }
+                
+                listOfRSVID.add(rsvID);
+            }
+        } 
+        
+        catch (Exception e) {
+            System.out.println("Error di select all reservation id: " + e);
+        }
+        
+        return listOfRSVID;
     }
     
     public String fetchParkingSlot(int reservationID) {
@@ -504,5 +543,31 @@ public class ParkingReservations extends MyModel {
             System.out.println("Error di fetch parking lot id: " + e);
         }
         return 0;
+    }
+    
+    public String fetchReservationDateCheckOut(int ReservationID) {
+        try {
+            String reservationDate = "";
+            
+            if (!MyModel.conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                    "SELECT ReservationDate FROM parkingreservations WHERE ReservationID=?");
+                sql.setInt(1, ReservationID);          
+                this.result = sql.executeQuery();
+                
+                if (this.result.next()) {
+                    Date rsv_date = this.result.getDate("ReservationDate");
+                    SimpleDateFormat rsv_date_format = new SimpleDateFormat("yyyy-MM-dd");
+                    reservationDate = rsv_date_format.format(rsv_date);
+                }
+                
+                return reservationDate;
+            }
+        } 
+        catch (Exception e) {
+            System.out.println("Error di fetch reservation date check out: " + e);
+        }
+        
+        return null;
     }
 }

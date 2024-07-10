@@ -302,6 +302,8 @@ public class bookParking extends javax.swing.JFrame implements Runnable {
                         else if (verifier.verify((JComponent)policeNumberText)) {
                             JOptionPane.showMessageDialog(this, "Sukses Memilih Parking Slot!", "Notification", JOptionPane.INFORMATION_MESSAGE);
                             
+                            out.writeBytes(formattedMessage);
+                            
                             konfirmasiBookParking windowPlane = new konfirmasiBookParking(selectedIndex, parkingSlot, reservationDate, plateNumber);
 
                             if (windowPlane == null || !windowPlane.isVisible()) {
@@ -399,8 +401,8 @@ public class bookParking extends javax.swing.JFrame implements Runnable {
             JFormattedTextField policeNumberText = (JFormattedTextField) input;
             String text = policeNumberText.getText().trim().replaceAll("_", "").replaceAll("-", " ");
 
-            // Regex to match the flexible format: 1-2 letters, 1-4 digits, 2-3 letters
-            String regex = "^[A-Z]{1,2} \\d{1,4} [A-Z]{2,3}$";
+            // Regex to match the flexible format: 1-2 letters, 1-4 digits, 0-3 letters
+            String regex = "^[A-Z]{1,2} \\d{1,4} [A-Z]{0,3}$";
             
             if (text.matches(regex)) {
                 return true;
