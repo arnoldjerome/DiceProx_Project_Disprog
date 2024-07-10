@@ -19,6 +19,9 @@ import javafx.scene.control.ComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.*;
+import javax.swing.text.MaskFormatter;
+import java.awt.*;
 
 /**
  *
@@ -32,12 +35,14 @@ public class bookParking extends javax.swing.JFrame implements Runnable {
     Thread t;
     
     int selectedIndex = 0;
+    PlateNumberVerifier verifier = new PlateNumberVerifier();
     /**
      * Creates new form bookParkir
      */
     public bookParking() {
         try {
             initComponents();
+            configurePlateNumberField();
             setDefaultDate();
             
             //untuk center
@@ -87,13 +92,13 @@ public class bookParking extends javax.swing.JFrame implements Runnable {
         reservationDate = new javax.swing.JLabel();
         parkingLotNameText = new javax.swing.JTextField();
         PoliceNumber = new javax.swing.JLabel();
-        policeNumberText = new javax.swing.JTextField();
         ParkingSlotLabel = new javax.swing.JLabel();
         parkingSlotText = new javax.swing.JTextField();
         submitButton = new javax.swing.JButton();
         denahParkirArif = new javax.swing.JLabel();
         denahParkirMayjen = new javax.swing.JLabel();
         dateText = new com.toedter.calendar.JDateChooser();
+        policeNumberText = new javax.swing.JFormattedTextField();
         bagian_kanan = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -176,19 +181,6 @@ public class bookParking extends javax.swing.JFrame implements Runnable {
         PoliceNumber.setText("Police Number");
         getContentPane().add(PoliceNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 510, 250, -1));
 
-        policeNumberText.setBackground(new java.awt.Color(207, 219, 229));
-        policeNumberText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        policeNumberText.setText("Police Number");
-        policeNumberText.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                policeNumberTextFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                policeNumberTextFocusLost(evt);
-            }
-        });
-        getContentPane().add(policeNumberText, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 500, 500, 67));
-
         ParkingSlotLabel.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         ParkingSlotLabel.setForeground(new java.awt.Color(57, 62, 70));
         ParkingSlotLabel.setText("Parking Slot");
@@ -225,6 +217,12 @@ public class bookParking extends javax.swing.JFrame implements Runnable {
 
         dateText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         getContentPane().add(dateText, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 400, 500, 70));
+
+        policeNumberText.setBackground(new java.awt.Color(207, 219, 229));
+        policeNumberText.setText("Police Number");
+        policeNumberText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        policeNumberText.setPreferredSize(new java.awt.Dimension(298, 54));
+        getContentPane().add(policeNumberText, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 505, 500, 60));
 
         bagian_kanan.setBackground(new java.awt.Color(187, 187, 187));
         bagian_kanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background_main_kiri.png"))); // NOI18N
@@ -264,18 +262,6 @@ public class bookParking extends javax.swing.JFrame implements Runnable {
         }
     }//GEN-LAST:event_parkingLotNameTextFocusLost
 
-    private void policeNumberTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_policeNumberTextFocusGained
-        if (policeNumberText.getText().equals("Police Number")) {
-            policeNumberText.setText("");
-        }
-    }//GEN-LAST:event_policeNumberTextFocusGained
-
-    private void policeNumberTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_policeNumberTextFocusLost
-        if (policeNumberText.getText().equals("")) {
-            policeNumberText.setText("Police Number");
-        }
-    }//GEN-LAST:event_policeNumberTextFocusLost
-
     private void parkingSlotTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_parkingSlotTextFocusGained
         if (parkingSlotText.getText().equals("Location")) {
             parkingSlotText.setText("");
@@ -310,17 +296,20 @@ public class bookParking extends javax.swing.JFrame implements Runnable {
                     String chkReservationDate = fetchReservationDate(reservationDate, selectedIndex, parkingSlot);
                     
                     if (chkReservationDate == null) {
-                        JOptionPane.showMessageDialog(this, "Sukses Memilih Parking Slot!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                        if (plateNumber == "Police Number") {
+                            JOptionPane.showMessageDialog(this, "Silahkan isi Police Number terlebih dahulu", "Notification", JOptionPane.WARNING_MESSAGE);
+                        } 
+                        else if (verifier.verify((JComponent)policeNumberText)) {
+                            JOptionPane.showMessageDialog(this, "Sukses Memilih Parking Slot!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                            
+                            konfirmasiBookParking windowPlane = new konfirmasiBookParking(selectedIndex, parkingSlot, reservationDate, plateNumber);
 
-                        konfirmasiBookParking windowPlane = new konfirmasiBookParking(selectedIndex, parkingSlot, reservationDate, plateNumber);
-                        
-                        out.writeBytes(formattedMessage);
-                        
-                        if (windowPlane == null || !windowPlane.isVisible()) {
-                            windowPlane.setVisible(true);
+                            if (windowPlane == null || !windowPlane.isVisible()) {
+                                windowPlane.setVisible(true);
+                            }
+
+                            this.dispose();
                         }
-
-                        this.dispose();
                     } else {
                         JOptionPane.showMessageDialog(this, "Slot sudah terisi untuk tanggal ini", "Notification", JOptionPane.WARNING_MESSAGE);
                     }
@@ -387,6 +376,37 @@ public class bookParking extends javax.swing.JFrame implements Runnable {
             }
         } else {
             System.out.println("No item selected");
+        }
+    }
+    
+    private void configurePlateNumberField() {
+        try {
+            // Define the mask with flexible parts
+            MaskFormatter formatter = new MaskFormatter("UU-####-UUU");
+            formatter.setPlaceholderCharacter('_');
+            formatter.install(policeNumberText);  // Assume plateNumberField is your JFormattedTextField
+        } catch (java.text.ParseException e) {
+            System.out.println("error di verifier" + e);
+        }
+
+        // Add an input verifier for validation
+        policeNumberText.setInputVerifier(new PlateNumberVerifier());
+    }
+
+    private class PlateNumberVerifier extends InputVerifier {
+        @Override
+        public boolean verify(JComponent input) {
+            JFormattedTextField policeNumberText = (JFormattedTextField) input;
+            String text = policeNumberText.getText().trim().replaceAll("_", "").replaceAll("-", " ");
+
+            // Regex to match the flexible format: 1-2 letters, 1-4 digits, 2-3 letters
+            String regex = "^[A-Z]{1,2} \\d{1,4} [A-Z]{2,3}$";
+            
+            if (text.matches(regex)) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
     
@@ -465,7 +485,7 @@ public class bookParking extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField parkingLotNameText;
     private javax.swing.JTextField parkingSlotText;
-    private javax.swing.JTextField policeNumberText;
+    private javax.swing.JFormattedTextField policeNumberText;
     private javax.swing.JLabel reservationDate;
     private javax.swing.JButton submitButton;
     // End of variables declaration//GEN-END:variables

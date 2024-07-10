@@ -370,4 +370,36 @@ public class ticketingServices {
         return parkingLotName;
     }
     
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "fetchTypeParkingID")
+    public String fetchTypeParkingID(@WebParam(name = "ReservationDate") String ReservationDate, @WebParam(name = "ParkingLotID") int ParkingLotID, @WebParam(name = "ParkingSlot") String ParkingSlot) {
+        pr = new ParkingReservations();
+        String typeParkingID = pr.fetchTypeParkingID(ReservationDate, ParkingLotID, ParkingSlot);
+        
+        return typeParkingID;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "insertDataReservation")
+    @Oneway
+    public void insertDataReservation(@WebParam(name = "ReservationID") int ReservationID, @WebParam(name = "UserID") int UserID, @WebParam(name = "ParkingLotID") int ParkingLotID, @WebParam(name = "TypeParkingID") String TypeParkingID, @WebParam(name = "ReservationDate") String ReservationDate, @WebParam(name = "PoliceNumber") String PoliceNumber) {
+        pr = new ParkingReservations(ReservationID, UserID, ParkingLotID, TypeParkingID, ReservationDate, PoliceNumber);
+        
+        pr.insertDataReservation();
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "fetchParkingLotID")
+    public int fetchParkingLotID(@WebParam(name = "ReservationDate") String ReservationDate, @WebParam(name = "ParkingLotID") int ParkingLotID, @WebParam(name = "ParkingSlot") String ParkingSlot) {
+        pr = new ParkingReservations();
+        int parkingLotID = pr.fetchParkingLotID(ReservationDate, ParkingLotID, ParkingSlot);
+        
+        return parkingLotID;
+    }
 }

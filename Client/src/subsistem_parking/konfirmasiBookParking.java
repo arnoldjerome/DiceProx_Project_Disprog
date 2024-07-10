@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.text.NumberFormat;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -358,6 +359,33 @@ public class konfirmasiBookParking extends javax.swing.JFrame implements Runnabl
             } else {
                 String formattedMessage = "RESERVE_PRK~" + parkingLotNameText.getText() + "~" + reservationDate + "~" + plateNumber + "~" + parkingSlot + "~" + parkingTypeText.getText() + "~" + parkingPriceText.getText() + "~" + UserSession.getUsername() + "\n";
                
+                //ReservationID
+                LocalDateTime now = LocalDateTime.now();
+
+                int currentSecond = now.getSecond();
+                int currentMinute = now.getMinute();
+                int currentHour = now.getHour();
+                int currentDay = now.getDayOfMonth();
+                int currentMonth = now.getMonthValue();
+                int currentYear = now.getYear() - 2000; // Assuming year 2000 as the starting point
+
+                // Encode the components into a single int
+                int reservationID = (currentYear << 26) | (currentMonth << 22) | (currentDay << 17)
+                                 | (currentHour << 12) | (currentMinute << 6) | currentSecond;
+                //UserID (ambil dari global variable)
+                //ParkingLotID (ambil dari global variable)
+                int parkingLotIDInsert = fetchParkingLotID(reservationDate, parkingLotID, parkingSlot);
+                //TypeParkingID
+                String typeParkingID = fetchTypeParkingID(reservationDate, parkingLotID, parkingSlot);
+                //ReservationDate
+                String date = dateText.getText();
+                //PoliceNumber
+                String nopol = policeNumberText.getText().trim().replace("-", " ").replace("_", " ");
+                
+                insertDataReservation(reservationID, idUser, parkingLotIDInsert, typeParkingID, date, nopol);
+                //Harga
+                String numericString = parkingPriceText.getText().replace("Rp", "").replace(".", "").trim();
+                
                 JOptionPane.showMessageDialog(this, "Sukses Melakukan Reservasi!", "Notification", JOptionPane.INFORMATION_MESSAGE);
                 JOptionPane.showMessageDialog(this, "Jangan lupa Check Out saat sudah keluar dari Parkiran!", "Notification", JOptionPane.INFORMATION_MESSAGE);
                 
@@ -515,5 +543,23 @@ public class konfirmasiBookParking extends javax.swing.JFrame implements Runnabl
             
         } catch (Exception e) {
         }
+    }
+
+    private static int fetchParkingLotID(java.lang.String reservationDate, int parkingLotID, java.lang.String parkingSlot) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.fetchParkingLotID(reservationDate, parkingLotID, parkingSlot);
+    }
+
+    private static String fetchTypeParkingID(java.lang.String reservationDate, int parkingLotID, java.lang.String parkingSlot) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.fetchTypeParkingID(reservationDate, parkingLotID, parkingSlot);
+    }
+
+    private static void insertDataReservation(int reservationID, int userID, int parkingLotID, java.lang.String typeParkingID, java.lang.String reservationDate, java.lang.String policeNumber) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        port.insertDataReservation(reservationID, userID, parkingLotID, typeParkingID, reservationDate, policeNumber);
     }
 }
