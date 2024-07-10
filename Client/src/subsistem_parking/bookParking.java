@@ -24,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Windows
  */
-public class BookParkir extends javax.swing.JFrame implements Runnable {
+public class bookParking extends javax.swing.JFrame implements Runnable {
 
     Socket client;
     BufferedReader in;
@@ -35,7 +35,7 @@ public class BookParkir extends javax.swing.JFrame implements Runnable {
     /**
      * Creates new form bookParkir
      */
-    public BookParkir() {
+    public bookParking() {
         try {
             initComponents();
             setDefaultDate();
@@ -44,7 +44,7 @@ public class BookParkir extends javax.swing.JFrame implements Runnable {
             this.setLocationRelativeTo(null);
             
             // Maximize the frame
-            setExtendedState(BookParkir.MAXIMIZED_BOTH);
+            setExtendedState(bookParking.MAXIMIZED_BOTH);
             
             client = new Socket("localhost", 5005);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
@@ -312,7 +312,7 @@ public class BookParkir extends javax.swing.JFrame implements Runnable {
                     if (chkReservationDate == null) {
                         JOptionPane.showMessageDialog(this, "Sukses Memilih Parking Slot!", "Notification", JOptionPane.INFORMATION_MESSAGE);
 
-                        KonfirmasiBookParkir windowPlane = new KonfirmasiBookParkir(selectedIndex, parkingSlot, reservationDate, plateNumber);
+                        konfirmasiBookParking windowPlane = new konfirmasiBookParking(selectedIndex, parkingSlot, reservationDate, plateNumber);
                         
                         out.writeBytes(formattedMessage);
                         
@@ -424,14 +424,18 @@ public class BookParkir extends javax.swing.JFrame implements Runnable {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BookParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(bookParking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BookParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(bookParking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BookParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(bookParking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BookParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(bookParking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -440,7 +444,7 @@ public class BookParkir extends javax.swing.JFrame implements Runnable {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BookParkir().setVisible(true);
+                new bookParking().setVisible(true);
             }
         });
     }

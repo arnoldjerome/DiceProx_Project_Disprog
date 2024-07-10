@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  *
  * @author Windows
  */
-public class CheckOutParkir extends javax.swing.JFrame implements Runnable {
+public class checkOutParking extends javax.swing.JFrame implements Runnable {
 
     Socket client;
     BufferedReader in;
@@ -28,7 +28,7 @@ public class CheckOutParkir extends javax.swing.JFrame implements Runnable {
     /**
      * Creates new form checkOutParkir
      */
-    public CheckOutParkir() {
+    public checkOutParking() {
         try {
             initComponents();
             
@@ -36,7 +36,7 @@ public class CheckOutParkir extends javax.swing.JFrame implements Runnable {
             this.setLocationRelativeTo(null);
             
             // Maximize the frame
-            setExtendedState(BookParkir.MAXIMIZED_BOTH);
+            setExtendedState(bookParking.MAXIMIZED_BOTH);
             
             client = new Socket("localhost", 5005);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
@@ -194,21 +194,23 @@ public class CheckOutParkir extends javax.swing.JFrame implements Runnable {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CheckOutParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(checkOutParking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CheckOutParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(checkOutParking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CheckOutParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(checkOutParking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CheckOutParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(checkOutParking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CheckOutParkir().setVisible(true);
+                new checkOutParking().setVisible(true);
             }
         });
     }

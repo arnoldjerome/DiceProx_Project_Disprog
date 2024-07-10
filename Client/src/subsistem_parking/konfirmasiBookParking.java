@@ -23,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Windows
  */
-public class KonfirmasiBookParkir extends javax.swing.JFrame implements Runnable {
+public class konfirmasiBookParking extends javax.swing.JFrame implements Runnable {
 
     Socket client;
     BufferedReader in;
@@ -39,7 +39,7 @@ public class KonfirmasiBookParkir extends javax.swing.JFrame implements Runnable
     /**
      * Creates new form bookParkir2
      */
-    public KonfirmasiBookParkir(int parkingLotID, String parkingSlot, String reservationDate, String plateNumber) {
+    public konfirmasiBookParking(int parkingLotID, String parkingSlot, String reservationDate, String plateNumber) {
         try {
             this.parkingLotID = parkingLotID;
             this.parkingSlot = parkingSlot;
@@ -52,7 +52,7 @@ public class KonfirmasiBookParkir extends javax.swing.JFrame implements Runnable
             this.setLocationRelativeTo(null);
             
             // Maximize the frame
-            setExtendedState(BookParkir.MAXIMIZED_BOTH);
+            setExtendedState(bookParking.MAXIMIZED_BOTH);
             
             client = new Socket("localhost", 5005);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
@@ -435,14 +435,22 @@ public class KonfirmasiBookParkir extends javax.swing.JFrame implements Runnable
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(KonfirmasiBookParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(konfirmasiBookParking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(KonfirmasiBookParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(konfirmasiBookParking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(KonfirmasiBookParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(konfirmasiBookParking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(KonfirmasiBookParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(konfirmasiBookParking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -459,7 +467,7 @@ public class KonfirmasiBookParkir extends javax.swing.JFrame implements Runnable
                 String ParkingSlot = "";
                 String NumberPolice = "";
                 int ParkingLotID = 0;
-                new KonfirmasiBookParkir(ParkingLotID, ParkingSlot, ReservationDate, NumberPolice).setVisible(true);
+                new konfirmasiBookParking(ParkingLotID, ParkingSlot, ReservationDate, NumberPolice).setVisible(true);
             }
         });
     }
