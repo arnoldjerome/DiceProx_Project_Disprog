@@ -226,7 +226,7 @@ public class bookParking extends javax.swing.JFrame implements Runnable {
 
         bagian_kanan.setBackground(new java.awt.Color(187, 187, 187));
         bagian_kanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background_main_kiri.png"))); // NOI18N
-        getContentPane().add(bagian_kanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -90, 1920, 1080));
+        getContentPane().add(bagian_kanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -90, 1920, 1220));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

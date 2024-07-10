@@ -204,18 +204,20 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
 
     private void parkingTicketButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parkingTicketButtonActionPerformed
 
+        if (isGuestDefault()) {
+            JOptionPane.showMessageDialog(this, "Please log in to access parkings!", "Notification", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         try {
 
             String formattedMessage = "MENU_PRK~" + namaLabel.getText() + "\n";
 
             out.writeBytes(formattedMessage);
-            
+
             JOptionPane.showMessageDialog(this, "Sukses Mengakses Menu Parking!", "Notification", JOptionPane.INFORMATION_MESSAGE);
 
             //String response = in.readLine();
-
             //JOptionPane.showMessageDialog(this, response);
-
             bookParking windowPlane = new bookParking();
 
             if (windowPlane == null || !windowPlane.isVisible()) {
@@ -231,18 +233,21 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
 
     private void eventTicketButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventTicketButtonActionPerformed
 
+        if (isGuestDefault()) {
+            JOptionPane.showMessageDialog(this, "Please log in to access event tickets!", "Notification", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         try {
 
             String formattedMessage = "MENU_EVNT~" + namaLabel.getText() + "\n";
 
             out.writeBytes(formattedMessage);
-            
+
             JOptionPane.showMessageDialog(this, "Sukses Mengakses Menu Event!", "Notification", JOptionPane.INFORMATION_MESSAGE);
 
             //String response = in.readLine();
-
             //JOptionPane.showMessageDialog(this, response);
-
             bookAcara windowPlane = new bookAcara();
 
             if (windowPlane == null || !windowPlane.isVisible()) {
@@ -250,13 +255,16 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
             }
 
             this.dispose();
-        } 
-        
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error di button menu event: " + e);
         }
 
     }//GEN-LAST:event_eventTicketButtonActionPerformed
+
+    private boolean isGuestDefault() {
+        return "Guest Default".equals(UserSession.getUsername());
+    }
+
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         try {
@@ -264,27 +272,25 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
             if (response == JOptionPane.YES_OPTION) {
 
                 String formattedMessage = "LOGOUT~" + namaLabel.getText() + "\n";
-                
+
                 JOptionPane.showMessageDialog(this, "Logout Sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-                
+
                 // Reset user session
                 UserSession.resetSession();
 
                 // Buka form login
                 LoginForm loginForm = new LoginForm();
                 loginForm.setVisible(true);
-                
+
                 out.writeBytes(formattedMessage);
-                
+
                 // Tutup form utama (MainForm)
                 this.dispose();
             }
-        } 
-        
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error di button logout: " + e);
         }
-        
+
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
@@ -293,32 +299,35 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
             if (response == JOptionPane.YES_OPTION) {
 
                 String formattedMessage = "EXIT~" + namaLabel.getText() + "\n";
-                
+
                 JOptionPane.showMessageDialog(this, "Exit Sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-                
+
                 // Reset user session
                 UserSession.resetSession();
-                
+
                 out.writeBytes(formattedMessage);
 
                 System.exit(0);
             }
-        } 
-        
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error di button exit: " + e);
         }
-        
+
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void klaimTicketButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_klaimTicketButtonActionPerformed
+        if (isGuestDefault()) {
+            JOptionPane.showMessageDialog(this, "Please log in to access event claim tickets!", "Notification", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         try {
             String formattedMessage = "MENU_CLM~" + namaLabel.getText() + "\n";
-            
+
             out.writeBytes(formattedMessage);
-            
+
             JOptionPane.showMessageDialog(this, "Sukses Mengakses Menu Klaim Ticket!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-            
+
             klaimTiketAcara windowPlane = new klaimTiketAcara();
 
             if (windowPlane == null || !windowPlane.isVisible()) {
@@ -326,22 +335,25 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
             }
 
             this.dispose();
-        } 
-        
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error di button klaim ticket: " + e);
         }
-        
+
     }//GEN-LAST:event_klaimTicketButtonActionPerformed
 
     private void checkOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOutButtonActionPerformed
+        if (isGuestDefault()) {
+            JOptionPane.showMessageDialog(this, "Please log in to access check out!", "Notification", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         try {
             String formattedMessage = "MENU_CHKOUT~" + namaLabel.getText() + "\n";
-            
+
             out.writeBytes(formattedMessage);
-            
+
             JOptionPane.showMessageDialog(this, "Sukses Mengakses Menu Check Out!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-            
+
             checkOutParking windowPlane = new checkOutParking();
 
             if (windowPlane == null || !windowPlane.isVisible()) {
@@ -349,21 +361,24 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
             }
 
             this.dispose();
-        } 
-        
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error di button Check Out: " + e);
         }
     }//GEN-LAST:event_checkOutButtonActionPerformed
 
     private void pemesananButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pemesananButton1ActionPerformed
+        if (isGuestDefault()) {
+            JOptionPane.showMessageDialog(this, "Please log in to access pemesanan!", "Notification", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         try {
             String formattedMessage = "ORD_TIX~" + namaLabel.getText() + "\n";
-            
+
             out.writeBytes(formattedMessage);
-            
+
             JOptionPane.showMessageDialog(this, "Sukses Mengakses Menu Pemesanan Form!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-            
+
             PemesananForm windowPlane = new PemesananForm();
 
             if (windowPlane == null || !windowPlane.isVisible()) {
@@ -371,9 +386,7 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
             }
 
             this.dispose();
-        } 
-        
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error di button pemesanan : " + e);
         }
     }//GEN-LAST:event_pemesananButton1ActionPerformed

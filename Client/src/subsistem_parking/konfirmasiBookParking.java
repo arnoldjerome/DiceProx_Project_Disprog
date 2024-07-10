@@ -240,7 +240,7 @@ public class konfirmasiBookParking extends javax.swing.JFrame implements Runnabl
                 ConfirmButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(ConfirmButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 950, 250, 60));
+        getContentPane().add(ConfirmButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 830, 250, 60));
 
         denahParkirArif.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ArifRahmanHakim4x2.jpg"))); // NOI18N
         getContentPane().add(denahParkirArif, new org.netbeans.lib.awtextra.AbsoluteConstraints(1310, 40, 500, 450));
