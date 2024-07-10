@@ -230,7 +230,7 @@ public class ParkingReservations extends MyModel {
         try {
             if (!MyModel.conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
-                     "UPDATE parkingreservations SET UserID=?, ReservationDate=?, PoliceNumber=?, IsAvailable=0 WHERE ReservationID= ?");
+                     "UPDATE parkingreservations SET UserID=?, ReservationDate=?, PoliceNumber=? WHERE ReservationID= ?");
                 
                 sql.setInt(1, this.getUserID());
                 sql.setString(2, this.getReservationDate());
@@ -374,6 +374,54 @@ public class ParkingReservations extends MyModel {
         return listOfReservations;
     }
     
+    public String fetchParkingSlot(int reservationID) {
+        try {
+            String parkingSlot = "";
+            
+            if (!MyModel.conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                    "SELECT tp.ParkingSlot FROM typeparkings tp INNER JOIN parkingreservations pr ON tp.TypeParkingID = pr.TypeParkingID WHERE pr.ReservationID = ?");
+                sql.setInt(1, reservationID);
+                
+                this.result = sql.executeQuery();
+                
+                if (this.result.next()) {
+                    parkingSlot = this.result.getString("ParkingSlot");
+                }
+                
+                return parkingSlot;
+            }
+        } catch (Exception e) {
+            System.out.println("Error di fetch parking slot: " + e);
+        }
+        
+        return null;
+    }
+    
+    public String fetchPoliceNumber(int reservationID) {
+        try {
+            String policeNumber = "";
+            
+            if (!MyModel.conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                     "SELECT pr.PoliceNumber FROM parkingreservations pr WHERE pr.ReservationID = ?");
+                sql.setInt(1, reservationID);
+                
+                this.result = sql.executeQuery();
+                
+                if (this.result.next()) {
+                    policeNumber = this.result.getString("PoliceNumber");
+                }
+                
+                return policeNumber;
+            }
+        } catch (Exception e) {
+            System.out.println("Error di fetch police number: " + e);
+        }
+        
+        return null;
+    }
+    
     public String fetchReservationDate(String ReservationDate, int ParkingLotID, String ParkingSlot) {
         try {
             String reservationDate = "";
@@ -390,12 +438,14 @@ public class ParkingReservations extends MyModel {
                 if (this.result.next()) {
                     reservationDate = this.result.getString("ReservationDate");
                 }
+                
                 return reservationDate;
             }
         } 
         catch (Exception e) {
             System.out.println("Error di fetch parking lot name: " + e);
         }
+        
         return null;
     }
 }

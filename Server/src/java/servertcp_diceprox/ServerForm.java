@@ -23,6 +23,9 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
     String fullname, username, email, password, rePassword, regisDOB;
     String eventName, eventDate, eventLoc, ticketType, ticketQty, ticketPrice, totalPrice;
     String ticketId;
+    String parkingLotName, parkingSlot, reservationDate, policeNumber;
+    String parkingType, parkingPrice;
+    String parkingId;
     Socket incoming;
     ServerSocket s;
     Thread t;
@@ -157,6 +160,34 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             broadCast(msg);
         }
         
+        else if (msg.contains("CHOOSE_PRK~")) {
+            String msgSplit[] = msg.split("~");
+            parkingLotName = msgSplit[1];
+            parkingSlot = msgSplit[2];
+            reservationDate = msgSplit[3];
+            policeNumber = msgSplit[4];
+            username = msgSplit[5];
+            
+            chatTxt.append(msg + "\n");
+            chatTxt.append(username + " sukses memilih parking slot " + parkingSlot + "\n");
+            broadCast(msg);
+        }
+        
+        else if (msg.contains("RSVP_PRK")) {
+            String msgSplit[] = msg.split("~");
+            parkingLotName = msgSplit[1];
+            reservationDate = msgSplit[2];
+            policeNumber = msgSplit[3];
+            parkingSlot = msgSplit[4];
+            parkingType = msgSplit[5];
+            parkingPrice = msgSplit[6];
+            username = msgSplit[7];
+            
+            chatTxt.append(msg + "\n");
+            chatTxt.append(username + " sukses melakukan reservasi parking slot " + parkingSlot + " untuk tanggal " + reservationDate + "\n");
+            broadCast(msg);
+        }
+        
         else if (msg.contains("MENU_CLM~")) {
             String msgSplit[] = msg.split("MENU_CLM~");
             username = msgSplit[1];
@@ -175,6 +206,18 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             
             chatTxt.append(msg + "\n");
             chatTxt.append(username + " sukses mengklaim ticket event " + eventName + "\n");
+            broadCast(msg);
+        }
+        
+        else if (msg.contains("PRK_CHKOUT_TIX~")) {
+            String msgSplit[] = msg.split("~");
+            parkingId = msgSplit[1];
+            parkingSlot = msgSplit[2];
+            policeNumber = msgSplit[3];
+            username = msgSplit[4];
+            
+            chatTxt.append(msg + "\n");
+            chatTxt.append(username + " sukses checkout ticket parking slot " + parkingSlot + "\n");
             broadCast(msg);
         }
         

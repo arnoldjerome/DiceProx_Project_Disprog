@@ -76,8 +76,8 @@
               <Table columnCount="5" rowCount="4">
                 <Column editable="true" title="ParkingLotID" type="java.lang.Object"/>
                 <Column editable="true" title="ParkingLotName" type="java.lang.Object"/>
-                <Column editable="true" title="ParkingLotCode" type="java.lang.Object"/>
-                <Column editable="true" title="HargaParking" type="java.lang.Object"/>
+                <Column editable="true" title="ParkingSlot" type="java.lang.Object"/>
+                <Column editable="true" title="ParkingPrice" type="java.lang.Object"/>
                 <Column editable="true" title="ParkingType" type="java.lang.Object"/>
               </Table>
             </Property>
@@ -146,7 +146,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JLabel" name="reservationDate">
+    <Component class="javax.swing.JLabel" name="reservationDateLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="36" style="0"/>
@@ -370,7 +370,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JLabel" name="hargaLabel">
+    <Component class="javax.swing.JLabel" name="priceLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="36" style="0"/>
@@ -378,7 +378,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="46" green="3e" red="39" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Harga Parking"/>
+        <Property name="text" type="java.lang.String" value="Parking Price"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -386,7 +386,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JLabel" name="harga">
+    <Component class="javax.swing.JLabel" name="parkingPriceText">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="36" style="1"/>

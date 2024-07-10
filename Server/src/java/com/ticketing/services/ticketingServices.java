@@ -9,7 +9,7 @@ import com.ticketing.model.Events;
 import com.ticketing.model.HistoryLogin;
 import com.ticketing.model.Tickets;
 import com.ticketing.model.ParkingReservations;
-import com.ticketing.model.ParkingLots;
+import com.ticketing.model.ParkingLot;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class ticketingServices {
     Tickets t;
     HistoryLogin h;
     ParkingReservations pr;
-    ParkingLots pl;
+    ParkingLot pl;
             
     public ticketingServices() {
     }
@@ -332,6 +332,30 @@ public class ticketingServices {
         String reservationDate = pr.fetchReservationDate(ReservationDate, ParkingLotID, ParkingSlot);
         
         return reservationDate;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "fetchParkingSlot")
+    public String fetchParkingSlot(@WebParam(name = "reservationID") int reservationID) {
+        //TODO write your implementation code here:
+        pr = new ParkingReservations();
+        String parkingSlot = pr.fetchParkingSlot(reservationID);
+        
+        return parkingSlot;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "fetchPoliceNumber")
+    public String fetchPoliceNumber(@WebParam(name = "reservationID") int reservationID) {
+        //TODO write your implementation code here:
+        pr = new ParkingReservations();
+        String policeNumber = pr.fetchPoliceNumber(reservationID);
+        
+        return policeNumber;
     }
     
 }

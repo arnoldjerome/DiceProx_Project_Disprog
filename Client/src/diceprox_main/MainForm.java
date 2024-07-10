@@ -16,8 +16,8 @@ import subsistem_event.bookAcara;
 import subsistem_event.bookAcara;
 import subsistem_event.bookAcara;
 import subsistem_event.klaimTiketAcara;
-import subsistem_parking.bookParkir;
-import subsistem_parking.checkOutParkir;
+import subsistem_parking.BookParkir;
+import subsistem_parking.CheckOutParkir;
 
 /**
  *
@@ -216,7 +216,7 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
 
             //JOptionPane.showMessageDialog(this, response);
 
-            bookParkir windowPlane = new bookParkir();
+            BookParkir windowPlane = new BookParkir();
 
             if (windowPlane == null || !windowPlane.isVisible()) {
                 windowPlane.setVisible(true);
@@ -342,7 +342,7 @@ public class MainForm extends javax.swing.JFrame implements Runnable {
             
             JOptionPane.showMessageDialog(this, "Sukses Mengakses Menu Check Out!", "Notification", JOptionPane.INFORMATION_MESSAGE);
             
-            checkOutParkir windowPlane = new checkOutParkir();
+            CheckOutParkir windowPlane = new CheckOutParkir();
 
             if (windowPlane == null || !windowPlane.isVisible()) {
                 windowPlane.setVisible(true);

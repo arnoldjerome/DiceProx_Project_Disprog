@@ -6,18 +6,52 @@ package subsistem_parking;
 
 import diceprox_main.MainForm;
 import diceprox_main.UserSession;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 /**
  *
  * @author Windows
  */
-public class checkOutParkir extends javax.swing.JFrame {
+public class CheckOutParkir extends javax.swing.JFrame implements Runnable {
 
+    Socket client;
+    BufferedReader in;
+    DataOutputStream out;
+    Thread t;
+    
     /**
      * Creates new form checkOutParkir
      */
-    public checkOutParkir() {
-        initComponents();
+    public CheckOutParkir() {
+        try {
+            initComponents();
+            
+            //untuk center
+            this.setLocationRelativeTo(null);
+            
+            // Maximize the frame
+            setExtendedState(BookParkir.MAXIMIZED_BOTH);
+            
+            client = new Socket("localhost", 5005);
+            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            out = new DataOutputStream(client.getOutputStream());
+            start();
+        } catch (IOException ex) {
+            System.out.println("Error di CheckOutParkir: " + ex);
+        }
+    }
+    
+    private void start() {
+        if (t == null) {
+            t = new Thread(this, "CheckOutParkir");
+            t.start();
+        }
     }
 
     /**
@@ -30,7 +64,7 @@ public class checkOutParkir extends javax.swing.JFrame {
     private void initComponents() {
 
         back = new javax.swing.JLabel();
-        ReservationText = new javax.swing.JTextField();
+        parkingRSVCodeText = new javax.swing.JTextField();
         checkOutButton = new javax.swing.JButton();
         salamTiket = new javax.swing.JLabel();
         bagian_kanan = new javax.swing.JLabel();
@@ -48,18 +82,18 @@ public class checkOutParkir extends javax.swing.JFrame {
         });
         getContentPane().add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 70, 70));
 
-        ReservationText.setBackground(new java.awt.Color(207, 219, 229));
-        ReservationText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        ReservationText.setText("Reservation Code");
-        ReservationText.addFocusListener(new java.awt.event.FocusAdapter() {
+        parkingRSVCodeText.setBackground(new java.awt.Color(207, 219, 229));
+        parkingRSVCodeText.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        parkingRSVCodeText.setText("Reservation Code");
+        parkingRSVCodeText.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                ReservationTextFocusGained(evt);
+                parkingRSVCodeTextFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                ReservationTextFocusLost(evt);
+                parkingRSVCodeTextFocusLost(evt);
             }
         });
-        getContentPane().add(ReservationText, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 220, 1020, 67));
+        getContentPane().add(parkingRSVCodeText, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 220, 1020, 67));
 
         checkOutButton.setBackground(new java.awt.Color(187, 224, 253));
         checkOutButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -93,29 +127,37 @@ public class checkOutParkir extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_backMouseClicked
 
-    private void ReservationTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ReservationTextFocusGained
-        if (ReservationText.getText().equals("Reservation Code")) {
-            ReservationText.setText("");
+    private void parkingRSVCodeTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_parkingRSVCodeTextFocusGained
+        if (parkingRSVCodeText.getText().equals("Reservation Code")) {
+            parkingRSVCodeText.setText("");
         }
-    }//GEN-LAST:event_ReservationTextFocusGained
+    }//GEN-LAST:event_parkingRSVCodeTextFocusGained
 
-    private void ReservationTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ReservationTextFocusLost
-        if (ReservationText.getText().equals("")) {
-            ReservationText.setText("Reservation Code");
+    private void parkingRSVCodeTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_parkingRSVCodeTextFocusLost
+        if (parkingRSVCodeText.getText().equals("")) {
+            parkingRSVCodeText.setText("Reservation Code");
         }
-    }//GEN-LAST:event_ReservationTextFocusLost
+    }//GEN-LAST:event_parkingRSVCodeTextFocusLost
 
     private void checkOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOutButtonActionPerformed
         try {
-            int reservationID = Integer.parseInt(ReservationText.getText());
-            int userID = userIdForCheckOut(reservationID);
+            int reservationID = Integer.parseInt(parkingRSVCodeText.getText());
+            int userID = userIdForCheckOut(reservationID);           
+            String parkingSlot = fetchParkingSlot(reservationID);
+            String policeNumber = fetchPoliceNumber(reservationID);
             
             int response = JOptionPane.showConfirmDialog(null, "Apakah benar anda ingin Check Out?", 
-                    "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                    "Confirmation", JOptionPane.YES_NO_OPTION);
+            
+            String formattedMessage = "PRK_CHKOUT_TIX~" + reservationID + "~" + parkingSlot + "~" + policeNumber + "~" + UserSession.getUsername() + "\n";
+            
             if (response == JOptionPane.YES_OPTION) {
                 if (userID == UserSession.getUserId()) {
                     updateCheckOutReservation(reservationID, UserSession.getUserId());
-                    JOptionPane.showMessageDialog(this, "Berhasil Check Out!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                    
+                    out.writeBytes(formattedMessage);
+                    
+                    JOptionPane.showMessageDialog(this, "Sukses Melakukan Check Out Parkir!", "Notification", JOptionPane.INFORMATION_MESSAGE);
                     
                     MainForm windowPlane = new MainForm();
 
@@ -124,7 +166,7 @@ public class checkOutParkir extends javax.swing.JFrame {
                     }
                     this.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(this, "User ID berbeda dengan UserID di ReservationID", "Pemberitahuan", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "User ID berbeda dengan UserID di ReservationID", "Notification", JOptionPane.WARNING_MESSAGE);
                 }
             } else {
                 System.out.println("User memilih belum");
@@ -152,29 +194,30 @@ public class checkOutParkir extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(checkOutParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CheckOutParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(checkOutParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CheckOutParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(checkOutParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CheckOutParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(checkOutParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CheckOutParkir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new checkOutParkir().setVisible(true);
+                new CheckOutParkir().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField ReservationText;
     private javax.swing.JLabel back;
     private javax.swing.JLabel bagian_kanan;
     private javax.swing.JButton checkOutButton;
+    private javax.swing.JTextField parkingRSVCodeText;
     private javax.swing.JLabel salamTiket;
     // End of variables declaration//GEN-END:variables
 
@@ -189,6 +232,24 @@ public class checkOutParkir extends javax.swing.JFrame {
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
         return port.userIdForCheckOut(reservationID);
     }
-
     
+    private static String fetchParkingSlot(int reservationID) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.fetchParkingSlot(reservationID);
+    }
+    
+    private static String fetchPoliceNumber(int reservationID) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.fetchPoliceNumber(reservationID);
+    }
+    
+    @Override
+    public void run() {
+        try {
+            
+        } catch (Exception e) {
+        }
+    }
 }

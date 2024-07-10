@@ -10,17 +10,17 @@ import java.util.ArrayList;
  *
  * @author Rome
  */
-public class ParkingLots extends MyModel {
+public class ParkingLot extends MyModel {
     private int parkingLotsID;
     private String parkingLotsName;
     private int totalSlots;
 
-    public ParkingLots(int parkingLotsID, String parkingLotsName, int totalSlots) {
+    public ParkingLot(int parkingLotsID, String parkingLotsName, int totalSlots) {
         this.parkingLotsID = parkingLotsID;
         this.parkingLotsName = parkingLotsName;
         this.totalSlots = totalSlots;
     }
-    public ParkingLots() {
+    public ParkingLot() {
     }
 
     public int getParkingLotsID() {
