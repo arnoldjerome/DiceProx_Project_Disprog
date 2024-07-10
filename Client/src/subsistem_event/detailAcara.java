@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,43 +24,47 @@ import java.util.List;
 public class detailAcara extends javax.swing.JFrame {
 
     private String eventId;
-    
+
     Socket client;
     BufferedReader in;
     DataOutputStream out;
     Thread t;
+
     /**
      * Creates new form detailAcara
      */
     public detailAcara(String eventId) {
         try {
             initComponents();
-            
+
+            this.eventId = eventId;
+
             client = new Socket("localhost", 5005);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             out = new DataOutputStream(client.getOutputStream());
             start();
-            
+
             //untuk center
             this.setLocationRelativeTo(null);
-            
+
             // Maximize the frame
             setExtendedState(bookAcara.MAXIMIZED_BOTH);
-            
+
             System.out.println(eventId);
-            
+
             loadEventDetails(eventId);
         } catch (IOException ex) {
             System.out.println("Error di detail acara: " + ex);
         }
     }
-    
+
     private void start() {
         if (t == null) {
             t = new Thread("detailAcara");
             t.start();
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -73,11 +78,12 @@ public class detailAcara extends javax.swing.JFrame {
         logo = new javax.swing.JLabel();
         back = new javax.swing.JLabel();
         nameLabel = new javax.swing.JLabel();
-        locationLabel = new javax.swing.JLabel();
+        addressLocationLabel = new javax.swing.JLabel();
         dateLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jDetailTextArea = new javax.swing.JTextArea();
         eventLabel = new javax.swing.JLabel();
+        viewOnMapButton = new javax.swing.JButton();
         bagian_kanan = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -87,7 +93,7 @@ public class detailAcara extends javax.swing.JFrame {
 
         gambarEvents.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/512.png"))); // NOI18N
         gambarEvents.setPreferredSize(new java.awt.Dimension(120, 125));
-        getContentPane().add(gambarEvents, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 310, 510, 510));
+        getContentPane().add(gambarEvents, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 260, 510, 510));
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
         logo.setPreferredSize(new java.awt.Dimension(120, 125));
@@ -107,10 +113,10 @@ public class detailAcara extends javax.swing.JFrame {
         nameLabel.setText("Event Name");
         getContentPane().add(nameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 240, 630, -1));
 
-        locationLabel.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        locationLabel.setForeground(new java.awt.Color(57, 62, 70));
-        locationLabel.setText("Event Location");
-        getContentPane().add(locationLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 320, 650, -1));
+        addressLocationLabel.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        addressLocationLabel.setForeground(new java.awt.Color(57, 62, 70));
+        addressLocationLabel.setText("Event Address + Event Location");
+        getContentPane().add(addressLocationLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 320, 650, -1));
 
         dateLabel.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         dateLabel.setForeground(new java.awt.Color(57, 62, 70));
@@ -135,6 +141,16 @@ public class detailAcara extends javax.swing.JFrame {
         eventLabel.setText("EVENT DETAIL");
         getContentPane().add(eventLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 60, -1, -1));
 
+        viewOnMapButton.setBackground(new java.awt.Color(187, 224, 253));
+        viewOnMapButton.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        viewOnMapButton.setText("View On Map");
+        viewOnMapButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewOnMapButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(viewOnMapButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 810, 310, 60));
+
         bagian_kanan.setBackground(new java.awt.Color(187, 187, 187));
         bagian_kanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background_main_kiri.png"))); // NOI18N
         getContentPane().add(bagian_kanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 1080));
@@ -152,16 +168,40 @@ public class detailAcara extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_backMouseClicked
 
+    private void viewOnMapButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewOnMapButtonActionPerformed
+        // Dapatkan event details termasuk latitude dan longitude
+
+        Events event = getEventDetails(Integer.parseInt(eventId));
+
+        if (event != null) {
+            Double latitude = event.getLatitude();
+            Double longitude = event.getLongitude();
+            String eventId = String.valueOf(event.getEventID());
+
+            viewMapAcara windowPlane = new viewMapAcara(eventId, latitude, longitude);
+
+            if (windowPlane == null || !windowPlane.isVisible()) {
+                windowPlane.setVisible(true);
+            }
+
+            this.dispose();
+
+        } else {
+            System.out.println("Event not found.");
+        }
+    }//GEN-LAST:event_viewOnMapButtonActionPerformed
+
     private void loadEventDetails(String eventId) {
         Events event = getEventDetails(Integer.parseInt(eventId));
+        System.out.println(event);
         if (event != null) {
             nameLabel.setText(event.getEventName());
             dateLabel.setText(event.getEventDate());
-            locationLabel.setText(event.getEventLocation());
+            addressLocationLabel.setText(event.getEventAddress() + ", " + event.getEventLocation());
             jDetailTextArea.setText(event.getEventDetails());
-            
+
             String namaGambar = event.getEventImage();
-            gambarEvents.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/"+namaGambar + ".png")));
+            gambarEvents.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/" + namaGambar + ".png")));
         } else {
             System.out.println("Event not found.");
         }
@@ -177,7 +217,6 @@ public class detailAcara extends javax.swing.JFrame {
 //        label.revalidate();  // Memperbarui tata letak komponen
 //        label.repaint();  // Menggambar ulang komponen
 //    }
-
     /**
      * @param args the command line arguments
      */
@@ -215,6 +254,7 @@ public class detailAcara extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel addressLocationLabel;
     private javax.swing.JLabel back;
     private javax.swing.JLabel bagian_kanan;
     private javax.swing.JLabel dateLabel;
@@ -222,9 +262,10 @@ public class detailAcara extends javax.swing.JFrame {
     private javax.swing.JLabel gambarEvents;
     private javax.swing.JTextArea jDetailTextArea;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel locationLabel;
     private javax.swing.JLabel logo;
     private javax.swing.JLabel nameLabel;
+    private javax.swing.JButton reserveButton;
+    private javax.swing.JButton viewOnMapButton;
     // End of variables declaration//GEN-END:variables
 
     private static Events getEventDetails(int eventId) {

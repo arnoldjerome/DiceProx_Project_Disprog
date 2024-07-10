@@ -25,6 +25,7 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
     BufferedReader in;
     DataOutputStream out;
     Thread t;
+    private boolean isPasswordVisible = false;
 
     /**
      * Creates new form login
@@ -86,6 +87,11 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
 
         logoPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon_password.png"))); // NOI18N
         logoPassword.setText("jLabel4");
+        logoPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoPasswordMouseClicked(evt);
+            }
+        });
         getContentPane().add(logoPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 730, 50, 50));
 
         logoUsername.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon_username.png"))); // NOI18N
@@ -242,7 +248,7 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
 
                 if (userId != -1) {
                     JOptionPane.showMessageDialog(this, "Login Sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-                    
+
                     String response = in.readLine();
                     JOptionPane.showMessageDialog(this, response);
 
@@ -250,7 +256,7 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
                     UserSession.setUserId(userId);
                     UserSession.setUsername(username);
                     UserSession.setEmail(email);
-                    
+
                     insertHistoryLogin(userId);
 
                     MainForm windowPlane = new MainForm();
@@ -283,6 +289,16 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
 
         this.dispose();
     }//GEN-LAST:event_registerButtonActionPerformed
+
+    private void logoPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoPasswordMouseClicked
+        // TODO add your handling code here:
+        if (isPasswordVisible) {
+            passwordText.setEchoChar('*'); // Menyembunyikan password
+        } else {
+            passwordText.setEchoChar((char) 0); // Menampilkan password
+        }
+        isPasswordVisible = !isPasswordVisible;
+    }//GEN-LAST:event_logoPasswordMouseClicked
 
     /**
      * @param args the command line arguments
