@@ -86,6 +86,10 @@
 
 <xs:element name="selectAllTicketUserResponse" type="tns:selectAllTicketUserResponse"/>
 
+<xs:element name="selectAllUserIDLogin" type="tns:selectAllUserIDLogin"/>
+
+<xs:element name="selectAllUserIDLoginResponse" type="tns:selectAllUserIDLoginResponse"/>
+
 <xs:element name="selectAllUserTicketID" type="tns:selectAllUserTicketID"/>
 
 <xs:element name="selectAllUserTicketIDResponse" type="tns:selectAllUserTicketIDResponse"/>
@@ -99,6 +103,8 @@
 <xs:element name="updateClaimStatus" type="tns:updateClaimStatus"/>
 
 <xs:element name="updateParking" type="tns:updateParking"/>
+
+<xs:element name="updateTimeLogin" type="tns:updateTimeLogin"/>
 
 <xs:element name="userIdForCheckOut" type="tns:userIdForCheckOut"/>
 
@@ -115,20 +121,6 @@
 </xs:complexType>
 
 <xs:complexType name="fetchPoliceNumberResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="fetchReservationDate">
-<xs:sequence>
-<xs:element name="ReservationDate" type="xs:string" minOccurs="0"/>
-<xs:element name="ParkingLotID" type="xs:int"/>
-<xs:element name="ParkingSlot" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="fetchReservationDateResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -175,6 +167,20 @@
 <xs:sequence>
 <xs:element name="ticketTypeID" type="xs:int"/>
 <xs:element name="ticketsReserved" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="fetchReservationDate">
+<xs:sequence>
+<xs:element name="ReservationDate" type="xs:string" minOccurs="0"/>
+<xs:element name="ParkingLotID" type="xs:int"/>
+<xs:element name="ParkingSlot" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="fetchReservationDateResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -241,6 +247,12 @@
 </xs:sequence>
 </xs:extension>
 </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="updateTimeLogin">
+<xs:sequence>
+<xs:element name="userID" type="xs:int"/>
+</xs:sequence>
 </xs:complexType>
 
 <xs:complexType name="fetchEventDate">
@@ -432,6 +444,16 @@
 <xs:complexType name="fetchEventNameResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="selectAllUserIDLogin">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="selectAllUserIDLoginResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 

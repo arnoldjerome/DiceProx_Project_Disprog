@@ -257,7 +257,24 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
                     UserSession.setUsername(username);
                     UserSession.setEmail(email);
 
-                    insertHistoryLogin(userId);
+                    boolean userExists = false; // Penanda untuk menentukan apakah user sudah ada
+
+                    for (Integer IDUser : selectAllUserIDLogin()) {
+                        if (IDUser instanceof Integer) {
+                            System.out.println(IDUser);
+                            System.out.println(UserSession.getUserId());
+                            if (UserSession.getUserId() == IDUser) {
+                                updateTimeLogin(UserSession.getUserId());
+                                userExists = true; // Tandai bahwa user sudah ada
+                                break; // Keluar dari loop setelah menemukan kecocokan
+                            }
+                        }
+                    }
+
+                    // Jika tidak ada kecocokan ditemukan setelah loop
+                    if (!userExists) {
+                        insertHistoryLogin(UserSession.getUserId());
+                    }
 
                     MainForm windowPlane = new MainForm();
                     if (windowPlane == null || !windowPlane.isVisible()) {
@@ -374,5 +391,17 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
         port.insertHistoryLogin(userID);
+    }
+
+    private static void updateTimeLogin(int userID) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        port.updateTimeLogin(userID);
+    }
+
+    private static java.util.List<java.lang.Integer> selectAllUserIDLogin() {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.selectAllUserIDLogin();
     }
 }

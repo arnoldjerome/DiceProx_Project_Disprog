@@ -412,4 +412,30 @@ public class ticketingServices {
         pr = new ParkingReservations();
         pr.deleteReservations(ReservationID, UserID);
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "updateTimeLogin")
+    @Oneway
+    public void updateTimeLogin(@WebParam(name = "userID") int userID) {
+        h = new HistoryLogin();
+        h.updateDataUserLogin(userID);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "selectAllUserIDLogin")
+    public ArrayList<Integer> selectAllUserIDLogin() {
+        System.out.println("Calling selectAllUserIDLogin...");
+        h = new HistoryLogin();
+        ArrayList<Integer> listOfUserIDs = new ArrayList<>();
+        for (Integer UserID : h.selectAllUserIDLogin()) {
+            if (UserID instanceof Integer) {
+                listOfUserIDs.add(UserID);
+            }
+        }   
+        return listOfUserIDs;
+    }
 }
