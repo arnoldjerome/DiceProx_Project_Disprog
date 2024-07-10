@@ -154,7 +154,7 @@ public class checkOutParking extends javax.swing.JFrame implements Runnable {
             
             if (response == JOptionPane.YES_OPTION) {
                 if (userID == UserSession.getUserId()) {
-                    updateCheckOutReservation(reservationID, UserSession.getUserId());
+                    deleteReservations(reservationID, UserSession.getUserId());
                     
                     out.writeBytes(formattedMessage);
                     
@@ -224,12 +224,6 @@ public class checkOutParking extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel salamTiket;
     // End of variables declaration//GEN-END:variables
 
-    private static void updateCheckOutReservation(int reservationID, int userID) {
-        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
-        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
-        port.updateCheckOutReservation(reservationID, userID);
-    }
-
     private static int userIdForCheckOut(int reservationID) {
         com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
         com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
@@ -259,5 +253,11 @@ public class checkOutParking extends javax.swing.JFrame implements Runnable {
             
         } catch (Exception e) {
         }
+    }
+
+    private static void deleteReservations(int reservationID, int userID) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        port.deleteReservations(reservationID, userID);
     }
 }

@@ -193,6 +193,20 @@ public class ParkingReservations extends MyModel {
         }
     }
     
+    public void deleteReservations (int ReservationID, int UserID) {
+        try {
+            if (!MyModel.conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement("DELETE FROM parkingreservations WHERE ReservationID = ? AND UserID = ?");
+                sql.setInt(1, ReservationID);
+                sql.setInt(2, UserID);
+                sql.executeUpdate();
+                sql.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error di update check out reservations: " + e);
+        }
+    }
+    
     public int userIdForCheckOut(int ReservationID) {
         try {
             int userId = 0;

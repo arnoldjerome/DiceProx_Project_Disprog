@@ -402,4 +402,14 @@ public class ticketingServices {
         
         return parkingLotID;
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "deleteReservations")
+    @Oneway
+    public void deleteReservations(@WebParam(name = "ReservationID") int ReservationID, @WebParam(name = "UserID") int UserID) {
+        pr = new ParkingReservations();
+        pr.deleteReservations(ReservationID, UserID);
+    }
 }

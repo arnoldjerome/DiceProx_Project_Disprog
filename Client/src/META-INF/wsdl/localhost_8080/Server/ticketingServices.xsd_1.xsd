@@ -12,6 +12,8 @@
 
 <xs:element name="checkRegisterResponse" type="tns:checkRegisterResponse"/>
 
+<xs:element name="deleteReservations" type="tns:deleteReservations"/>
+
 <xs:element name="fetchEventDate" type="tns:fetchEventDate"/>
 
 <xs:element name="fetchEventDateResponse" type="tns:fetchEventDateResponse"/>
@@ -118,6 +120,57 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="fetchReservationDate">
+<xs:sequence>
+<xs:element name="ReservationDate" type="xs:string" minOccurs="0"/>
+<xs:element name="ParkingLotID" type="xs:int"/>
+<xs:element name="ParkingSlot" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="fetchReservationDateResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="selectAllReservationsType">
+<xs:sequence>
+<xs:element name="ParkingLotID" type="xs:int"/>
+<xs:element name="ReservationDate" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="selectAllReservationsTypeResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:parkingReservations" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="parkingReservations">
+<xs:complexContent>
+<xs:extension base="tns:myModel">
+<xs:sequence>
+<xs:element name="hargaParking" type="xs:int"/>
+<xs:element name="parkingLotID" type="xs:int"/>
+<xs:element name="parkingLotName" type="xs:string" minOccurs="0"/>
+<xs:element name="parkingSlot" type="xs:string" minOccurs="0"/>
+<xs:element name="parkingType" type="xs:string" minOccurs="0"/>
+<xs:element name="policeNumber" type="xs:string" minOccurs="0"/>
+<xs:element name="reservationDate" type="xs:string" minOccurs="0"/>
+<xs:element name="reservationID" type="xs:int"/>
+<xs:element name="typeParkingID" type="xs:string" minOccurs="0"/>
+<xs:element name="userID" type="xs:int"/>
+<xs:element name="username" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="myModel" abstract="true">
+<xs:sequence/>
+</xs:complexType>
+
 <xs:complexType name="updateAvailableTickets">
 <xs:sequence>
 <xs:element name="ticketTypeID" type="xs:int"/>
@@ -155,58 +208,6 @@
 </xs:sequence>
 </xs:extension>
 </xs:complexContent>
-</xs:complexType>
-
-<xs:complexType name="myModel" abstract="true">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="selectAllReservationsType">
-<xs:sequence>
-<xs:element name="ParkingLotID" type="xs:int"/>
-<xs:element name="ReservationDate" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="selectAllReservationsTypeResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:parkingReservations" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="parkingReservations">
-<xs:complexContent>
-<xs:extension base="tns:myModel">
-<xs:sequence>
-<xs:element name="hargaParking" type="xs:int"/>
-<xs:element name="isAvailable" type="xs:boolean" minOccurs="0"/>
-<xs:element name="parkingLotID" type="xs:int"/>
-<xs:element name="parkingLotName" type="xs:string" minOccurs="0"/>
-<xs:element name="parkingSlot" type="xs:string" minOccurs="0"/>
-<xs:element name="parkingType" type="xs:string" minOccurs="0"/>
-<xs:element name="policeNumber" type="xs:string" minOccurs="0"/>
-<xs:element name="reservationDate" type="xs:string" minOccurs="0"/>
-<xs:element name="reservationID" type="xs:int"/>
-<xs:element name="typeParkingID" type="xs:string" minOccurs="0"/>
-<xs:element name="userID" type="xs:int"/>
-<xs:element name="username" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:extension>
-</xs:complexContent>
-</xs:complexType>
-
-<xs:complexType name="fetchReservationDate">
-<xs:sequence>
-<xs:element name="ReservationDate" type="xs:string" minOccurs="0"/>
-<xs:element name="ParkingLotID" type="xs:int"/>
-<xs:element name="ParkingSlot" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="fetchReservationDateResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
 </xs:complexType>
 
 <xs:complexType name="selectAllEvents">
@@ -254,15 +255,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="updateParking">
-<xs:sequence>
-<xs:element name="UserID" type="xs:int"/>
-<xs:element name="ReservationDate" type="xs:string" minOccurs="0"/>
-<xs:element name="NumberPolice" type="xs:string" minOccurs="0"/>
-<xs:element name="ReservationID" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="selectAllUserTicketID">
 <xs:sequence>
 <xs:element name="userID" type="xs:int"/>
@@ -272,6 +264,15 @@
 <xs:complexType name="selectAllUserTicketIDResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="updateParking">
+<xs:sequence>
+<xs:element name="UserID" type="xs:int"/>
+<xs:element name="ReservationDate" type="xs:string" minOccurs="0"/>
+<xs:element name="NumberPolice" type="xs:string" minOccurs="0"/>
+<xs:element name="ReservationID" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -344,18 +345,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="hello">
-<xs:sequence>
-<xs:element name="name" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="helloResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="selectAllEventsType">
 <xs:sequence>
 <xs:element name="arg0" type="xs:string" minOccurs="0"/>
@@ -365,6 +354,18 @@
 <xs:complexType name="selectAllEventsTypeResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:events" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="hello">
+<xs:sequence>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="helloResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -434,18 +435,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="checkRegister">
-<xs:sequence>
-<xs:element name="email" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="checkRegisterResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:boolean" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="userIdForClaimTicket">
 <xs:sequence>
 <xs:element name="ticketID" type="xs:int"/>
@@ -455,6 +444,18 @@
 <xs:complexType name="userIdForClaimTicketResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="checkRegister">
+<xs:sequence>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="checkRegisterResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -477,6 +478,13 @@
 <xs:complexType name="insertHistoryLogin">
 <xs:sequence>
 <xs:element name="userID" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deleteReservations">
+<xs:sequence>
+<xs:element name="ReservationID" type="xs:int"/>
+<xs:element name="UserID" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 
