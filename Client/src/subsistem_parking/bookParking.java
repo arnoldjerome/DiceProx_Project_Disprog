@@ -296,8 +296,8 @@ public class bookParking extends javax.swing.JFrame implements Runnable {
                     String chkReservationDate = fetchReservationDate(reservationDate, selectedIndex, parkingSlot);
                     
                     if (chkReservationDate == null) {
-                        if (plateNumber == "Police Number") {
-                            JOptionPane.showMessageDialog(this, "Silahkan isi Police Number terlebih dahulu", "Notification", JOptionPane.WARNING_MESSAGE);
+                        if (plateNumber.contains("__-____-__")) {
+                            JOptionPane.showMessageDialog(this, "Silahkan Isi Plat Nomor Terlebih Dahulu!", "Gagal Memproses Data", JOptionPane.WARNING_MESSAGE);
                         } 
                         else if (verifier.verify((JComponent)policeNumberText)) {
                             JOptionPane.showMessageDialog(this, "Sukses Memilih Parking Slot!", "Notification", JOptionPane.INFORMATION_MESSAGE);
@@ -311,9 +311,12 @@ public class bookParking extends javax.swing.JFrame implements Runnable {
                             }
 
                             this.dispose();
+                        }                     
+                        else {
+                            JOptionPane.showMessageDialog(this, "Pastikan Format Penulisan Plat Nomor Sudah Sesuai ", "Gagal Memproses Data", JOptionPane.WARNING_MESSAGE);
                         }
                     } else {
-                        JOptionPane.showMessageDialog(this, "Slot sudah terisi untuk tanggal ini", "Notification", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Slot Sudah Terisi Untuk Tanggal " + reservationDate, "Gagal Memproses Data", JOptionPane.WARNING_MESSAGE);
                     }
                     
                 }
@@ -388,7 +391,7 @@ public class bookParking extends javax.swing.JFrame implements Runnable {
             formatter.setPlaceholderCharacter('_');
             formatter.install(policeNumberText);  // Assume plateNumberField is your JFormattedTextField
         } catch (java.text.ParseException e) {
-            System.out.println("error di verifier" + e);
+            System.out.println("Error di verifier: " + e);
         }
 
         // Add an input verifier for validation
