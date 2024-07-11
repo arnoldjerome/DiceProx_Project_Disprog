@@ -8,7 +8,6 @@ import com.ticketing.model.Account;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -262,24 +261,7 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             System.out.println("Error displaying page!");
         }
     }
-    
-//    public void broadCast(String msg) {
-//        for (HandleSocket client : clients) {
-//            client.sendChat(msg);
-//        }
-//    }
-    
-//    public void broadCast(String msg) {
-//    ArrayList<HandleSocket> disconnectedClients = new ArrayList<>();
-//    for (HandleSocket client : clients) {
-//        if (!client.isAlive()) {
-//            disconnectedClients.add(client);
-//        } else {
-//            client.sendChat(msg);
-//        }
-//    }
-//    clients.removeAll(disconnectedClients);
-    
+   
     public void broadCast(String msg) {
     Iterator<HandleSocket> iterator = clients.iterator();
     while (iterator.hasNext()) {
@@ -290,7 +272,6 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             client.sendChat(msg);
         }
     }
-
 
 }
 

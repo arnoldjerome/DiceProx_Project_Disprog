@@ -14,10 +14,7 @@ import java.net.Socket;
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**

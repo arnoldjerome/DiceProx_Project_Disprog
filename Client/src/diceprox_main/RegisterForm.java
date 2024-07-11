@@ -7,14 +7,10 @@ package diceprox_main;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import subsistem_event.*;
-import com.ticketing.services.TicketingServices_Service;
-import com.ticketing.services.TicketingServices;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Method;
 import java.net.Socket;
 
 /**

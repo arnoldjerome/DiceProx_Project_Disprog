@@ -13,8 +13,6 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 

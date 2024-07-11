@@ -4,16 +4,12 @@
  */
 package diceprox_main;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import subsistem_event.*;
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
 
 /**
  *
@@ -54,32 +50,6 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
             System.out.println("Error di login form: " + ex);
             JOptionPane.showMessageDialog(this, "Error di login form: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-//        try {
-//            if (isServerActive()) { 
-//                //untuk center
-//                this.setLocationRelativeTo(null);
-//
-//                // Maximize the frame
-//                setExtendedState(LoginForm.MAXIMIZED_BOTH);
-//                
-//                JOptionPane.showMessageDialog(this, "Connected To Server!", "Koneksi Sukses", JOptionPane.INFORMATION_MESSAGE);          
-//                initComponents();
-//                
-//                client = new Socket("localhost", 5005);
-//                in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-//                out = new DataOutputStream(client.getOutputStream());
-//                start();
-//            }
-//            
-//            else {
-//                JOptionPane.showMessageDialog(this, "Make Sure Server Form Is Active!", "Koneksi Gagal", JOptionPane.WARNING_MESSAGE);
-//                this.dispose();
-//            }
-//        } 
-//        
-//        catch (IOException ex) {
-//            System.out.println("Error di login form: " + ex);
-//        }
     }
     
     private boolean isServerActive() {

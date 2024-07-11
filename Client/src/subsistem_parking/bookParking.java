@@ -13,15 +13,10 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.scene.control.ComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
-import java.awt.*;
 
 /**
  *

@@ -10,16 +10,11 @@ import com.ticketing.model.HistoryLogin;
 import com.ticketing.model.Tickets;
 import com.ticketing.model.ParkingReservations;
 import com.ticketing.model.ParkingLot;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import javax.jws.Oneway;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
-import sun.security.krb5.internal.Ticket;
 
 /**
  *

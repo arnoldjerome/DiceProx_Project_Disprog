@@ -4,11 +4,9 @@
  */
 package subsistem_event;
 
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.event.MouseInputListener;
-import org.jxmapviewer.OSMTileFactoryInfo;
 import org.jxmapviewer.VirtualEarthTileFactoryInfo;
 import org.jxmapviewer.input.PanMouseInputListener;
 import org.jxmapviewer.input.ZoomMouseWheelListenerCenter;

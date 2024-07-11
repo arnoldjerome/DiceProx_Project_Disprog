@@ -5,17 +5,11 @@
 package subsistem_event;
 
 import com.ticketing.services.Events;
-import diceprox_main.MainForm;
-import java.awt.Dimension;
-import java.awt.FontMetrics;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -264,7 +258,6 @@ public class detailAcara extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel logo;
     private javax.swing.JLabel nameLabel;
-    private javax.swing.JButton reserveButton;
     private javax.swing.JButton viewOnMapButton;
     // End of variables declaration//GEN-END:variables
 
