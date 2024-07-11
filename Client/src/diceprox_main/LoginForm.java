@@ -32,23 +32,65 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
      */
     public LoginForm() {
         try {
-            initComponents();
+            if (isServerActive()) { 
+                //untuk center
+                this.setLocationRelativeTo(null);
 
-            //untuk center
-            this.setLocationRelativeTo(null);
-
-            // Maximize the frame
-            setExtendedState(LoginForm.MAXIMIZED_BOTH);
-
-            client = new Socket("localhost", 5005);
-            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            out = new DataOutputStream(client.getOutputStream());
-            start();
+                // Maximize the frame
+                setExtendedState(LoginForm.MAXIMIZED_BOTH);
+                
+                JOptionPane.showMessageDialog(this, "Connected To Server!", "Koneksi Sukses", JOptionPane.INFORMATION_MESSAGE);
+                initComponents();
+                
+                client = new Socket("localhost", 5005);
+                in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                out = new DataOutputStream(client.getOutputStream());
+                start();
+            } else {
+                JOptionPane.showMessageDialog(this, "Make Sure Server Form Is Active!", "Koneksi Gagal", JOptionPane.WARNING_MESSAGE);
+                System.exit(0);
+            }
         } catch (IOException ex) {
             System.out.println("Error di login form: " + ex);
+            JOptionPane.showMessageDialog(this, "Error di login form: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+//        try {
+//            if (isServerActive()) { 
+//                //untuk center
+//                this.setLocationRelativeTo(null);
+//
+//                // Maximize the frame
+//                setExtendedState(LoginForm.MAXIMIZED_BOTH);
+//                
+//                JOptionPane.showMessageDialog(this, "Connected To Server!", "Koneksi Sukses", JOptionPane.INFORMATION_MESSAGE);          
+//                initComponents();
+//                
+//                client = new Socket("localhost", 5005);
+//                in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+//                out = new DataOutputStream(client.getOutputStream());
+//                start();
+//            }
+//            
+//            else {
+//                JOptionPane.showMessageDialog(this, "Make Sure Server Form Is Active!", "Koneksi Gagal", JOptionPane.WARNING_MESSAGE);
+//                this.dispose();
+//            }
+//        } 
+//        
+//        catch (IOException ex) {
+//            System.out.println("Error di login form: " + ex);
+//        }
+    }
+    
+    private boolean isServerActive() {
+        try (Socket socketClient = new Socket("localhost", 5005)) {
+            return true;
+        } 
+        
+        catch (IOException e) {
+            return false;
         }
     }
-
     private void start() {
         if (t == null) {
             t = new Thread(this, "LoginForm");
