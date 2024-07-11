@@ -294,8 +294,6 @@ public class RegisterForm extends javax.swing.JFrame implements Runnable {
 
                 String formattedMessage = "REGISTER~" + fullname + "~" + username + "~" + email + "~" + password + "~" + rePassword + "~" + regisDOB + "\n";
 
-                out.writeBytes(formattedMessage);
-
                 boolean register = checkRegister(email);
 
                 if (register) {
@@ -303,6 +301,8 @@ public class RegisterForm extends javax.swing.JFrame implements Runnable {
                     if (password.equals(rePassword)) {
 
                         JOptionPane.showMessageDialog(this, "Registrasi sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                                               
+                        out.writeBytes(formattedMessage);
 
                         String response = in.readLine();
                         JOptionPane.showMessageDialog(this, response);
