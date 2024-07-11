@@ -22,6 +22,7 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
     Account acc;
     String fullname, username, email, password, rePassword, regisDOB;
     String eventName, eventDate, eventLoc, ticketType, ticketQty, ticketPrice, totalPrice;
+    Double longitude, latitude;
     String ticketId;
     String parkingLotName, parkingSlot, reservationDate, policeNumber;
     String parkingType, parkingPrice;
@@ -123,6 +124,17 @@ public class ServerForm extends javax.swing.JFrame implements Runnable {
             chatTxt.append(msg + "\n");
             chatTxt.append(username + " sukses membuka detail event " + eventName + "\n");
             broadCast(msg);
+        }
+        
+        else if (msg.contains("VIEW_MAP~")) {
+            String msgSplit[] = msg.split("~");
+            eventName = msgSplit[1];
+            longitude = Double.valueOf(msgSplit[2]);
+            latitude = Double.valueOf(msgSplit[3]);
+            username = msgSplit[4];
+            
+            chatTxt.append(msg + "\n");
+            chatTxt.append(username + " sukses mengakses view on map!" + "\n");
         }
         
         else if (msg.contains("CHOOSE_EVNT~")) {

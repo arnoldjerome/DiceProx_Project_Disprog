@@ -446,4 +446,15 @@ public class ticketingServices {
         return listOfUserIDs;
     }
 
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "fetchEventNameViewMap")
+    public String fetchEventNameViewMap(@WebParam(name = "eventID") String eventID) {
+        //TODO write your implementation code here:
+        ev = new Events();
+        String eventName = ev.fetchEventName(eventID);
+        
+        return eventName;
+    }
 }

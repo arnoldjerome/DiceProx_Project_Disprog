@@ -28,21 +28,23 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
      */
     public LoginForm() {
         try {
-            if (isServerActive()) { 
+            if (isServerActive()) {
+                JOptionPane.showMessageDialog(this, "Connected To Server!", "Koneksi Sukses", JOptionPane.INFORMATION_MESSAGE);
+                initComponents();
+
+                client = new Socket("localhost", 5005);
+                in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                out = new DataOutputStream(client.getOutputStream());
+                start();
+
                 //untuk center
                 this.setLocationRelativeTo(null);
 
                 // Maximize the frame
                 setExtendedState(LoginForm.MAXIMIZED_BOTH);
-                
-                JOptionPane.showMessageDialog(this, "Connected To Server!", "Koneksi Sukses", JOptionPane.INFORMATION_MESSAGE);
-                initComponents();
-                
-                client = new Socket("localhost", 5005);
-                in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-                out = new DataOutputStream(client.getOutputStream());
-                start();
-            } else {
+            } 
+            
+            else {
                 JOptionPane.showMessageDialog(this, "Make Sure Server Form Is Active!", "Koneksi Gagal", JOptionPane.WARNING_MESSAGE);
                 System.exit(0);
             }
@@ -51,16 +53,15 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
             JOptionPane.showMessageDialog(this, "Error di login form: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private boolean isServerActive() {
         try (Socket socketClient = new Socket("localhost", 5005)) {
             return true;
-        } 
-        
-        catch (IOException e) {
+        } catch (IOException e) {
             return false;
         }
     }
+
     private void start() {
         if (t == null) {
             t = new Thread(this, "LoginForm");
@@ -259,7 +260,7 @@ public class LoginForm extends javax.swing.JFrame implements Runnable {
 
                 if (userId != -1) {
                     JOptionPane.showMessageDialog(this, "Login Sukses!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-                    
+
                     out.writeBytes(formattedMessage);
 
                     String response = in.readLine();

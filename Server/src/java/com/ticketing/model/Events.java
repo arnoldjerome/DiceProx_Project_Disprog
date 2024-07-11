@@ -4,6 +4,7 @@
  */
 package com.ticketing.model;
 
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -200,16 +201,35 @@ public class Events extends MyModel {
     public void deleteData() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    public String fetchEventName(String eventID) {
+        try {
+            String eventName = "";
+            
+            if (!MyModel.conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) MyModel.conn.prepareStatement(
+                    "SELECT e.EventName FROM events e WHERE e.EventID=?");
+                sql.setString(1, eventID);
+                this.result = sql.executeQuery();
+                
+                if (this.result.next()) {
+                    eventName = this.result.getString("EventName");
+                }
+                
+                return eventName;
+            }
+        } catch (Exception e) {
+            System.out.println("Error di fetch event name: " + e);
+        }
+        
+        return null;
+    }
 
     public ArrayList<Object> viewListData() {
         ArrayList<Object> listOfEvents = new ArrayList<>();
         try {
             this.statement = (Statement) MyModel.conn.createStatement();
             this.result = this.statement.executeQuery(
-                    //                    "SELECT e.EventID, e.EventName, e.EventDate, e.EventLocation, t.TotalQuota, t.AvailableTickets "
-                    //                    + "FROM events e "
-                    //                    + "JOIN typeTickets t ON e.EventID = t.EventID");
-
                     "SELECT e.EventID, e.EventName, e.EventDate, e.EventLocation, "
                     + "SUM(t.TotalQuota) AS TotalQuota, "
                     + "SUM(t.AvailableTickets) AS AvailableTickets "

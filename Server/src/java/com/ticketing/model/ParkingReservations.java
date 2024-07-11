@@ -198,7 +198,7 @@ public class ParkingReservations extends MyModel {
                 if (this.result.next()) {
                     statusCheckOut = this.result.getInt("IsCheckedOut");
                     
-                    if (statusCheckOut == 1) {
+                    if (statusCheckOut == 0) {
                         return true;
                     }
                 }

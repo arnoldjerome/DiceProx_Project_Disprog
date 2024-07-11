@@ -5,11 +5,13 @@
 package subsistem_event;
 
 import com.ticketing.services.Events;
+import diceprox_main.UserSession;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -164,24 +166,36 @@ public class detailAcara extends javax.swing.JFrame {
 
     private void viewOnMapButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewOnMapButtonActionPerformed
         // Dapatkan event details termasuk latitude dan longitude
-
-        Events event = getEventDetails(Integer.parseInt(eventId));
-
-        if (event != null) {
+        try {
+            Events event = getEventDetails(Integer.parseInt(eventId));
             Double latitude = event.getLatitude();
             Double longitude = event.getLongitude();
             String eventId = String.valueOf(event.getEventID());
 
-            viewMapAcara windowPlane = new viewMapAcara(eventId, latitude, longitude);
+            String eventName = fetchEventNameViewMap(eventId);
 
-            if (windowPlane == null || !windowPlane.isVisible()) {
-                windowPlane.setVisible(true);
+            String formattedMessage = "VIEW_MAP~" + eventName + "~" + longitude + "~" + latitude + "~" + UserSession.getUsername() + "\n";
+
+            if (event != null) {
+                JOptionPane.showMessageDialog(this, "Sukses Mengakses View On Map!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                
+                out.writeBytes(formattedMessage);
+
+                viewMapAcara windowPlane = new viewMapAcara(eventId, latitude, longitude);
+
+                if (windowPlane == null || !windowPlane.isVisible()) {
+                    windowPlane.setVisible(true);
+                }
+
+                this.dispose();
+
+            } else {
+                System.out.println("Event not found.");
             }
-
-            this.dispose();
-
-        } else {
-            System.out.println("Event not found.");
+        } 
+        
+        catch (Exception e) {
+            System.out.println("Error view on map: "+ e);
         }
     }//GEN-LAST:event_viewOnMapButtonActionPerformed
 
@@ -201,16 +215,6 @@ public class detailAcara extends javax.swing.JFrame {
         }
     }
 
-//    private void updateLabelSize(javax.swing.JLabel label, String text) {
-//        label.setText(text);  // Mengatur teks pada JLabel
-//        FontMetrics metrics = label.getFontMetrics(label.getFont());  // Mendapatkan metrik font
-//        int width = metrics.stringWidth(text);  // Menghitung lebar teks
-//        int height = metrics.getHeight();  // Menghitung tinggi teks
-//
-//        label.setPreferredSize(new Dimension(width, height));  // Mengatur ukuran preferensi JLabel
-//        label.revalidate();  // Memperbarui tata letak komponen
-//        label.repaint();  // Menggambar ulang komponen
-//    }
     /**
      * @param args the command line arguments
      */
@@ -267,4 +271,9 @@ public class detailAcara extends javax.swing.JFrame {
         return port.getEventDetails(eventId);
     }
 
+    private static String fetchEventNameViewMap(java.lang.String eventID) {
+        com.ticketing.services.TicketingServices_Service service = new com.ticketing.services.TicketingServices_Service();
+        com.ticketing.services.TicketingServices port = service.getTicketingServicesPort();
+        return port.fetchEventNameViewMap(eventID);
+    }
 }
