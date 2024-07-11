@@ -6,7 +6,6 @@ package com.ticketing.model;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
@@ -77,14 +76,14 @@ public class ParkingReservations extends MyModel {
     public void setPoliceNumber(String PoliceNumber) {
         this.PoliceNumber = PoliceNumber;
     }
-    
+
     public Boolean getIsCheckedOut() {
         return IsCheckedOut;
     }
 
     public void setIsCheckedOut(Boolean IsCheckedOut) {
         this.IsCheckedOut = IsCheckedOut;
-    } 
+    }
 
     public String getParkingSlot() {
         return ParkingSlot;
@@ -223,7 +222,7 @@ public class ParkingReservations extends MyModel {
                 sql.executeUpdate();
                 sql.close();
                 
-                this.IsCheckedOut = true;
+                this.setIsCheckedOut((Boolean) true);
             }
         } catch (Exception e) {
             System.out.println("Error di update check out reservations: " + e);
@@ -333,6 +332,7 @@ public class ParkingReservations extends MyModel {
                         this.result.getInt("HargaParking"),
                         this.result.getString("ParkingType") 
                 );
+                
                 listOfReservations.add(pr);
             }
         } catch (Exception e) {

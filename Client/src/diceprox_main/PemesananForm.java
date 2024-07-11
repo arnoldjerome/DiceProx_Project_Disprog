@@ -173,7 +173,7 @@ public class PemesananForm extends javax.swing.JFrame {
     public void refreshTableParking() {
         DefaultTableModel model = (DefaultTableModel) jPemesananParkingTabel.getModel();
         model.setRowCount(0);
-        Object[] rowData = new Object[8]; //total kolom tampil
+        Object[] rowData = new Object[9]; //total kolom tampil
 
         for (com.ticketing.services.ParkingReservations obj : selectAllReservationPemesanan(idUser)) {
             rowData[0] = obj.getReservationID();
@@ -184,6 +184,7 @@ public class PemesananForm extends javax.swing.JFrame {
             rowData[5] = obj.getParkingSlot();
             rowData[6] = obj.getParkingType();
             rowData[7] = obj.getHargaParking();
+            rowData[8] = obj.isIsCheckedOut();
             model.addRow(rowData);
         }
     }
