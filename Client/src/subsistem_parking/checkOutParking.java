@@ -142,7 +142,7 @@ public class checkOutParking extends javax.swing.JFrame implements Runnable {
 
     private void checkOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOutButtonActionPerformed
         try {
-            int reservationID = Integer.parseInt(parkingRSVCodeText.getText());
+            Integer reservationID = Integer.valueOf(parkingRSVCodeText.getText());
             int userID = userIdForCheckOut(reservationID);           
             String parkingSlot = fetchParkingSlot(reservationID);
             String policeNumber = fetchPoliceNumber(reservationID);
@@ -173,7 +173,7 @@ public class checkOutParking extends javax.swing.JFrame implements Runnable {
                                 
                                 if (today.equals(reservationDate)) {
                                     
-                                    if (checkStatusCheckOut(reservationID)) {
+                                    if (checkStatusCheckOut(reservationID) == false) {
                                         
                                         updateCheckOutReservation(reservationID, UserSession.getUserId());
                                         
@@ -209,7 +209,7 @@ public class checkOutParking extends javax.swing.JFrame implements Runnable {
         } 
         
         catch (Exception e) {
-            System.out.println("Error di button check out: " + e);
+            JOptionPane.showMessageDialog(this, "Pastikan Inputan Digit Kode Reservasi Sudah Sesuai!", "Kode Reservasi Tidak Valid", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_checkOutButtonActionPerformed
 
